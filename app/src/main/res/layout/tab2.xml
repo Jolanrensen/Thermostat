@@ -12,4 +12,12 @@
         android:text="Tab 2"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
+    <nl.tue.student.thermostat.RotaryKnobView
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:id="@+id/jogView"
+        android:layout_gravity="center"
+        android:layout_above="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
