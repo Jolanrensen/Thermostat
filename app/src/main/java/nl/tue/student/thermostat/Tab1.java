@@ -26,7 +26,7 @@ public class Tab1 extends Fragment {
             @Override
             public void onClick(View view) {
                 if (text.getText() == "hallo") {
-                    text.setText("jij");
+                    text.setText("meneer");
                 } else {
                     text.setText("hallo");
                 }
