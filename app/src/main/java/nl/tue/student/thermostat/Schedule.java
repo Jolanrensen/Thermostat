@@ -13,12 +13,12 @@ import android.widget.TextView;
  */
 
 //Our class extending fragment
-public class Tab1 extends Fragment {
+public class Schedule extends Fragment {
 
     //Overriden method onCreateView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab1,container,false);
+        View view = inflater.inflate(R.layout.schedule,container,false);
         Button button = (Button)view.findViewById(R.id.button);
         final TextView text = (TextView)view.findViewById(R.id.textView);
 
@@ -38,7 +38,7 @@ public class Tab1 extends Fragment {
 
 
         //Returning the layout file after inflating
-        //Change R.layout.tab1 in you classes
+        //Change R.layout.schedule in you classes
         return view;
     }
 }

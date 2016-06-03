@@ -26,14 +26,11 @@ public class Pager extends FragmentStatePagerAdapter {
         //Returning the current tabs
         switch (position) {
             case 0:
-                Tab1 tab1 = new Tab1();
-                return tab1;
+                Homepage homepage = new Homepage();
+                return homepage;
             case 1:
-                Tab2 tab2 = new Tab2();
-                return tab2;
-            case 2:
-                Tab3 tab3 = new Tab3();
-                return tab3;
+                Schedule schedule = new Schedule();
+                return schedule;
             default:
                 return null;
         }

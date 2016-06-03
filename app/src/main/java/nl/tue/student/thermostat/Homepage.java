@@ -10,11 +10,11 @@ import android.view.ViewGroup;
  * Created by Belal on 2/3/2016.
  */
 
-public class Tab2 extends Fragment {
+public class Homepage extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab2, container, false);
+        View view = inflater.inflate(R.layout.homepage, container, false);
         RotaryKnobView jogView = (RotaryKnobView)view.findViewById(R.id.jogView);
         jogView.setKnobListener(new RotaryKnobView.RotaryKnobListener() {
             @Override
