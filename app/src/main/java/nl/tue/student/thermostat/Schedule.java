@@ -1,5 +1,6 @@
 package nl.tue.student.thermostat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ public class Schedule extends Fragment {
             public void onClick(View view) {
                 if (text.getText() == "hallo") {
                     text.setText("meneer");
+                    Intent intent = new Intent(view.getContext(), TestingWS.class);
+                    startActivity(intent);
                 } else {
                     text.setText("hallo");
                 }
