@@ -57,6 +57,7 @@ public class Homepage extends Fragment {
         ListView listview = (ListView) view.findViewById(R.id.upcomingChangesList);
         listview.setAdapter(new CustomListAdapter(this.getContext()));
 
+
         currentTemp.setText(Integer.toString(seekArc.getProgress()));
         return view;
     }
