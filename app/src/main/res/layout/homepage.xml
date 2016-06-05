@@ -7,34 +7,67 @@
     android:backgroundTint="#ffffff">
 
 
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view1"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="@dimen/design_snackbar_elevation"
+        card_view:cardBackgroundColor="@color/colorTextIcons"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/card_view"
+        android:layout_margin="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/currentTemp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center" />
+
         <com.triggertrap.seekarc.SeekArc
             android:id="@+id/seekArc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="30dp"
-            seekarc:arcColor="@color/dark_red"
-            seekarc:clockwise="true"
-            seekarc:max="150"
-            seekarc:progressColor="@color/red"
-            seekarc:rotation="180"
-            seekarc:startAngle="30"
-            seekarc:sweepAngle="300"
-            seekarc:touchInside="true"
-            android:layout_above="@+id/upcomingChangesList" />
+            android:layout_above="@+id/card_view"
+            seekarc:thumb="@drawable/jog"/> this doesn't seem to work, should change the selector
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        card_view:cardElevation="@dimen/cardview_default_elevation"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin">
 
         <ListView
-            android:layout_width="383dp"
-            android:layout_height="345dp"
             android:id="@+id/upcomingChangesList"
-            android:layout_gravity="bottom|center_horizontal"
-            android:elevation="@dimen/abc_action_bar_default_height_material"
             seekarc:listitem="@android:layout/simple_list_item_1"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="false"
             android:drawSelectorOnTop="true" />
+    </android.support.v7.widget.CardView>
+
 
 </RelativeLayout>
