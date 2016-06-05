@@ -43,7 +43,7 @@ public class CustomListAdapter extends BaseAdapter {
             row=inflater.inflate(R.layout.upcoming_changes_list_item,parent,false);
             ImageView imageview= (ImageView) row.findViewById(R.id.iv_icon);
             TextView textview= (TextView) row.findViewById(R.id.txt_name);
-            LinearLayout linearlayout= (LinearLayout) row.findViewById(R.id.upcomingChangesList);
+
 
             imageview.setBackgroundResource(icon[position]);
             textview.setText(title[position]);
