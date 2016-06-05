@@ -2,22 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:seekarc="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:backgroundTint="#ffffff">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Tab 2"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-    <nl.tue.student.thermostat.RotaryKnobView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/jogView"
-        android:layout_gravity="center"
-        android:layout_above="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        <com.triggertrap.seekarc.SeekArc
+            android:id="@+id/seekArc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="30dp"
+            seekarc:arcColor="@color/dark_red"
+            seekarc:clockwise="true"
+            seekarc:max="150"
+            seekarc:progressColor="@color/red"
+            seekarc:rotation="180"
+            seekarc:startAngle="30"
+            seekarc:sweepAngle="300"
+            seekarc:touchInside="true"
+            android:layout_above="@+id/upcomingChangesList" />
+
+        <ListView
+            android:layout_width="383dp"
+            android:layout_height="345dp"
+            android:id="@+id/upcomingChangesList"
+            android:layout_gravity="bottom|center_horizontal"
+            android:elevation="@dimen/abc_action_bar_default_height_material"
+            seekarc:listitem="@android:layout/simple_list_item_1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="false"
+            android:drawSelectorOnTop="true" />
 
 </RelativeLayout>
