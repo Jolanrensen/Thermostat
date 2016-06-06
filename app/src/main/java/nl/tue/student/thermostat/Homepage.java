@@ -14,6 +14,8 @@ import com.triggertrap.seekarc.SeekArc;
 
 public class Homepage extends Fragment {
     TextView currentTemp;
+    TextView currentTime;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -21,6 +23,9 @@ public class Homepage extends Fragment {
 
         //importing current temperature text
         currentTemp = (TextView)view.findViewById(R.id.currentTemp);
+
+        //importing current time
+        currentTime = (TextView)view.findViewById(R.id.currentTime);
 
         //importing the arc
         SeekArc seekArc = (SeekArc)view.findViewById(R.id.seekArc);
@@ -62,3 +67,4 @@ public class Homepage extends Fragment {
         return view;
     }
 }
+

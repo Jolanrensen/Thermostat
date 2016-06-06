@@ -1,10 +1,11 @@
 package nl.tue.student.thermostat;
 
-import android.widget.ImageView;
 import android.content.Context;
-import android.util.AttributeSet;
-import android.view.*;
 import android.graphics.Canvas;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
 
 /**
  * Created by s154563 on 31-5-2016.
@@ -18,7 +19,7 @@ public class RotaryKnobView extends ImageView {
     private RotaryKnobListener listener;
 
     public interface RotaryKnobListener {
-        public void onKnobChanged(int arg);
+        void onKnobChanged(int arg);
     }
 
     public void setKnobListener(RotaryKnobListener l )

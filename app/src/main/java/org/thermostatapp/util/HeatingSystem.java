@@ -245,11 +245,7 @@ public class HeatingSystem {
     public static boolean getVacationMode() {
         try {
             String state = HeatingSystem.get("weekProgramState");
-            if (state.equals("on")) {
-                return false;
-            } else {
-                return true;
-            }
+            return !state.equals("on");
         } catch (ConnectException e) {
             // Should not be able to occur, because the "weekProgramState" IS a
             // valid argument.
@@ -268,8 +264,7 @@ public class HeatingSystem {
      * @throws FileNotFoundException
      */
     private static HttpURLConnection getHttpConnection(String link, String type)
-            throws IOException, MalformedURLException, UnknownHostException,
-            FileNotFoundException {
+            throws IOException {
         URL url = new URL(link);
         HttpURLConnection connect = (HttpURLConnection) url.openConnection();
         connect.setReadTimeout(HeatingSystem.TIME_OUT);

@@ -11,7 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.thermostatapp.util.*;
+import org.thermostatapp.util.HeatingSystem;
+import org.thermostatapp.util.WeekProgram;
 
 public class TestingWS extends Activity {
 

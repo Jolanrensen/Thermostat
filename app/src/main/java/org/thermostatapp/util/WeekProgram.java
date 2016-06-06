@@ -27,9 +27,9 @@ public class WeekProgram {
      */
     public void setDefault() {
         nr_switches_active = new int[7];
-        for (int i = 0; i < this.valid_days.length; i++) {
+        for (int i = 0; i < valid_days.length; i++) {
             nr_switches_active[i] = 5;
-            String day = this.valid_days[i];
+            String day = valid_days[i];
             this.data.put(day, new ArrayList<Switch>());
             this.data.get(day).add(new Switch("night", false, "00:00"));
             this.data.get(day).add(new Switch("night", false, "00:00"));
@@ -58,9 +58,9 @@ public class WeekProgram {
         // Add prefix.
         build.append(prefix).append("\n");
         // Construct all the days.
-        for (int i = 0; i < this.valid_days.length; i++) {
+        for (int i = 0; i < valid_days.length; i++) {
             // Add the day
-            String day = this.valid_days[i];
+            String day = valid_days[i];
 
             build.append("<day name=\"" + day + "\">").append("\n");
 
@@ -118,7 +118,7 @@ public class WeekProgram {
         }
     */
     public void set_durations() {
-        for (int i = 0; i < this.valid_days.length; i++) {
+        for (int i = 0; i < valid_days.length; i++) {
 
             for (int j = 0; j < data.get(valid_days[i]).size() - 1; j++) {
                 if (data.get(valid_days[i]).get(j + 1).getState())
@@ -154,7 +154,7 @@ public class WeekProgram {
     public void setSwitches(String day, ArrayList<Switch> switches_list,
                             int nr_switches) {
         // Validate input???
-        for (String d : this.valid_days) {
+        for (String d : valid_days) {
             if (d.equalsIgnoreCase(day)) {
                 this.data.put(d, switches_list);
                 for (int i = 0; i < 7; i++)
