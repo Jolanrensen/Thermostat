@@ -23,6 +23,8 @@ public class Homepage extends Fragment {
     String getParamTime;
     TimerTask task;
     long clockDelay = 1000; //delay for updating the clock
+    int test;
+    ListView listview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class Homepage extends Fragment {
                                 @Override
                                 public void run() {
                                     currentTime.setText(getParamTime);
+                                    listview.invalidateViews();
+
                                 }
                             });
                         } catch (Exception e) {
@@ -76,7 +80,8 @@ public class Homepage extends Fragment {
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
             public void onProgressChanged(SeekArc seekArc, int i, boolean b) {
-               currentTemp.setText(Integer.toString(seekArc.getProgress()));
+               currentTemp.setText(Integer.toString(//seekArc.getProgress()
+                       test));
             }
 
             @Override
@@ -91,13 +96,13 @@ public class Homepage extends Fragment {
         });
 
         //importing the upcoming changes list
-        ListView listview = (ListView) view.findViewById(R.id.upcomingChangesList);
+        listview = (ListView) view.findViewById(R.id.upcomingChangesList);
         listview.setAdapter(new CustomListAdapter(this.getContext()));
-
 
         currentTemp.setText(Integer.toString(seekArc.getProgress()));
         return view;
     }
+
 
 
 
