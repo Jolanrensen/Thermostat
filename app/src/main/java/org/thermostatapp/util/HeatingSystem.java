@@ -24,7 +24,7 @@ import java.util.Locale;
 
 public class HeatingSystem {
 
-    public static String BASE_ADDRESS = "http://wwwis.win.tue.nl/2id40-ws/45/";
+    public static String BASE_ADDRESS = "http://wwwis.win.tue.nl/2id40-ws/45";
     public static String WEEK_PROGRAM_ADDRESS = "http://wwwis.win.tue.nl/2id40-ws/45/weekProgram";
     private final static int TIME_OUT = 10000; // in milliseconds.
 
@@ -177,7 +177,7 @@ public class HeatingSystem {
         if (match) {
             InputStream in = null;
             try {
-                System.out.println("USED Link: " + link);
+                //System.out.println("USED Link: " + link);
                 HttpURLConnection connect = getHttpConnection(link, "GET");
                 in = connect.getInputStream();
 

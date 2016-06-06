@@ -11,11 +11,18 @@ import android.widget.TextView;
 
 import com.triggertrap.seekarc.SeekArc;
 
+import org.thermostatapp.util.HeatingSystem;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class Homepage extends Fragment {
     TextView currentTemp;
     TextView currentTime;
-
+    String getParamTime;
+    TimerTask task;
+    long clockDelay = 1000; //delay for updating the clock
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -26,6 +33,33 @@ public class Homepage extends Fragment {
 
         //importing current time
         currentTime = (TextView)view.findViewById(R.id.currentTime);
+
+        //creating the timer for the clock
+
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            getParamTime = HeatingSystem.get("time");
+                            currentTime.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    currentTime.setText(getParamTime);
+                                }
+                            });
+                        } catch (Exception e) {
+                            System.err.println("Error from getdata "+e);
+                        }
+                    }
+                }).start();
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 0, clockDelay);
+
 
         //importing the arc
         SeekArc seekArc = (SeekArc)view.findViewById(R.id.seekArc);
@@ -38,8 +72,6 @@ public class Homepage extends Fragment {
         seekArc.setRoundedEdges(true);
         seekArc.setProgressColor(Color.parseColor("#448aff"));
         seekArc.setArcColor(Color.parseColor("#f44336"));
-
-
 
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
@@ -66,5 +98,9 @@ public class Homepage extends Fragment {
         currentTemp.setText(Integer.toString(seekArc.getProgress()));
         return view;
     }
+
+
+
+
 }
 

@@ -30,12 +30,15 @@
             android:gravity="center" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/currentTime"
+            android:textSize="40dp"
+            android:layout_marginRight="5dp"
             android:layout_centerHorizontal="true"
+            android:textColor="@color/colorTextSecondary"
             android:gravity="top" />
 
 
