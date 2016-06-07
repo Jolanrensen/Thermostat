@@ -38,6 +38,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     String getParam = "";
 
     TimerTask uiUpdateTask;
+    TimerTask task;
+
+    Thread secondaryThread;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +90,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         //Adding the manual switch
         manualSwitch = (Switch) headerLayout.findViewById(R.id.manualSwitch);
 
-        new Thread(new Runnable() {
+
+
+
+
+        secondaryThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -94,7 +103,18 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                     System.err.println("Error from getdata "+e);
                 }
             }
-        }).start();
+        });
+        //run the thread every clockDelay
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                secondaryThread.start();
+            }
+        };
+        Timer timer2 = new Timer();
+        timer2.schedule(task, 0, 100);
+
+
 
 
         uiUpdateTask = new TimerTask() {
