@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import org.thermostatapp.util.HeatingSystem;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 //Implementing the interface OnTabSelectedListener to our MainActivity
 //This interface would help in swiping views
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener,NavigationView.OnNavigationItemSelectedListener {
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     String getParam = "";
 
-
+    TimerTask task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +96,32 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             }
         }).start();
 
-        System.out.println("lala" + getParam);
-        if (getParam.equals("on")) {
-            manualSwitch.setChecked(false);
-        } else if (getParam.equals("off")){
-            manualSwitch.setChecked(true);
-        }
+
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (getParam.equals("on")) {
+                            manualSwitch.setChecked(false);
+                        } else if (getParam.equals("off")){
+                            manualSwitch.setChecked(true);
+                        }
+                    }
+                });
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 0, 100);
+
+
+
+
+
+
+
+
     }
 
 

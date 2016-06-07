@@ -19,10 +19,11 @@ import java.util.TimerTask;
 
 
 public class Homepage extends Fragment {
-    TextView currentTemp;
+    TextView targetTemp;
     TextView currentTime;
-    String getParamTime;
-    TimerTask task;
+    String getParamTime;    //time pulled from the server
+    TimerTask task; //Timertask that runs every clockdelay
+    Thread secondaryThread; //Thread that gets started by task
     long clockDelay = 100; //delay for updating the clock
 
     ListView listview;
@@ -32,35 +33,36 @@ public class Homepage extends Fragment {
         View view = inflater.inflate(R.layout.homepage, container, false);
 
         //importing current temperature text
-        currentTemp = (TextView)view.findViewById(R.id.currentTemp);
+        targetTemp = (TextView)view.findViewById(R.id.targetTemp);
 
         //importing current time
         currentTime = (TextView)view.findViewById(R.id.currentTime);
 
-        //creating the timer for the clock
+        //secondary thread for pulling network data and refreshing the upcoming changes list
+        secondaryThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    getParamTime = HeatingSystem.get("time");
+                    currentTime.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            currentTime.setText(getParamTime);
+                            //update list
+                            listview.invalidateViews();
 
+                        }
+                    });
+                } catch (Exception e) {
+                    System.err.println("Error from getdata "+e);
+                }
+            }
+        });
+        //run the thread every clockDelay
         task = new TimerTask() {
             @Override
             public void run() {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            getParamTime = HeatingSystem.get("time");
-                            currentTime.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    currentTime.setText(getParamTime);
-                                    //update list
-                                    listview.invalidateViews();
-
-                                }
-                            });
-                        } catch (Exception e) {
-                            System.err.println("Error from getdata "+e);
-                        }
-                    }
-                }).start();
+                secondaryThread.start();
             }
         };
         Timer timer = new Timer();
@@ -69,7 +71,6 @@ public class Homepage extends Fragment {
 
         //importing the arc
         SeekArc seekArc = (SeekArc)view.findViewById(R.id.seekArc);
-        //com.triggertrap.seekarc.R.drawable.seek_arc_control_selector = R.drawable.jog;
 
         seekArc.setMax(250);
         seekArc.setStartAngle(0);
@@ -85,7 +86,7 @@ public class Homepage extends Fragment {
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
             public void onProgressChanged(SeekArc seekArc, int i, boolean b) {
-               currentTemp.setText(Double.toString(((double) seekArc.getProgress()/10+5)) + " \u00B0" + "C"); //tweaky temporary solution
+                targetTemp.setText(Double.toString(((double) seekArc.getProgress()/10+5)) + " \u00B0" + "C"); //tweaky temporary solution
             }
 
             @Override
@@ -105,14 +106,14 @@ public class Homepage extends Fragment {
         listview.setAdapter(customlistadapter);
 
         customlistadapter.addItem("test123", R.drawable.jog);
-        customlistadapter.addItem("again", R.drawable.day);
+        customlistadapter.addItem("again", R.drawable.jog);
         customlistadapter.addItem("jemoeder", R.mipmap.ic_launcher);
         customlistadapter.removeFirst();
        // customlistadapter.removeFirst();
       //  customlistadapter.removeAll();
 
-
-        currentTemp.setText(Double.toString(((double) seekArc.getProgress()/10+5)) + " \u00B0" + "C");
+        //updating the current temperature
+        targetTemp.setText(Double.toString(((double) seekArc.getProgress()/10+5)) + " \u00B0" + "C");
         return view;
     }
 

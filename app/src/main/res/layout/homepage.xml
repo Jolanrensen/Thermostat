@@ -28,7 +28,7 @@
             android:textSize="40dp"
             android:textColor="@color/colorTextSecondary"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/currentTemp"
+            android:id="@+id/targetTemp"
             android:layout_centerHorizontal="true"
             android:gravity="center" />
 
@@ -52,9 +52,7 @@
             android:layout_gravity="center"
             android:padding="30dp"
             android:layout_above="@+id/card_view"
-            seekarc:targetApi="LOLLIPOP"
-            seekarc:mThumb="@drawable/jog"/> this doesn't seem to work, should change the selector
-
+            seekarc:targetApi="LOLLIPOP"/>
 
     </android.support.v7.widget.CardView>
 

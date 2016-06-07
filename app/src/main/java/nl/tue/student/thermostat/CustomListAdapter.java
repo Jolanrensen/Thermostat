@@ -12,9 +12,7 @@ import java.util.ArrayList;
 
 
 public class CustomListAdapter extends BaseAdapter {
-    //String [] title={"GingerBread","HoneyComb","IceCreamSandwitch","JellyBean","test", "test2", "testnogwat"};
     ArrayList<String> title = new ArrayList<String>();
-   // int [] icon={R.drawable.jog, R.drawable.jog};
     ArrayList<Integer> icon = new ArrayList<Integer>();
     private Context context;
     int count = 1;
