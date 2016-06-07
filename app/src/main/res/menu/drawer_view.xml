@@ -5,29 +5,27 @@
         <item
             android:id="@+id/nav_first_fragment"
             android:icon="@drawable/side_nav_bar"
-            android:title="Toggle Manual mode"
+            android:title="Something"
             android:checkable="true"
 
             />
-
-
         <item
             android:id="@+id/nav_second_fragment"
             android:icon="@drawable/side_nav_bar"
-            android:title="Second" />
+            android:title="Something else" />
         <item
             android:id="@+id/nav_third_fragment"
             android:icon="@drawable/side_nav_bar"
-            android:title="Third" />
-        <item android:title="Sub items">
+            android:title="Again Something else" />
+        <item android:title="The rest">
             <menu>
                 <group>
                     <item
-                        android:title="Sub item 1"
+                        android:title="About"
                         android:icon="@drawable/side_nav_bar"
                         android:id="@+id/sub1"/>
                     <item
-                        android:title="Sub item 2"
+                        android:title="FAQ"
                         android:id="@+id/sub2"
                         android:icon="@drawable/side_nav_bar"/>
                 </group>
