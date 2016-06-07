@@ -32,6 +32,7 @@ public class Schedule extends Fragment {
         customlistadapter.addItem("Day temperature: ",0);
         customlistadapter.addItem("Night temperature: ",0);
 
+
         customlistadapter.addItem("Monday",0);
         customlistadapter.addItem("Tuesday",0);
         customlistadapter.addItem("Wednesday",0);
