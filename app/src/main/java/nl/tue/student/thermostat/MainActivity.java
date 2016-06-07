@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (viewPager.getCurrentItem() == 1) {
+        } else if (viewPager.getCurrentItem() == 1) { //move back to homepage
             viewPager.setCurrentItem(0);
         }else {
             super.onBackPressed();
