@@ -24,6 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
+            android:textSize="40dp"
+            android:textColor="@color/colorTextSecondary"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/currentTemp"
             android:layout_centerHorizontal="true"
