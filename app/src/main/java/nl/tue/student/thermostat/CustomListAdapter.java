@@ -14,17 +14,53 @@ import java.util.ArrayList;
 public class CustomListAdapter extends BaseAdapter {
     //String [] title={"GingerBread","HoneyComb","IceCreamSandwitch","JellyBean","test", "test2", "testnogwat"};
     ArrayList<String> title = new ArrayList<String>();
-    int [] icon={R.drawable.jog, R.drawable.jog};
-    ArrayList<Integer> icon2 = new ArrayList<Integer>();
+   // int [] icon={R.drawable.jog, R.drawable.jog};
+    ArrayList<Integer> icon = new ArrayList<Integer>();
     private Context context;
     int count = 1;
     CustomListAdapter(Context context){
         this.context=context;
     }
 
-    public void addItem(String name, int icon) {
 
+    public void addItem(String name, int icon1) {
+        if (!title.isEmpty()) {
+                if(title.get(0).equals("")) {
+                    title.clear();
+                    icon.clear();
+                    title.add(name);
+                    icon.add(icon1);
+                } else {
+                    title.add(name);
+                    icon.add(icon1);
+                }
+        } else {
+            title.add(name);
+            icon.add(icon1);
+        }
+        count = title.size();
+    }
 
+    public void removeFirst() {
+        if (!title.isEmpty()){
+            if (!title.get(0).equals("")) {
+                title.remove(0);
+                icon.remove(0);
+                count = title.size();
+            }
+        } else {
+            title.add("");
+            icon.add(null);
+            count = 0;
+        }
+    }
+
+    public void removeAll() {
+        title.clear();
+        icon.clear();
+        title.add("");
+        icon.add(0);
+        count = 0;
     }
 
     @Override
@@ -47,15 +83,12 @@ public class CustomListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        //title and icon cannot be empty, but items can be added and removed. Will implement this in a method
-        title.clear();
-        icon2.clear();
-        title.add("");
-        icon2.add(0);
-        title.add("test2");
-        icon2.add(R.mipmap.ic_launcher);
-        //icon2.add(R.drawable.jog);
-        count = title.size();
+        if (title.isEmpty()) {
+            title.add("");
+            icon.add(0);
+            count = 0;
+        }
+
         View row=null;
         if(convertView==null){
             LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -64,7 +97,7 @@ public class CustomListAdapter extends BaseAdapter {
             TextView textview= (TextView) row.findViewById(R.id.txt_name);
 
 
-            imageview.setBackgroundResource(icon2.get(position));
+            imageview.setBackgroundResource(icon.get(position));
             textview.setText(title.get(position));
 
         }else{

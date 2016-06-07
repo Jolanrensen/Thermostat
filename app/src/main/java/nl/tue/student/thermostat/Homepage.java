@@ -97,7 +97,13 @@ public class Homepage extends Fragment {
 
         //importing the upcoming changes list
         listview = (ListView) view.findViewById(R.id.upcomingChangesList);
-        listview.setAdapter(new CustomListAdapter(this.getContext()));
+        CustomListAdapter customlistadapter = new CustomListAdapter(this.getContext());
+        listview.setAdapter(customlistadapter);
+        customlistadapter.addItem("test123", R.drawable.jog);
+        customlistadapter.addItem("again", R.mipmap.ic_launcher);
+        customlistadapter.removeFirst();
+        customlistadapter.removeFirst();
+
 
         currentTemp.setText(Integer.toString(seekArc.getProgress()));
         return view;
