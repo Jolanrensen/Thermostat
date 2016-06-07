@@ -12,7 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
+
+import org.thermostatapp.util.HeatingSystem;
 
 //Implementing the interface OnTabSelectedListener to our MainActivity
 //This interface would help in swiping views
@@ -25,10 +29,18 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     //This is our viewPager
     private ViewPager viewPager;
 
+    Switch manualSwitch;
+    NavigationView navigationView;
+
+    String getParam = "";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //Adding toolbar to the activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -62,11 +74,34 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
+        navigationView = (NavigationView) findViewById(R.id.nvView);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //adding header of hamburgermenu
+        final View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
+        //Adding the manual switch
+        manualSwitch = (Switch) headerLayout.findViewById(R.id.manualSwitch);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    getParam = HeatingSystem.get("weekProgramState");
+                } catch (Exception e) {
+                    System.err.println("Error from getdata "+e);
+                }
+            }
+        }).start();
+
+        System.out.println("lala" + getParam);
+        if (getParam.equals("on")) {
+            manualSwitch.setChecked(false);
+        } else if (getParam.equals("off")){
+            manualSwitch.setChecked(true);
+        }
     }
+
+
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
@@ -116,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.nav_first_fragment) {
 
         } else if (id == R.id.nav_second_fragment) {
@@ -129,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     @Override
     public void onBackPressed() {

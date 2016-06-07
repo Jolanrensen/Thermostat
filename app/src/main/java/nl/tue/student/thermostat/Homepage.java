@@ -112,7 +112,7 @@ public class Homepage extends Fragment {
       //  customlistadapter.removeAll();
 
 
-        currentTemp.setText(Integer.toString(seekArc.getProgress()) + " \u00B0" + "C");
+        currentTemp.setText(Double.toString(((double) seekArc.getProgress()/10+5)) + " \u00B0" + "C");
         return view;
     }
 
