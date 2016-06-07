@@ -2,6 +2,7 @@ package nl.tue.student.thermostat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +12,22 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.thermostatapp.util.HeatingSystem;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by Belal on 2/3/2016.
  */
 
 //Our class extending fragment
 public class Schedule extends Fragment {
-
+    TimerTask task;
     ListView listview;
+    long clockDelay = 1000;
+    String dayTemp;
+
     //Overriden method onCreateView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -26,10 +35,30 @@ public class Schedule extends Fragment {
         final TextView text = (TextView)view.findViewById(R.id.textView);
 
         listview = (ListView) view.findViewById(R.id.scheduleList);
-        CustomScheduleAdapter customlistadapter = new CustomScheduleAdapter(this.getContext());
+        final CustomScheduleAdapter customlistadapter = new CustomScheduleAdapter(this.getContext());
         listview.setAdapter(customlistadapter);
 
-        customlistadapter.addItem("Day temperature: ",0);
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            dayTemp = HeatingSystem.get("time");
+                            String text = "Day temperature: " + dayTemp + "°C";
+                            customlistadapter.title.set(0,text);
+                        } catch (Exception e) {
+                            System.err.println("Error from getdata "+e);
+                        }
+                    }
+                }).start();
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 0, clockDelay);
+
+        customlistadapter.addItem("Day temperature: " + dayTemp + "°C",0);
         customlistadapter.addItem("Night temperature: ",0);
 
 
@@ -45,7 +74,7 @@ public class Schedule extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch(position){
-                    case 0:
+                    case 2:
                         Intent intent = new Intent(view.getContext(), Monday.class);
                         startActivity(intent);
                         break;

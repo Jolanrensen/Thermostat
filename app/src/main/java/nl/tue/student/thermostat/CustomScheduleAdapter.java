@@ -92,7 +92,7 @@ public class CustomScheduleAdapter extends BaseAdapter {
         View row=null;
         if(convertView==null){
             LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row=inflater.inflate(R.layout.upcoming_changes_list_item,parent,false);
+            row=inflater.inflate(R.layout.schedule_list_item,parent,false);
             ImageView imageview= (ImageView) row.findViewById(R.id.iv_icon);
             TextView textview= (TextView) row.findViewById(R.id.txt_name);
 
