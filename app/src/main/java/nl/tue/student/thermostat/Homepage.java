@@ -71,7 +71,7 @@ public class Homepage extends Fragment {
         SeekArc seekArc = (SeekArc)view.findViewById(R.id.seekArc);
         //com.triggertrap.seekarc.R.drawable.seek_arc_control_selector = R.drawable.jog;
 
-        //seekArc.setMax(250);
+        seekArc.setMax(250);
         seekArc.setStartAngle(0);
         seekArc.setSweepAngle(280);
         seekArc.setTouchInSide(true);
@@ -85,7 +85,7 @@ public class Homepage extends Fragment {
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
             public void onProgressChanged(SeekArc seekArc, int i, boolean b) {
-               currentTemp.setText(Integer.toString(seekArc.getProgress()) + " \u00B0" + "C");
+               currentTemp.setText(Double.toString(((double) seekArc.getProgress()/10+5)) + " \u00B0" + "C"); //tweaky temporary solution
             }
 
             @Override
