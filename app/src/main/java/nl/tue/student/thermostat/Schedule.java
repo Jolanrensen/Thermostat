@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -16,37 +18,40 @@ import android.widget.TextView;
 //Our class extending fragment
 public class Schedule extends Fragment {
 
+    ListView listview;
     //Overriden method onCreateView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.schedule,container,false);
-        Button button = (Button)view.findViewById(R.id.button);
-        Button button2 = (Button)view.findViewById(R.id.button2);
         final TextView text = (TextView)view.findViewById(R.id.textView);
 
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Monday.class);
-                startActivity(intent);
-            }
-        });
+        listview = (ListView) view.findViewById(R.id.scheduleList);
+        CustomScheduleAdapter customlistadapter = new CustomScheduleAdapter(this.getContext());
+        listview.setAdapter(customlistadapter);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        customlistadapter.addItem("Day temperature: ",0);
+        customlistadapter.addItem("Night temperature: ",0);
+
+
+        customlistadapter.addItem("Monday",0);
+        customlistadapter.addItem("Tuesday",0);
+        customlistadapter.addItem("Wednesday",0);
+        customlistadapter.addItem("Thursday",0);
+        customlistadapter.addItem("Friday",0);
+        customlistadapter.addItem("Saturday",0);
+        customlistadapter.addItem("Sunday",0);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                if (text.getText() == "hallo") {
-                    text.setText("meneer");
-                    Intent intent = new Intent(view.getContext(), TestingWS.class);
-                    startActivity(intent);
-                } else {
-                    text.setText("hallo");
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(position){
+                    case 0:
+                        Intent intent = new Intent(view.getContext(), Monday.class);
+                        startActivity(intent);
+                        break;
                 }
-
             }
         });
-
-
 
 
         //Returning the layout file after inflating
