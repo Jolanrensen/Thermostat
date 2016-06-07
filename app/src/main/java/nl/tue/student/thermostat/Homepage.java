@@ -102,8 +102,8 @@ public class Homepage extends Fragment {
 
         customlistadapter.addItem("test123", R.drawable.jog);
         customlistadapter.addItem("again", R.mipmap.ic_launcher);
-        customlistadapter.removeFirst();
-        customlistadapter.removeFirst();
+       // customlistadapter.removeFirst();
+       // customlistadapter.removeFirst();
       //  customlistadapter.removeAll();
 
 
