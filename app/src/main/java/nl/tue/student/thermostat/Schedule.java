@@ -33,7 +33,7 @@ public class Schedule extends Fragment {
         final TextView text = (TextView)view.findViewById(R.id.textView);
 
         listview = (ListView) view.findViewById(R.id.scheduleList);
-        final CustomScheduleAdapter customlistadapter = new CustomScheduleAdapter(this.getContext());
+        final CustomListAdapter customlistadapter = new CustomListAdapter(this.getContext());
         listview.setAdapter(customlistadapter);
 
         taskSchedule = new TimerTask() {
