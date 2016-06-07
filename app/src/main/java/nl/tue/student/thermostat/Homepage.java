@@ -105,7 +105,7 @@ public class Homepage extends Fragment {
         listview.setAdapter(customlistadapter);
 
         customlistadapter.addItem("test123", R.drawable.jog);
-        customlistadapter.addItem("again", R.mipmap.ic_launcher);
+        customlistadapter.addItem("again", R.drawable.ic_action_day);
         customlistadapter.addItem("jemoeder", R.mipmap.ic_launcher);
         customlistadapter.removeFirst();
        // customlistadapter.removeFirst();
