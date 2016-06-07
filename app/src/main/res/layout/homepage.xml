@@ -44,14 +44,15 @@
             android:gravity="top" />
 
 
-        <com.triggertrap.seekarc.SeekArc
+        <nl.tue.student.thermostat.SeekArc
             android:id="@+id/seekArc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="30dp"
             android:layout_above="@+id/card_view"
-            seekarc:thumb="@drawable/jog"/> this doesn't seem to work, should change the selector
+            seekarc:targetApi="LOLLIPOP"
+            seekarc:mThumb="@drawable/jog"/> this doesn't seem to work, should change the selector
 
 
     </android.support.v7.widget.CardView>

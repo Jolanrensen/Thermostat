@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.triggertrap.seekarc.SeekArc;
+//import com.triggertrap.seekarc.SeekArc;
+
 
 import org.thermostatapp.util.HeatingSystem;
 
@@ -68,7 +69,9 @@ public class Homepage extends Fragment {
 
         //importing the arc
         SeekArc seekArc = (SeekArc)view.findViewById(R.id.seekArc);
+        //com.triggertrap.seekarc.R.drawable.seek_arc_control_selector = R.drawable.jog;
 
+        //seekArc.setMax(250);
         seekArc.setStartAngle(0);
         seekArc.setSweepAngle(280);
         seekArc.setTouchInSide(true);
