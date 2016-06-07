@@ -13,7 +13,7 @@
         android:layout_gravity="top|center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        card_view:cardElevation="@dimen/design_snackbar_elevation"
+        card_view:cardElevation="@dimen/cardview_default_elevation"
         card_view:cardBackgroundColor="@color/colorTextIcons"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/card_view"

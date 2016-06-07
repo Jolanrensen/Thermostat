@@ -21,7 +21,16 @@ public class Schedule extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.schedule,container,false);
         Button button = (Button)view.findViewById(R.id.button);
+        Button button2 = (Button)view.findViewById(R.id.button2);
         final TextView text = (TextView)view.findViewById(R.id.textView);
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), TestingWS.class);
+                startActivity(intent);
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -81,7 +81,7 @@ public class Homepage extends Fragment {
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
             public void onProgressChanged(SeekArc seekArc, int i, boolean b) {
-               currentTemp.setText(Integer.toString(seekArc.getProgress()));
+               currentTemp.setText(Integer.toString(seekArc.getProgress()) + "C");
             }
 
             @Override
@@ -99,13 +99,15 @@ public class Homepage extends Fragment {
         listview = (ListView) view.findViewById(R.id.upcomingChangesList);
         CustomListAdapter customlistadapter = new CustomListAdapter(this.getContext());
         listview.setAdapter(customlistadapter);
+
         customlistadapter.addItem("test123", R.drawable.jog);
         customlistadapter.addItem("again", R.mipmap.ic_launcher);
        // customlistadapter.removeFirst();
         customlistadapter.removeFirst();
+      //  customlistadapter.removeAll();
 
 
-        currentTemp.setText(Integer.toString(seekArc.getProgress()));
+        currentTemp.setText(Integer.toString(seekArc.getProgress()) + "C");
         return view;
     }
 
