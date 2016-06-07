@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,6 +29,9 @@ public class Schedule extends Fragment {
         CustomScheduleAdapter customlistadapter = new CustomScheduleAdapter(this.getContext());
         listview.setAdapter(customlistadapter);
 
+        customlistadapter.addItem("Day temperature: ",0);
+        customlistadapter.addItem("Night temperature: ",0);
+
         customlistadapter.addItem("Monday",0);
         customlistadapter.addItem("Tuesday",0);
         customlistadapter.addItem("Wednesday",0);
@@ -36,7 +40,17 @@ public class Schedule extends Fragment {
         customlistadapter.addItem("Saturday",0);
         customlistadapter.addItem("Sunday",0);
 
-
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(position){
+                    case 0:
+                        Intent intent = new Intent(view.getContext(), Monday.class);
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
 
 
         //Returning the layout file after inflating
