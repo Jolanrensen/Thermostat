@@ -81,8 +81,7 @@ public class Homepage extends Fragment {
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
             public void onProgressChanged(SeekArc seekArc, int i, boolean b) {
-               currentTemp.setText(Integer.toString(//seekArc.getProgress()
-                       test));
+               currentTemp.setText(Integer.toString(seekArc.getProgress()));
             }
 
             @Override
