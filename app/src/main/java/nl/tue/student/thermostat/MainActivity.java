@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     String getParam = "";
 
     TimerTask uiUpdateTask;
-    TimerTask task;
+    TimerTask secondaryThreadTask;
 
     Thread secondaryThread;
 
@@ -91,6 +91,35 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         manualSwitch = (Switch) headerLayout.findViewById(R.id.manualSwitch);
 
 
+        manualSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (manualSwitch.isChecked()) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                HeatingSystem.put("weekProgramState", "off");
+                            } catch (Exception e) {
+                                System.err.println("Error from getdata "+e);
+                            }
+                        }
+                    }).start();
+                } else {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                HeatingSystem.put("weekProgramState", "on");
+                            } catch (Exception e) {
+                                System.err.println("Error from getdata "+e);
+                            }
+                        }
+                    }).start();
+                }
+            }
+        });
+
 
 
 
@@ -104,17 +133,14 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 }
             }
         });
-        //run the thread every clockDelay
-        task = new TimerTask() {
+        secondaryThreadTask = new TimerTask() {
             @Override
             public void run() {
                 secondaryThread.start();
             }
         };
         Timer timer2 = new Timer();
-        timer2.schedule(task, 0, 100);
-
-
+        timer2.schedule(secondaryThreadTask, 0, 100);
 
 
         uiUpdateTask = new TimerTask() {
@@ -134,11 +160,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         };
         Timer timer = new Timer();
         timer.schedule(uiUpdateTask, 0, 100);
-
-
-
-
-
 
 
 
