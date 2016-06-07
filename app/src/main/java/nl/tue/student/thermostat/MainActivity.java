@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     String getParam = "";
 
-    TimerTask task;
+    TimerTask uiUpdateTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         }).start();
 
 
-        task = new TimerTask() {
+        uiUpdateTask = new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             }
         };
         Timer timer = new Timer();
-        timer.schedule(task, 0, 100);
+        timer.schedule(uiUpdateTask, 0, 100);
 
 
 
