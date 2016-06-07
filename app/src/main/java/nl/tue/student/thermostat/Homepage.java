@@ -22,8 +22,8 @@ public class Homepage extends Fragment {
     TextView currentTime;
     String getParamTime;
     TimerTask task;
-    long clockDelay = 1000; //delay for updating the clock
-    int test;
+    long clockDelay = 100; //delay for updating the clock
+
     ListView listview;
 
     @Override
@@ -102,7 +102,8 @@ public class Homepage extends Fragment {
 
         customlistadapter.addItem("test123", R.drawable.jog);
         customlistadapter.addItem("again", R.mipmap.ic_launcher);
-       // customlistadapter.removeFirst();
+        customlistadapter.addItem("jemoeder", R.mipmap.ic_launcher);
+        customlistadapter.removeFirst();
        // customlistadapter.removeFirst();
       //  customlistadapter.removeAll();
 

@@ -2,13 +2,11 @@ package nl.tue.student.thermostat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,7 +21,7 @@ import java.util.TimerTask;
 
 //Our class extending fragment
 public class Schedule extends Fragment {
-    TimerTask task;
+    TimerTask taskSchedule;
     ListView listview;
     long clockDelay = 1000;
     String dayTemp;
@@ -38,7 +36,7 @@ public class Schedule extends Fragment {
         final CustomScheduleAdapter customlistadapter = new CustomScheduleAdapter(this.getContext());
         listview.setAdapter(customlistadapter);
 
-        task = new TimerTask() {
+        taskSchedule = new TimerTask() {
             @Override
             public void run() {
                 new Thread(new Runnable() {
@@ -56,7 +54,7 @@ public class Schedule extends Fragment {
             }
         };
         Timer timer = new Timer();
-        timer.schedule(task, 0, clockDelay);
+        timer.schedule(taskSchedule, 0, clockDelay);
 
         customlistadapter.addItem("Day temperature: " + dayTemp + "°C",0);
         customlistadapter.addItem("Night temperature: ",0);

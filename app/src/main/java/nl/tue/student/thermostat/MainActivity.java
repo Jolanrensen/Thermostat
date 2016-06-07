@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
         navigationView.setNavigationItemSelectedListener(this);
 
+
     }
 
     @Override
@@ -103,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         }
     }
 
+
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -130,9 +133,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (viewPager.getCurrentItem() == 1) {
+            viewPager.setCurrentItem(0);
+        }else {
             super.onBackPressed();
         }
     }
