@@ -27,7 +27,7 @@ public class Schedule extends Fragment {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), TestingWS.class);
+                Intent intent = new Intent(view.getContext(), Monday.class);
                 startActivity(intent);
             }
         });
