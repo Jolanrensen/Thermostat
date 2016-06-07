@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         int id = item.getItemId();
 
         if (id == R.id.nav_first_fragment) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_second_fragment) {
 
         } else if (id == R.id.nav_third_fragment) {
