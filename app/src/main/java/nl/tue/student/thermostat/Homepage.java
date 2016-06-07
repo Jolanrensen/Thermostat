@@ -50,6 +50,7 @@ public class Homepage extends Fragment {
                                 @Override
                                 public void run() {
                                     currentTime.setText(getParamTime);
+                                    //update list
                                     listview.invalidateViews();
 
                                 }
@@ -101,7 +102,7 @@ public class Homepage extends Fragment {
         listview.setAdapter(customlistadapter);
         customlistadapter.addItem("test123", R.drawable.jog);
         customlistadapter.addItem("again", R.mipmap.ic_launcher);
-        customlistadapter.removeFirst();
+       // customlistadapter.removeFirst();
         customlistadapter.removeFirst();
 
 
