@@ -118,7 +118,7 @@ public class Homepage extends Fragment {
         customlistadapter.addItem("blah", R.drawable.jog);
         customlistadapter.addItem("again", R.drawable.day);
         customlistadapter.addItem("jemoeder", R.mipmap.ic_launcher);
-        customlistadapter.removeFirst();
+        //customlistadapter.removeFirst();
        // customlistadapter.removeFirst();
        // customlistadapter.removeAll();
 
@@ -138,7 +138,7 @@ public class Homepage extends Fragment {
     }
 
     public static void setViewListVisible(boolean b) {
-        System.out.println("done2");
+
         if (!b) {
             customlistadapter.viewListVisible(false);
         } else if (b) {

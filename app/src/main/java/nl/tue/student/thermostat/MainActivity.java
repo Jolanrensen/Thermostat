@@ -164,13 +164,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                             if (!useScheduleSwitch.isChecked()) {
                                 useScheduleSwitch.setChecked(true);
                                 Homepage.setViewListVisible(true);
-                                System.out.println("done1");
                             }
                         } else if (!useSchedule){
                             if (useScheduleSwitch.isChecked()) {
                                 useScheduleSwitch.setChecked(false);
                                 Homepage.setViewListVisible(false);
-                                System.out.println("done1");
                             }
                         }
                     }
