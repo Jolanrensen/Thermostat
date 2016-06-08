@@ -32,17 +32,16 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     //This is our viewPager
     private ViewPager viewPager;
 
-    Switch manualSwitch;
+    Switch useScheduleSwitch;
     NavigationView navigationView;
 
     //String getParam = "";
-    boolean manualMode;
+   public boolean useSchedule;
 
     TimerTask uiUpdateTask;
     TimerTask secondaryThreadTask;
 
     Thread secondaryThread;
-
 
 
     @Override
@@ -89,14 +88,14 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         //adding header of hamburgermenu
         final View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header);
         //Adding the manual switch
-        manualSwitch = (Switch) headerLayout.findViewById(R.id.manualSwitch);
+        useScheduleSwitch = (Switch) headerLayout.findViewById(R.id.useScheduleSwitch);
 
 
-        manualSwitch.setOnClickListener(new View.OnClickListener() {
+        useScheduleSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!manualMode) {
-                    manualMode = true;
+                if (useSchedule) {
+                    useSchedule = false;
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -109,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                         }
                     }).start();
                 } else {
-                    manualMode = false;
+                    useSchedule = true;
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -134,9 +133,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                     String getParam;
                     getParam = HeatingSystem.get("weekProgramState");
                     if (getParam.equals("on")) {
-                        manualMode = false;
+                        useSchedule = true;
                     } else if (getParam.equals("off")){
-                        manualMode = true;
+                        useSchedule = false;
                     }
                 } catch (Exception e) {
                     System.err.println("Error from getdata "+e);
@@ -159,13 +158,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (!manualMode) {
-                            if (manualSwitch.isChecked()) {
-                                manualSwitch.setChecked(false);
+                        if (useSchedule) {
+                            if (!useScheduleSwitch.isChecked()) {
+                                useScheduleSwitch.setChecked(true);
                             }
-                        } else if (manualMode){
-                            if (!manualSwitch.isChecked()) {
-                                manualSwitch.setChecked(true);
+                        } else if (!useSchedule){
+                            if (useScheduleSwitch.isChecked()) {
+                                useScheduleSwitch.setChecked(false);
                             }
                         }
                     }

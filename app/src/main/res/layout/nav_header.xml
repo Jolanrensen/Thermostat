@@ -35,8 +35,8 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Manual Mode "
-        android:id="@+id/manualSwitch"
+        android:text="Use Schedule"
+        android:id="@+id/useScheduleSwitch"
         android:layout_gravity="right" />
 
 </LinearLayout>

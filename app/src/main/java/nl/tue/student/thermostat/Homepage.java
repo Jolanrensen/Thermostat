@@ -48,6 +48,10 @@ public class Homepage extends Fragment {
                         @Override
                         public void run() {
                             currentTime.setText(getParamTime);
+
+
+
+
                             //update list
                             listview.invalidateViews();
 
@@ -114,6 +118,27 @@ public class Homepage extends Fragment {
 
         //updating the current temperature
         targetTemp.setText(Double.toString(((double) seekArc.getProgress()/10+5)) + " \u00B0" + "C");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         return view;
     }
 
