@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     Switch manualSwitch;
     NavigationView navigationView;
 
-    String getParam = "";
+    //String getParam = "";
+    boolean manualMode;
 
     TimerTask uiUpdateTask;
     TimerTask secondaryThreadTask;
@@ -94,18 +95,21 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         manualSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (manualSwitch.isChecked()) {
+                if (!manualMode) {
+                    manualMode = true;
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             try {
                                 HeatingSystem.put("weekProgramState", "off");
+
                             } catch (Exception e) {
                                 System.err.println("Error from getdata "+e);
                             }
                         }
                     }).start();
                 } else {
+                    manualMode = false;
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -127,7 +131,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             @Override
             public void run() {
                 try {
+                    String getParam;
                     getParam = HeatingSystem.get("weekProgramState");
+                    if (getParam.equals("on")) {
+                        manualMode = false;
+                    } else if (getParam.equals("off")){
+                        manualMode = true;
+                    }
                 } catch (Exception e) {
                     System.err.println("Error from getdata "+e);
                 }
@@ -140,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             }
         };
         Timer timer2 = new Timer();
-        timer2.schedule(secondaryThreadTask, 0, 100);
+        timer2.schedule(secondaryThreadTask, 0, 500);
 
 
         uiUpdateTask = new TimerTask() {
@@ -149,17 +159,21 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (getParam.equals("on")) {
-                            manualSwitch.setChecked(false);
-                        } else if (getParam.equals("off")){
-                            manualSwitch.setChecked(true);
+                        if (!manualMode) {
+                            if (manualSwitch.isChecked()) {
+                                manualSwitch.setChecked(false);
+                            }
+                        } else if (manualMode){
+                            if (!manualSwitch.isChecked()) {
+                                manualSwitch.setChecked(true);
+                            }
                         }
                     }
                 });
             }
         };
         Timer timer = new Timer();
-        timer.schedule(uiUpdateTask, 0, 100);
+        timer.schedule(uiUpdateTask, 0, 10);
 
 
 
