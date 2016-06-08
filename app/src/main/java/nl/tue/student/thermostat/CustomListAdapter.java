@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class CustomListAdapter extends BaseAdapter {
     ArrayList<String> title = new ArrayList<String>();
     ArrayList<Integer> icon = new ArrayList<Integer>();
+    boolean viewListVisible;
     private Context context;
     int count = 1;
     CustomListAdapter(Context context){
@@ -37,6 +38,7 @@ public class CustomListAdapter extends BaseAdapter {
             icon.add(icon1);
         }
         count = title.size();
+        notifyDataSetChanged();
     }
 
     public void removeFirst() {
@@ -51,6 +53,7 @@ public class CustomListAdapter extends BaseAdapter {
             icon.add(null);
             count = 0;
         }
+        notifyDataSetChanged();
     }
 
     public void removeAll() {
@@ -59,11 +62,16 @@ public class CustomListAdapter extends BaseAdapter {
         title.add("");
         icon.add(0);
         count = 0;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return count;
+        if (viewListVisible) {
+            return count;
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -76,15 +84,16 @@ public class CustomListAdapter extends BaseAdapter {
         return position;
     }
 
-
+    public void viewListVisible(boolean b) {
+        viewListVisible = b;
+        notifyDataSetChanged();
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (title.isEmpty()) {
-            title.add("");
-            icon.add(0);
-            count = 0;
+            removeAll();
         }
 
         View row=null;
@@ -103,4 +112,6 @@ public class CustomListAdapter extends BaseAdapter {
         }
         return row;
     }
+
+
 }

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     NavigationView navigationView;
 
     //String getParam = "";
-   public boolean useSchedule;
+    static boolean useSchedule;
 
     TimerTask uiUpdateTask;
     TimerTask secondaryThreadTask;
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             public void onClick(View v) {
                 if (useSchedule) {
                     useSchedule = false;
+                    Homepage.setViewListVisible(false);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                     }).start();
                 } else {
                     useSchedule = true;
+                    Homepage.setViewListVisible(true);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -161,10 +163,14 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                         if (useSchedule) {
                             if (!useScheduleSwitch.isChecked()) {
                                 useScheduleSwitch.setChecked(true);
+                                Homepage.setViewListVisible(true);
+                                System.out.println("done1");
                             }
                         } else if (!useSchedule){
                             if (useScheduleSwitch.isChecked()) {
                                 useScheduleSwitch.setChecked(false);
+                                Homepage.setViewListVisible(false);
+                                System.out.println("done1");
                             }
                         }
                     }
@@ -256,5 +262,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         }
     }
 
+    public static boolean isUsingSchedule() {
+        return useSchedule;
+    }
 
 }

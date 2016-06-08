@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-//import com.triggertrap.seekarc.SeekArc;
-
-
 import org.thermostatapp.util.HeatingSystem;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+//import com.triggertrap.seekarc.SeekArc;
 
 
 public class Homepage extends Fragment {
@@ -23,9 +22,11 @@ public class Homepage extends Fragment {
     TextView currentTime;
     String getParamTime;    //time pulled from the server
     TimerTask task; //Timertask that runs every clockdelay
+    TimerTask uiUpdateTask;
     Thread secondaryThread; //Thread that gets started by task
     long clockDelay = 100; //delay for updating the clock
 
+    static CustomListAdapter customlistadapter;
     ListView listview;
 
     @Override
@@ -48,13 +49,6 @@ public class Homepage extends Fragment {
                         @Override
                         public void run() {
                             currentTime.setText(getParamTime);
-
-
-
-
-                            //update list
-                            listview.invalidateViews();
-
                         }
                     });
                 } catch (Exception e) {
@@ -71,6 +65,18 @@ public class Homepage extends Fragment {
         };
         Timer timer = new Timer();
         timer.schedule(task, 0, clockDelay);
+
+
+
+        /*update list
+        if (!MainActivity.isUsingSchedule()) {
+            customlistadapter.viewListVisible(false);
+        } else if (MainActivity.isUsingSchedule()){
+            customlistadapter.viewListVisible(true);
+        }
+*/
+
+
 
 
         //importing the arc
@@ -106,15 +112,15 @@ public class Homepage extends Fragment {
 
         //importing the upcoming changes list
         listview = (ListView) view.findViewById(R.id.upcomingChangesList);
-        CustomListAdapter customlistadapter = new CustomListAdapter(this.getContext());
+        customlistadapter = new CustomListAdapter(this.getContext());
         listview.setAdapter(customlistadapter);
 
-        customlistadapter.addItem("test123", R.drawable.jog);
+        customlistadapter.addItem("blah", R.drawable.jog);
         customlistadapter.addItem("again", R.drawable.day);
         customlistadapter.addItem("jemoeder", R.mipmap.ic_launcher);
         customlistadapter.removeFirst();
        // customlistadapter.removeFirst();
-      //  customlistadapter.removeAll();
+       // customlistadapter.removeAll();
 
         //updating the current temperature
         targetTemp.setText(Double.toString(((double) seekArc.getProgress()/10+5)) + " \u00B0" + "C");
@@ -128,21 +134,17 @@ public class Homepage extends Fragment {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
         return view;
     }
 
-
+    public static void setViewListVisible(boolean b) {
+        System.out.println("done2");
+        if (!b) {
+            customlistadapter.viewListVisible(false);
+        } else if (b) {
+            customlistadapter.viewListVisible(true);
+        }
+    }
 
 
 
