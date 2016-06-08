@@ -22,7 +22,7 @@ import java.util.TimerTask;
 //Our class extending fragment
 public class Schedule extends Fragment {
     TimerTask taskSchedule;
-    ListView listview;
+    ListView weekListView;
     long clockDelay = 1000;
     String dayTemp;
 
@@ -32,9 +32,9 @@ public class Schedule extends Fragment {
         View view = inflater.inflate(R.layout.schedule,container,false);
         final TextView text = (TextView)view.findViewById(R.id.textView);
 
-        listview = (ListView) view.findViewById(R.id.scheduleList);
+        weekListView = (ListView) view.findViewById(R.id.scheduleList);
         final CustomListAdapter customlistadapter = new CustomListAdapter(this.getContext());
-        listview.setAdapter(customlistadapter);
+        weekListView.setAdapter(customlistadapter);
 
         taskSchedule = new TimerTask() {
             @Override
@@ -68,7 +68,7 @@ public class Schedule extends Fragment {
         customlistadapter.addItem("Saturday",0);
         customlistadapter.addItem("Sunday",0);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        weekListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch(position){

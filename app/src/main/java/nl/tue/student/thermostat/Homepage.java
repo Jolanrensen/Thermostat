@@ -114,7 +114,7 @@ public class Homepage extends Fragment {
         listview = (ListView) view.findViewById(R.id.upcomingChangesList);
         customlistadapter = new CustomListAdapter(this.getContext());
         listview.setAdapter(customlistadapter);
-
+        listview.setBackgroundResource(R.mipmap.ic_launcher);
         customlistadapter.addItem("blah", R.drawable.jog);
         customlistadapter.addItem("again", R.drawable.day);
         customlistadapter.addItem("jemoeder", R.mipmap.ic_launcher);
@@ -138,9 +138,9 @@ public class Homepage extends Fragment {
     }
 
     public static void setViewListVisible(boolean b) {
-
         if (!b) {
             customlistadapter.viewListVisible(false);
+
         } else if (b) {
             customlistadapter.viewListVisible(true);
         }
