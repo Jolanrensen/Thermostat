@@ -22,12 +22,11 @@ public class Homepage extends Fragment {
     TextView currentTime;
     String getParamTime;    //time pulled from the server
     TimerTask task; //Timertask that runs every clockdelay
-    TimerTask uiUpdateTask;
-    Thread secondaryThread; //Thread that gets started by task
+    Thread secondaryThreadHome; //Thread that gets started by task
     long clockDelay = 100; //delay for updating the clock
 
     static CustomListAdapter customlistadapter;
-    ListView listview;
+    static ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class Homepage extends Fragment {
         currentTime = (TextView)view.findViewById(R.id.currentTime);
 
         //secondary thread for pulling network data and refreshing the upcoming changes list
-        secondaryThread = new Thread(new Runnable() {
+        secondaryThreadHome = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -60,21 +59,12 @@ public class Homepage extends Fragment {
         task = new TimerTask() {
             @Override
             public void run() {
-                secondaryThread.start();
+                secondaryThreadHome.start();
             }
         };
         Timer timer = new Timer();
         timer.schedule(task, 0, clockDelay);
 
-
-
-        /*update list
-        if (!MainActivity.isUsingSchedule()) {
-            customlistadapter.viewListVisible(false);
-        } else if (MainActivity.isUsingSchedule()){
-            customlistadapter.viewListVisible(true);
-        }
-*/
 
 
 
@@ -111,10 +101,10 @@ public class Homepage extends Fragment {
         });
 
         //importing the upcoming changes list
-        listview = (ListView) view.findViewById(R.id.upcomingChangesList);
+        listView = (ListView) view.findViewById(R.id.upcomingChangesList);
         customlistadapter = new CustomListAdapter(this.getContext());
-        listview.setAdapter(customlistadapter);
-        listview.setBackgroundResource(R.mipmap.ic_launcher);
+        listView.setAdapter(customlistadapter);
+
         customlistadapter.addItem("blah", R.drawable.jog);
         customlistadapter.addItem("again", R.drawable.day);
         customlistadapter.addItem("jemoeder", R.mipmap.ic_launcher);
@@ -129,20 +119,16 @@ public class Homepage extends Fragment {
 
 
 
-
-
-
-
-
         return view;
     }
 
     public static void setViewListVisible(boolean b) {
         if (!b) {
             customlistadapter.viewListVisible(false);
-
+            listView.setBackgroundResource(R.mipmap.ic_launcher);   ////background of upcoming changes!!
         } else if (b) {
             customlistadapter.viewListVisible(true);
+            listView.setBackgroundResource(0);
         }
     }
 
