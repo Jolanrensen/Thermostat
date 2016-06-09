@@ -78,15 +78,20 @@ public class Homepage extends Fragment {
         seekArc.setTouchInSide(true);
         seekArc.setArcWidth(10);
         seekArc.setArcRotation(220);
-        seekArc.setProgressWidth(40);
+        seekArc.setProgressWidth(10);
         seekArc.setRoundedEdges(true);
-        seekArc.setProgressColor(Color.parseColor("#448aff"));
+        //seekArc.setProgressColor(Color.parseColor("#448aff"));
+        seekArc.setProgressColor(Color.parseColor("#f44336"));
         seekArc.setArcColor(Color.parseColor("#f44336"));
 
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
             public void onProgressChanged(SeekArc seekArc, int i, boolean b) {
-                targetTemp.setText(Double.toString(((double) seekArc.getProgress()/10+5)) + " \u00B0" + "C"); //tweaky temporary solution
+                // hard to set the slider to the extremes, this takes care of that
+                double snap = (double )seekArc.getProgress()/10+5;
+                if(snap>29.5) snap = 30;
+                if(snap<5.5) snap = 5;
+                targetTemp.setText(Double.toString((snap)) + " \u00B0" + "C"); //tweaky temporary solution
             }
 
             @Override
