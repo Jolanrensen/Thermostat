@@ -59,7 +59,7 @@ public class Homepage extends Fragment {
         task = new TimerTask() {
             @Override
             public void run() {
-                secondaryThreadHome.start();
+               secondaryThreadHome.start();
             }
         };
         Timer timer = new Timer();
@@ -110,9 +110,11 @@ public class Homepage extends Fragment {
         customlistadapter = new CustomListAdapter(this.getContext());
         listView.setAdapter(customlistadapter);
 
-        customlistadapter.addItem("blah", R.drawable.jog);
-        customlistadapter.addItem("again", R.drawable.day);
-        customlistadapter.addItem("jemoeder", R.mipmap.ic_launcher);
+        customlistadapter.addItem("12:45 PM  |  20 °C", R.drawable.night);
+        customlistadapter.addItem("14:30 PM  |  18 °C", R.drawable.day);
+        customlistadapter.addItem("18:00 PM  |  20 °C", R.drawable.night);
+        customlistadapter.addItem("20:00 PM  |  20 °C", R.drawable.night);
+        customlistadapter.addItem("22:00 PM  |  18 °C", R.drawable.day);
         //customlistadapter.removeFirst();
        // customlistadapter.removeFirst();
        // customlistadapter.removeAll();
