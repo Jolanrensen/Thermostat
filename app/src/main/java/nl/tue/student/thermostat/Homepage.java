@@ -59,7 +59,8 @@ public class Homepage extends Fragment {
         task = new TimerTask() {
             @Override
             public void run() {
-               secondaryThreadHome.start();
+
+                secondaryThreadHome.start();
             }
         };
         Timer timer = new Timer();
@@ -72,7 +73,7 @@ public class Homepage extends Fragment {
         //importing the arc
         SeekArc seekArc = (SeekArc)view.findViewById(R.id.seekArc);
 
-        seekArc.setMax(250);
+        seekArc.setMax(270);
         seekArc.setStartAngle(0);
         seekArc.setSweepAngle(280);
         seekArc.setTouchInSide(true);
@@ -88,9 +89,9 @@ public class Homepage extends Fragment {
             @Override
             public void onProgressChanged(SeekArc seekArc, int i, boolean b) {
                 // hard to set the slider to the extremes, this takes care of that
-                double snap = (double )seekArc.getProgress()/10+5;
-                if(snap>29.5) snap = 30;
-                if(snap<5.5) snap = 5;
+                double snap = (double )seekArc.getProgress()/10+4;
+                if(snap>30) snap = 30;
+                if(snap<5) snap = 5;
                 targetTemp.setText(Double.toString((snap)) + " \u00B0" + "C"); //tweaky temporary solution
             }
 
