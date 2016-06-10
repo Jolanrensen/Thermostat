@@ -64,6 +64,7 @@ public class Schedule extends Fragment {
         final ListView listview = (ListView) view.findViewById(R.id.listView);
         String[] values = new String[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 
+
         final ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
@@ -73,11 +74,13 @@ public class Schedule extends Fragment {
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
+
                 if (position == 0) {
                     Intent intent = new Intent(view.getContext(), Monday.class);
                     startActivity(intent);

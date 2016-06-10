@@ -11,14 +11,18 @@
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view1"
-        android:layout_gravity="top|center_horizontal"
+        android:layout_gravity="top"
         android:layout_width="wrap_content"
         android:layout_height="300dp"
         card_view:cardElevation="2dp"
         card_view:cardBackgroundColor="@color/colorTextIcons"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/card_view"
-        android:layout_margin="16dp">
+        android:layout_marginTop="5dp"
+        android:layout_margin="16dp"
+        android:foregroundGravity="top"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="true">
 
 
         <TextView
@@ -38,7 +42,7 @@
             android:layout_gravity="right"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/currentTime"
-            android:textSize="40dp"
+            android:textSize="35dp"
             android:layout_marginRight="5dp"
             android:layout_centerHorizontal="true"
             android:textColor="@color/colorTextSecondary"
