@@ -1,5 +1,6 @@
 package nl.tue.student.thermostat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,11 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import org.thermostatapp.util.HeatingSystem;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,7 +27,7 @@ import java.util.TimerTask;
 //Our class extending fragment
 public class Schedule extends Fragment {
     TimerTask taskSchedule;
-    ListView weekListView;
+
     long clockDelay = 1000;
     String dayTemp;
 
@@ -32,9 +37,6 @@ public class Schedule extends Fragment {
         View view = inflater.inflate(R.layout.schedule,container,false);
         final TextView text = (TextView)view.findViewById(R.id.textView);
 
-        weekListView = (ListView) view.findViewById(R.id.scheduleList);
-        final CustomListAdapter customlistadapter = new CustomListAdapter(this.getContext());
-        weekListView.setAdapter(customlistadapter);
 
         taskSchedule = new TimerTask() {
             @Override
@@ -45,7 +47,8 @@ public class Schedule extends Fragment {
                         try {
                             dayTemp = HeatingSystem.get("time");
                             String text = "Day temperature: " + dayTemp + "°C";
-                            customlistadapter.title.set(0,text);
+                            //customlistadapter2.title.set(0,text);
+
                         } catch (Exception e) {
                             System.err.println("Error from getdata "+e);
                         }
@@ -56,33 +59,67 @@ public class Schedule extends Fragment {
         Timer timer = new Timer();
         timer.schedule(taskSchedule, 0, clockDelay);
 
-        customlistadapter.addItem("Day temperature: " + dayTemp + "°C",0);
-        customlistadapter.addItem("Night temperature: ",0);
 
+        //new list
+        final ListView listview = (ListView) view.findViewById(R.id.listView);
+        String[] values = new String[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 
-        customlistadapter.addItem("Monday",0);
-        customlistadapter.addItem("Tuesday",0);
-        customlistadapter.addItem("Wednesday",0);
-        customlistadapter.addItem("Thursday",0);
-        customlistadapter.addItem("Friday",0);
-        customlistadapter.addItem("Saturday",0);
-        customlistadapter.addItem("Sunday",0);
+        final ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < values.length; ++i) {
+            list.add(values[i]);
+        }
 
-        weekListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final StableArrayAdapter adapter = new StableArrayAdapter(getContext(),
+                android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch(position){
-                    case 2:
-                        Intent intent = new Intent(view.getContext(), Monday.class);
-                        startActivity(intent);
-                        break;
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                if (position == 0) {
+                    Intent intent = new Intent(view.getContext(), Monday.class);
+                    startActivity(intent);
                 }
             }
+
         });
+
+
 
 
         //Returning the layout file after inflating
         //Change R.layout.schedule in you classes
         return view;
     }
+
+    private class StableArrayAdapter extends ArrayAdapter<String> {
+
+        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+        public StableArrayAdapter(Context context, int textViewResourceId,
+                                  List<String> objects) {
+            super(context, textViewResourceId, objects);
+            for (int i = 0; i < objects.size(); ++i) {
+                mIdMap.put(objects.get(i), i);
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            String item = getItem(position);
+            return mIdMap.get(item);
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+    }
+
 }
+
+
+
