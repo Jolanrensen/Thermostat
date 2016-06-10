@@ -60,7 +60,7 @@ public class Homepage extends Fragment {
             @Override
             public void run() {
 
-                secondaryThreadHome.start();
+               secondaryThreadHome.start();
             }
         };
         Timer timer = new Timer();
@@ -77,17 +77,13 @@ public class Homepage extends Fragment {
         seekArc.setStartAngle(0);
         seekArc.setSweepAngle(280);
         seekArc.setTouchInSide(true);
-        seekArc.setArcWidth(10);
+        seekArc.setArcWidth(30);
         seekArc.setArcRotation(220);
-        seekArc.setProgressWidth(40);
+        seekArc.setProgressWidth(30);
         seekArc.setRoundedEdges(true);
         //seekArc.setProgressColor(Color.parseColor("#448aff"));
 
-
-
-
-
-        seekArc.setArcColor(Color.parseColor("#f44336"));
+        //seekArc.setArcColor(Color.parseColor("#f44336"));
 
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
@@ -126,7 +122,7 @@ public class Homepage extends Fragment {
 
                 }
                 seekArc.setProgressColor(Color.parseColor(result.toString()));
-
+                seekArc.setArcColor(Color.parseColor(result.toString()));
             }
 
             @Override

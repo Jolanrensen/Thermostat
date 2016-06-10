@@ -106,7 +106,6 @@ public class CustomListAdapter extends BaseAdapter {
 
             imageview.setBackgroundResource(icon.get(position));
             textview.setText(title.get(position));
-
         }else{
             row=convertView;
         }
