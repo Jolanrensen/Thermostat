@@ -79,20 +79,54 @@ public class Homepage extends Fragment {
         seekArc.setTouchInSide(true);
         seekArc.setArcWidth(10);
         seekArc.setArcRotation(220);
-        seekArc.setProgressWidth(10);
+        seekArc.setProgressWidth(40);
         seekArc.setRoundedEdges(true);
         //seekArc.setProgressColor(Color.parseColor("#448aff"));
-        seekArc.setProgressColor(Color.parseColor("#f44336"));
+
+
+
+
+
         seekArc.setArcColor(Color.parseColor("#f44336"));
 
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
-            public void onProgressChanged(SeekArc seekArc, int i, boolean b) {
+            public void onProgressChanged(SeekArc seekArc, int j, boolean b) {
                 // hard to set the slider to the extremes, this takes care of that
                 double snap = (double )seekArc.getProgress()/10+4;
                 if(snap>30) snap = 30;
                 if(snap<5) snap = 5;
                 targetTemp.setText(Double.toString((snap)) + " \u00B0" + "C"); //tweaky temporary solution
+
+
+
+                String cold = "#448aff";
+                String hot = "#d32f2f";
+                String midStr = "0";
+
+                StringBuilder result = new StringBuilder("#");
+                for (int i=0;i<3;i++) {
+                    String h1 = cold.substring(i*2+1, 3+(i*2));
+                    String h2 = hot.substring(i*2+1, 3+(i*2));
+
+                    double l1 = Long.parseLong(h1, 16);
+                    double l2 = Long.parseLong(h2, 16);
+
+                    double progress = (double) seekArc.getProgress();
+
+                    progress = progress/255;
+                    System.out.println(progress);
+                    long mid = (long) (((1 - progress)*l1) + (progress * l2)); //truncating not rounding
+
+                    midStr = Long.toString(mid, 16);
+                    if (midStr.length() == 1) {
+                        result.append("0");
+                    }
+                    result.append(midStr.toUpperCase());
+
+                }
+                seekArc.setProgressColor(Color.parseColor(result.toString()));
+
             }
 
             @Override
