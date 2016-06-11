@@ -42,12 +42,14 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     TimerTask secondaryThreadTask;
 
     Thread secondaryThread;
+    public static final Time time = new Time();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 
         //Adding toolbar to the activity
@@ -132,6 +134,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             @Override
             public void run() {
                 try {
+                    String getTime;
+                    String getDay;
+                    getDay = HeatingSystem.get("day");
+                    getTime = HeatingSystem.get("time");
+                    time.setTime(getDay, getTime);
+
                     String getParam;
                     getParam = HeatingSystem.get("weekProgramState");
                     if (getParam.equals("on")) {
@@ -139,8 +147,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                     } else if (getParam.equals("off")){
                         useSchedule = false;
                     }
+                    secondaryThread.wait();
                 } catch (Exception e) {
-                    System.err.println("Error from getdata "+e);
+                    //System.err.println(e);
                 }
             }
         });
@@ -151,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             }
         };
         Timer timer2 = new Timer();
-        timer2.schedule(secondaryThreadTask, 0, 500);
+        timer2.schedule(secondaryThreadTask, 0, 5000);
 
 
         uiUpdateTask = new TimerTask() {

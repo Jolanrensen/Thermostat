@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.thermostatapp.util.HeatingSystem;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,10 +21,11 @@ public class Homepage extends Fragment {
     String getParamTime;    //time pulled from the server
     TimerTask task; //Timertask that runs every clockdelay
     Thread secondaryThreadHome; //Thread that gets started by task
-    long clockDelay = 100; //delay for updating the clock
+    long clockDelay = 200; //delay for updating the clock
 
     static CustomListAdapter customlistadapter;
     static ListView listView;
+    Time time = MainActivity.time;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,31 +37,22 @@ public class Homepage extends Fragment {
         //importing current time
         currentTime = (TextView)view.findViewById(R.id.currentTime);
 
-        //secondary thread for pulling network data and refreshing the upcoming changes list
-        secondaryThreadHome = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    getParamTime = HeatingSystem.get("time");
-                    currentTime.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            currentTime.setText(getParamTime);
-                        }
-                    });
-                } catch (Exception e) {
-                    System.err.println("Error from getdata "+e);
-                }
-            }
-        });
+
         //run the thread every clockDelay
         task = new TimerTask() {
             @Override
             public void run() {
 
-               secondaryThreadHome.start();
+                currentTime.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        currentTime.setText(time.getHoursString() + ":" + time.getMinutesString());
+                        time.increaseTime();
+                    }
+                });
             }
         };
+
         Timer timer = new Timer();
         timer.schedule(task, 0, clockDelay);
 
@@ -96,7 +86,7 @@ public class Homepage extends Fragment {
             double progress = (double) seekArc.getProgress();
 
             progress = progress/255;
-            System.out.println(progress);
+
             long mid = (long) (((1 - progress)*l1) + (progress * l2)); //truncating not rounding
 
             midStr = Long.toString(mid, 16);
@@ -135,7 +125,7 @@ public class Homepage extends Fragment {
                     double progress = (double) seekArc.getProgress();
 
                     progress = progress/255;
-                    System.out.println(progress);
+
                     long mid = (long) (((1 - progress)*l1) + (progress * l2)); //truncating not rounding
 
                     midStr = Long.toString(mid, 16);
