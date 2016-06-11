@@ -77,13 +77,37 @@ public class Homepage extends Fragment {
         seekArc.setStartAngle(0);
         seekArc.setSweepAngle(280);
         seekArc.setTouchInSide(true);
-        seekArc.setArcWidth(30);
+        seekArc.setArcWidth(10);
         seekArc.setArcRotation(220);
-        seekArc.setProgressWidth(30);
+        seekArc.setProgressWidth(50);
         seekArc.setRoundedEdges(true);
-        //seekArc.setProgressColor(Color.parseColor("#448aff"));
+        String cold = "#448aff";
+        String hot = "#d32f2f";
+        String midStr = "0";
 
-        //seekArc.setArcColor(Color.parseColor("#f44336"));
+        StringBuilder result = new StringBuilder("#");
+        for (int i=0;i<3;i++) {
+            String h1 = cold.substring(i*2+1, 3+(i*2));
+            String h2 = hot.substring(i*2+1, 3+(i*2));
+
+            double l1 = Long.parseLong(h1, 16);
+            double l2 = Long.parseLong(h2, 16);
+
+            double progress = (double) seekArc.getProgress();
+
+            progress = progress/255;
+            System.out.println(progress);
+            long mid = (long) (((1 - progress)*l1) + (progress * l2)); //truncating not rounding
+
+            midStr = Long.toString(mid, 16);
+            if (midStr.length() == 1) {
+                result.append("0");
+            }
+            result.append(midStr.toUpperCase());
+
+        }
+        seekArc.setProgressColor(Color.parseColor(result.toString()));
+        seekArc.setArcColor(Color.parseColor(result.toString()));
 
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
