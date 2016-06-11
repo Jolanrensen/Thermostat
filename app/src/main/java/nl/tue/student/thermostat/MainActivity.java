@@ -203,7 +203,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         timer.schedule(uiUpdateTask, 0, 10);
 
 
-
     }
 
 

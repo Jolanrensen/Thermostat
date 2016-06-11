@@ -164,7 +164,7 @@ public class Homepage extends Fragment {
         listView = (ListView) view.findViewById(R.id.upcomingChangesList);
         customlistadapter = new CustomListAdapter(this.getContext());
         listView.setAdapter(customlistadapter);
-
+        setViewListVisible(false);
         customlistadapter.addItem("12:45 PM  |  20 °C", R.drawable.night);
         customlistadapter.addItem("14:30 PM  |  18 °C", R.drawable.day);
         customlistadapter.addItem("18:00 PM  |  20 °C", R.drawable.night);
