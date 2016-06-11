@@ -213,7 +213,7 @@ public class Homepage extends Fragment {
     public static void setViewListVisible(boolean b) {
         if (!b) {
             customlistadapter.viewListVisible(false);
-            listView.setBackgroundResource(R.mipmap.ic_launcher);   ////background of upcoming changes!!
+            listView.setBackgroundResource(R.drawable.noschedule);   ////background of upcoming changes!!
         } else if (b) {
             customlistadapter.viewListVisible(true);
             listView.setBackgroundResource(0);
