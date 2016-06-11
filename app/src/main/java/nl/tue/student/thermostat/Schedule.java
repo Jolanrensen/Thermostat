@@ -31,6 +31,7 @@ public class Schedule extends Fragment {
 
     long clockDelay = 1000;
     String dayTemp;
+    String nightTemp;
 
     //Overriden method onCreateView
     @Override
@@ -41,8 +42,8 @@ public class Schedule extends Fragment {
         CardView dayTempCard = (CardView)view.findViewById(R.id.card_view4);
         CardView nightTempCard = (CardView)view.findViewById(R.id.card_view5);
 
-        TextView dayTempText = (TextView)view.findViewById(R.id.day_temp);
-        TextView nightTempText = (TextView)view.findViewById(R.id.night_temp);
+        final TextView dayTempText = (TextView)view.findViewById(R.id.day_temp);
+        final TextView nightTempText = (TextView)view.findViewById(R.id.night_temp);
 
         taskSchedule = new TimerTask() {
             @Override
@@ -51,8 +52,11 @@ public class Schedule extends Fragment {
                     @Override
                     public void run() {
                         try {
-                            dayTemp = ""+MainActivity.currentDayTemp;
+                            dayTemp = MainActivity.currentDayTemp + "°C";
+                            dayTempText.setText(dayTemp);
 
+                            nightTemp = MainActivity.currentNightTemp + "°C";
+                            nightTempText.setText(nightTemp);
 
                         } catch (Exception e) {
                             System.err.println("Error from getdata "+e);
