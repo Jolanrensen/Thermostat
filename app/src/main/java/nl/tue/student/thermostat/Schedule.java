@@ -52,10 +52,10 @@ public class Schedule extends Fragment {
                     @Override
                     public void run() {
                         try {
-                            dayTemp = MainActivity.currentDayTemp + "°C";
+                            dayTemp = MainActivity.currentDayTemp + " °C";
                             dayTempText.setText(dayTemp);
 
-                            nightTemp = MainActivity.currentNightTemp + "°C";
+                            nightTemp = MainActivity.currentNightTemp + " °C";
                             nightTempText.setText(nightTemp);
 
                         } catch (Exception e) {
