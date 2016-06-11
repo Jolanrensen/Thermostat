@@ -156,11 +156,14 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         secondaryThreadTask = new TimerTask() {
             @Override
             public void run() {
-                if (!secondaryThread.isAlive()){
-                    secondaryThread.start();
-                } else {
+                /*if (secondaryThread.getState().){
+                    System.out.println("hoi");
                     secondaryThread.run();
-                }
+                } else {
+                    System.out.println("hoi2");
+                    secondaryThread.start();
+                }*/
+                secondaryThread.run();
             }
         };
         Timer timer2 = new Timer();
