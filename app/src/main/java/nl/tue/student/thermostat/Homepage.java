@@ -22,6 +22,8 @@ public class Homepage extends Fragment {
     TextView currentTime;
     TextView currentTemp;
     TextView currentDay;
+    SeekArc seekArc;
+    boolean seekArcIsBeingTouched = false;
     double arcTemp;
     String getParamTime;    //time pulled from the server
     TimerTask task; //Timertask that runs every clockdelay
@@ -61,6 +63,11 @@ public class Homepage extends Fragment {
                         time.increaseTime();
                         currentTemp.setText(Double.toString(MainActivity.currentTemp) + " \u00B0" + "C");
                         currentDay.setText(time.getDaysString());
+
+                        if (!seekArcIsBeingTouched) {
+                            seekArc.setProgress((int) (10 *(MainActivity.targetTemp - 5)));
+                        }
+
                     }
                 });
             }
@@ -74,7 +81,7 @@ public class Homepage extends Fragment {
 
 
         //importing the arc
-        SeekArc seekArc = (SeekArc)view.findViewById(R.id.seekArc);
+        seekArc = (SeekArc)view.findViewById(R.id.seekArc);
 
         seekArc.setMax(270);
         seekArc.setStartAngle(0);
@@ -84,6 +91,7 @@ public class Homepage extends Fragment {
         seekArc.setArcRotation(220);
         seekArc.setProgressWidth(50);
         seekArc.setRoundedEdges(true);
+
         String cold = "#448aff";
         String hot = "#d32f2f";
         String midStr = "0";
@@ -117,7 +125,7 @@ public class Homepage extends Fragment {
             public void onProgressChanged(SeekArc seekArc, int j, boolean b) {
 
                 // hard to set the slider to the extremes, this takes care of that
-                arcTemp = (double)seekArc.getProgress()/10+4;
+                arcTemp = (double)seekArc.getProgress()/10+5;
                 if(arcTemp>30) arcTemp = 30;
                 if(arcTemp<5) arcTemp = 5;
 
@@ -156,11 +164,12 @@ public class Homepage extends Fragment {
 
             @Override
             public void onStartTrackingTouch(SeekArc seekArc) {
-
+                seekArcIsBeingTouched = true;
             }
 
             @Override
             public void onStopTrackingTouch(SeekArc seekArc) {
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -172,6 +181,8 @@ public class Homepage extends Fragment {
                         }
                     }
                 }).start();
+                seekArcIsBeingTouched = false;
+                MainActivity.targetTemp = ((double) seekArc.getProgress())/10 + 5;
             }
         });
 
@@ -190,7 +201,7 @@ public class Homepage extends Fragment {
        // customlistadapter.removeAll();
 
         //updating the current temperature
-        targetTemp.setText(Double.toString(((double) seekArc.getProgress()/10+5)) + " \u00B0" + "C");
+        targetTemp.setText(Double.toString(((double) seekArc.getProgress())/10 + 5) + " \u00B0" + "C");
 
 
 

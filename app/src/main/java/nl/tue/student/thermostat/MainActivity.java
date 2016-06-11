@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public static double currentTemp;
     public static double currentDayTemp;
     public static double currentNightTemp;
+    public static double targetTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +142,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                     String getTemp;
                     String getDayTemp;
                     String getNightTemp;
+                    String getTargetTemp;
+
+                    getTargetTemp = HeatingSystem.get("targetTemperature");
+                    targetTemp = Double.parseDouble(getTargetTemp);
 
                     getTemp = HeatingSystem.get("currentTemperature");
                     currentTemp = Double.parseDouble(getTemp);
