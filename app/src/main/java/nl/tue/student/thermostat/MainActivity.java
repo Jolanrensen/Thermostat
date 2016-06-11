@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     Thread secondaryThread;
     public static final Time time = new Time();
     public static double currentTemp;
-
-
+    public static double currentDayTemp;
+    public static double currentNightTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,10 +139,17 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                     String getTime;
                     String getDay;
                     String getTemp;
+                    String getDayTemp;
+                    String getNightTemp;
 
                     getTemp = HeatingSystem.get("currentTemperature");
                     currentTemp = Double.parseDouble(getTemp);
 
+                    getDayTemp = HeatingSystem.get("dayTemperature");
+                    currentDayTemp = Double.parseDouble(getDayTemp);
+
+                    getNightTemp = HeatingSystem.get("nightTemperature");
+                    currentNightTemp = Double.parseDouble(getNightTemp);
 
                     getDay = HeatingSystem.get("day");
                     getTime = HeatingSystem.get("time");

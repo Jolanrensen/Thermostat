@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,11 @@ public class Schedule extends Fragment {
         View view = inflater.inflate(R.layout.schedule,container,false);
         final TextView text = (TextView)view.findViewById(R.id.textView);
 
+        CardView dayTempCard = (CardView)view.findViewById(R.id.card_view4);
+        CardView nightTempCard = (CardView)view.findViewById(R.id.card_view5);
+
+        TextView dayTempText = (TextView)view.findViewById(R.id.day_temp);
+        TextView nightTempText = (TextView)view.findViewById(R.id.night_temp);
 
         taskSchedule = new TimerTask() {
             @Override
@@ -45,9 +51,8 @@ public class Schedule extends Fragment {
                     @Override
                     public void run() {
                         try {
-                            dayTemp = HeatingSystem.get("time");
-                            String text = "Day temperature: " + dayTemp + "°C";
-                            //customlistadapter2.title.set(0,text);
+                            dayTemp = ""+MainActivity.currentDayTemp;
+
 
                         } catch (Exception e) {
                             System.err.println("Error from getdata "+e);
@@ -89,7 +94,19 @@ public class Schedule extends Fragment {
 
         });
 
+        dayTempCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Clicked!");
+            }
+        });
 
+        nightTempCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
         //Returning the layout file after inflating
