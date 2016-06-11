@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     Thread secondaryThread;
     public static final Time time = new Time();
+    public static double currentTemp;
+
 
 
     @Override
@@ -136,6 +138,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 try {
                     String getTime;
                     String getDay;
+                    String getTemp;
+
+                    getTemp = HeatingSystem.get("currentTemperature");
+                    currentTemp = Double.parseDouble(getTemp);
+
+
                     getDay = HeatingSystem.get("day");
                     getTime = HeatingSystem.get("time");
                     time.setTime(getDay, getTime);
@@ -156,18 +164,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         secondaryThreadTask = new TimerTask() {
             @Override
             public void run() {
-                /*if (secondaryThread.getState().){
-                    System.out.println("hoi");
-                    secondaryThread.run();
-                } else {
-                    System.out.println("hoi2");
-                    secondaryThread.start();
-                }*/
                 secondaryThread.run();
             }
         };
         Timer timer2 = new Timer();
-        timer2.schedule(secondaryThreadTask, 0, 5000);
+        timer2.schedule(secondaryThreadTask, 0, 2000);
 
 
         uiUpdateTask = new TimerTask() {

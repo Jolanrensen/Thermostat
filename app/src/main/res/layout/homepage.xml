@@ -42,11 +42,36 @@
             android:layout_gravity="right"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/currentTime"
-            android:textSize="35dp"
+            android:textSize="30dp"
             android:layout_marginRight="5dp"
             android:layout_centerHorizontal="true"
             android:textColor="@color/colorTextSecondary"
             android:gravity="top" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/currentTemp"
+            android:textSize="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorTextSecondary"
+            android:gravity="top" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/currentDay"
+            android:textSize="20dp"
+            android:layout_marginBottom="100dp"
+            android:layout_above="@id/targetTemp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorTextSecondary"
+            android:gravity="center" />
 
 
         <nl.tue.student.thermostat.SeekArc

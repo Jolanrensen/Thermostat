@@ -18,6 +18,8 @@ import java.util.TimerTask;
 public class Homepage extends Fragment {
     TextView targetTemp;
     TextView currentTime;
+    TextView currentTemp;
+    TextView currentDay;
     String getParamTime;    //time pulled from the server
     TimerTask task; //Timertask that runs every clockdelay
     Thread secondaryThreadHome; //Thread that gets started by task
@@ -37,6 +39,12 @@ public class Homepage extends Fragment {
         //importing current time
         currentTime = (TextView)view.findViewById(R.id.currentTime);
 
+        //importing current temp
+        currentTemp = (TextView) view.findViewById(R.id.currentTemp);
+
+        //importing current day
+        currentDay = (TextView) view.findViewById(R.id.currentDay);
+
 
         //run the thread every clockDelay
         task = new TimerTask() {
@@ -48,6 +56,8 @@ public class Homepage extends Fragment {
                     public void run() {
                         currentTime.setText(time.getHoursString() + ":" + time.getMinutesString());
                         time.increaseTime();
+                        currentTemp.setText(Double.toString(MainActivity.currentTemp) + " \u00B0" + "C");
+                        currentDay.setText(time.getDaysString());
                     }
                 });
             }
@@ -103,7 +113,7 @@ public class Homepage extends Fragment {
             @Override
             public void onProgressChanged(SeekArc seekArc, int j, boolean b) {
                 // hard to set the slider to the extremes, this takes care of that
-                double snap = (double )seekArc.getProgress()/10+4;
+                double snap = (double)seekArc.getProgress()/10+4;
                 if(snap>30) snap = 30;
                 if(snap<5) snap = 5;
                 targetTemp.setText(Double.toString((snap)) + " \u00B0" + "C"); //tweaky temporary solution
