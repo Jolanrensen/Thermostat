@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.thermostatapp.util.HeatingSystem;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,6 +22,7 @@ public class Homepage extends Fragment {
     TextView currentTime;
     TextView currentTemp;
     TextView currentDay;
+    double arcTemp;
     String getParamTime;    //time pulled from the server
     TimerTask task; //Timertask that runs every clockdelay
     Thread secondaryThreadHome; //Thread that gets started by task
@@ -112,11 +115,13 @@ public class Homepage extends Fragment {
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
             public void onProgressChanged(SeekArc seekArc, int j, boolean b) {
+
                 // hard to set the slider to the extremes, this takes care of that
-                double snap = (double)seekArc.getProgress()/10+4;
-                if(snap>30) snap = 30;
-                if(snap<5) snap = 5;
-                targetTemp.setText(Double.toString((snap)) + " \u00B0" + "C"); //tweaky temporary solution
+                arcTemp = (double)seekArc.getProgress()/10+4;
+                if(arcTemp>30) arcTemp = 30;
+                if(arcTemp<5) arcTemp = 5;
+
+                targetTemp.setText(Double.toString(arcTemp) + " \u00B0" + "C"); //tweaky temporary solution
 
 
 
@@ -156,7 +161,17 @@ public class Homepage extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekArc seekArc) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            HeatingSystem.put("targetTemperature", Double.toString(arcTemp));
 
+                        } catch (Exception e) {
+                            System.err.println("Error from getdata "+e);
+                        }
+                    }
+                }).start();
             }
         });
 
