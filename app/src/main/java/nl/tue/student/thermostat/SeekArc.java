@@ -460,7 +460,7 @@ public class SeekArc extends View {
 	 * @param l
 	 *            The seek bar notification listener
 	 * 
-	 * @see SeekArc.OnSeekBarChangeListener
+	 * @seek SeekArc.OnSeekBarChangeListener
 	 */
 	public void setOnSeekArcChangeListener(OnSeekArcChangeListener l) {
 		mOnSeekArcChangeListener = l;
