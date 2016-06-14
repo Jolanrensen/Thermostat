@@ -58,4 +58,14 @@
         android:gravity="right"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Pick a Temperature"
+        android:id="@+id/textView4"
+        android:layout_above="@id/numberPicker2"
+        android:layout_centerHorizontal="true"
+        />
+
 </RelativeLayout>
