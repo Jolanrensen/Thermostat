@@ -3,7 +3,6 @@ package nl.tue.student.thermostat;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -197,13 +196,12 @@ public class Homepage extends Fragment {
 
         imageButtonDown.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                seekArc.setProgress(seekArc.getProgress()-1);
                 arcTemp = (double)seekArc.getProgress()/10+5;
                 if(arcTemp>30) arcTemp = 30;
                 if(arcTemp<5) arcTemp = 5;
-                arcTemp = arcTemp - 0.1;
                 arcTemp = (double) Math.round(arcTemp * 10) / 10;
                 System.out.println(arcTemp);
-                //targetTemp.setText(Double.toString(arcTemp) + " \u00B0" + "C"); //tweaky temporary solution
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -215,23 +213,18 @@ public class Homepage extends Fragment {
                         }
                     }
                 }).start();
-                seekArcIsBeingTouched = false;
-
-                //targetTemp.setText(Double.toString(arcTemp) + " \u00B0" + "C"); //tweaky temporary solution
                 MainActivity.targetTemp = ((double) seekArc.getProgress())/10 + 5;
-               // targetTemp.setText(Double.toString(arcTemp) + " \u00B0" + "C"); //tweaky temporary solution
             }
         });
 
         imageButtonUp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                seekArc.setProgress(seekArc.getProgress()+1);
                 arcTemp = (double)seekArc.getProgress()/10+5;
                 if(arcTemp>30) arcTemp = 30;
                 if(arcTemp<5) arcTemp = 5;
-                arcTemp = arcTemp + 0.1;
                 arcTemp = (double) Math.round(arcTemp * 10) / 10;
                 System.out.println(arcTemp);
-                //targetTemp.setText(Double.toString(arcTemp) + " \u00B0" + "C"); //tweaky temporary solution
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -243,8 +236,6 @@ public class Homepage extends Fragment {
                         }
                     }
                 }).start();
-                //targetTemp.setText(Double.toString(arcTemp) + " \u00B0" + "C");
-                seekArcIsBeingTouched = false;
                 MainActivity.targetTemp = ((double) seekArc.getProgress())/10 + 5;
             }
         });
