@@ -1,6 +1,8 @@
 package nl.tue.student.thermostat;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import org.thermostatapp.util.HeatingSystem;
@@ -28,6 +32,9 @@ import java.util.TimerTask;
 //Our class extending fragment
 public class Schedule extends Fragment {
     TimerTask taskSchedule;
+
+    protected static TextView tv;
+    static Dialog dialog;
 
     long clockDelay = 1000;
     String dayTemp;
@@ -101,14 +108,14 @@ public class Schedule extends Fragment {
         dayTempCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Clicked!");
+                dialog("Day temperature", dayTempText);
             }
         });
 
         nightTempCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                dialog("Night temperature", nightTempText);
             }
         });
 
@@ -116,6 +123,82 @@ public class Schedule extends Fragment {
         //Returning the layout file after inflating
         //Change R.layout.schedule in you classes
         return view;
+    }
+
+    private void dialog(final String name, final TextView tempText){
+        double temp = 0.0;
+        boolean oneLong = false;
+        dialog = new Dialog(getContext());
+        dialog.setTitle(name);
+        dialog.setContentView(R.layout.dialog);
+        Button b1 = (Button) dialog.findViewById(R.id.button1);
+        Button b2 = (Button) dialog.findViewById(R.id.button2);
+        // number picker for whole values
+        final NumberPicker np = (NumberPicker) dialog.findViewById(R.id.numberPicker1);
+        np.setMaxValue(30);
+        np.setMinValue(5);
+        try {
+            int currentValue = Integer.parseInt(((String) tempText.getText()).substring(0, 2));
+            np.setValue(currentValue);
+            oneLong = false;
+        }catch(NumberFormatException e){
+            int currentValue = Integer.parseInt(((String) tempText.getText()).substring(0, 1));
+            np.setValue(currentValue);
+            oneLong = true;
+        }
+        np.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
+            }
+        });
+        // number picker for decimals
+        final NumberPicker dp = (NumberPicker) dialog.findViewById(R.id.numberPicker2);
+        dp.setMaxValue(9);
+        dp.setMinValue(0);
+        if(!oneLong){
+            dp.setValue(Integer.parseInt((String) ((String) tempText.getText()).substring(3,4)));
+        }else{
+            dp.setValue(Integer.parseInt((String) ((String) tempText.getText()).substring(2,3)));
+        }
+        dp.setWrapSelectorWheel(false);
+        dp.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
+            }
+        });
+        b1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                tempText.setText(String.valueOf(np.getValue()) + "." + String.valueOf(dp.getValue()) + " °C");
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            if(name.equals("Day temperature")){
+                                HeatingSystem.put("dayTemperature", String.valueOf(np.getValue()));
+                            }else{
+                                HeatingSystem.put("nightTemperature", String.valueOf(np.getValue()));
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Error from getdata "+e);
+                        }
+                    }
+                }).start();
+                dialog.dismiss();
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
