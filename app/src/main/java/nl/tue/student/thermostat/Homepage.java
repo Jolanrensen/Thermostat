@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ public class Homepage extends Fragment {
     TextView currentTime;
     TextView currentTemp;
     TextView currentDay;
+    ImageButton imageButtonDown;
+    ImageButton imageButtonUp;
     SeekArc seekArc;
     boolean seekArcIsBeingTouched = false;
     double arcTemp;
@@ -51,6 +54,11 @@ public class Homepage extends Fragment {
         //importing current day
         currentDay = (TextView) view.findViewById(R.id.currentDay);
 
+        //import down button
+        imageButtonDown = (ImageButton) view.findViewById(R.id.imageButtonDown);
+
+        //import up button
+        imageButtonUp = (ImageButton) view.findViewById(R.id.imageButtonUp);
 
         //run the thread every clockDelay
         task = new TimerTask() {
@@ -182,6 +190,57 @@ public class Homepage extends Fragment {
                         }
                     }
                 }).start();
+                seekArcIsBeingTouched = false;
+                MainActivity.targetTemp = ((double) seekArc.getProgress())/10 + 5;
+            }
+        });
+
+        imageButtonDown.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                arcTemp = (double)seekArc.getProgress()/10+5;
+                if(arcTemp>30) arcTemp = 30;
+                if(arcTemp<5) arcTemp = 5;
+                arcTemp = arcTemp - 0.1;
+                arcTemp = (double) Math.round(arcTemp * 10) / 10;
+                System.out.println(arcTemp);
+                //targetTemp.setText(Double.toString(arcTemp) + " \u00B0" + "C"); //tweaky temporary solution
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            HeatingSystem.put("targetTemperature", Double.toString(arcTemp));
+
+                        } catch (Exception e) {
+                            System.err.println("Error from getdata "+e);
+                        }
+                    }
+                }).start();
+                seekArcIsBeingTouched = false;
+                MainActivity.targetTemp = ((double) seekArc.getProgress())/10 + 5;
+            }
+        });
+
+        imageButtonUp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                arcTemp = (double)seekArc.getProgress()/10+5;
+                if(arcTemp>30) arcTemp = 30;
+                if(arcTemp<5) arcTemp = 5;
+                arcTemp = arcTemp + 0.1;
+                arcTemp = (double) Math.round(arcTemp * 10) / 10;
+                System.out.println(arcTemp);
+                //targetTemp.setText(Double.toString(arcTemp) + " \u00B0" + "C"); //tweaky temporary solution
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            HeatingSystem.put("targetTemperature", Double.toString(arcTemp));
+
+                        } catch (Exception e) {
+                            System.err.println("Error from getdata "+e);
+                        }
+                    }
+                }).start();
+                //targetTemp.setText(Double.toString(arcTemp) + " \u00B0" + "C");
                 seekArcIsBeingTouched = false;
                 MainActivity.targetTemp = ((double) seekArc.getProgress())/10 + 5;
             }
