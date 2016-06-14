@@ -73,7 +73,7 @@ public class Homepage extends Fragment {
                         currentDay.setText(time.getDaysString());
 
                         if (!seekArcIsBeingTouched) {
-                            seekArc.setProgress((int) (10 *(MainActivity.targetTemp - 5)));
+                            seekArc.setProgress((int) ((10 *MainActivity.targetTemp) - 50));
                         }
 
                     }
@@ -213,7 +213,7 @@ public class Homepage extends Fragment {
                         }
                     }
                 }).start();
-                MainActivity.targetTemp = ((double) seekArc.getProgress())/10 + 5;
+               MainActivity.targetTemp = MainActivity.targetTemp - 0.1;
             }
         });
 
@@ -236,7 +236,7 @@ public class Homepage extends Fragment {
                         }
                     }
                 }).start();
-                MainActivity.targetTemp = ((double) seekArc.getProgress())/10 + 5;
+                MainActivity.targetTemp = MainActivity.targetTemp + 0.1;
             }
         });
 
