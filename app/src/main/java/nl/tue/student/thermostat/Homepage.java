@@ -216,7 +216,10 @@ public class Homepage extends Fragment {
                     }
                 }).start();
                 seekArcIsBeingTouched = false;
+
+                //targetTemp.setText(Double.toString(arcTemp) + " \u00B0" + "C"); //tweaky temporary solution
                 MainActivity.targetTemp = ((double) seekArc.getProgress())/10 + 5;
+               // targetTemp.setText(Double.toString(arcTemp) + " \u00B0" + "C"); //tweaky temporary solution
             }
         });
 
