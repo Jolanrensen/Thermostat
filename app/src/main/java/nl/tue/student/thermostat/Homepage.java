@@ -91,7 +91,7 @@ public class Homepage extends Fragment {
         //importing the arc
         seekArc = (SeekArc)view.findViewById(R.id.seekArc);
 
-        seekArc.setMax(270);
+        seekArc.setMax(250);
         seekArc.setStartAngle(0);
         seekArc.setSweepAngle(280);
         seekArc.setTouchInSide(true);
