@@ -28,6 +28,11 @@
             android:name=".Monday"
             android:label="@string/title_activity_monday"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".Day"
+            android:label="Day"
+
+            ></activity>
     </application>
 
 </manifest>

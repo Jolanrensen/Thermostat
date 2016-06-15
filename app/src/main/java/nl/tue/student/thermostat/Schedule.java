@@ -2,7 +2,6 @@ package nl.tue.student.thermostat;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,6 +32,8 @@ import java.util.TimerTask;
 public class Schedule extends Fragment {
     TimerTask taskSchedule;
 
+
+
     protected static TextView tv;
     static Dialog dialog;
 
@@ -45,6 +46,11 @@ public class Schedule extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.schedule,container,false);
         final TextView text = (TextView)view.findViewById(R.id.textView);
+
+
+
+
+
 
         CardView dayTempCard = (CardView)view.findViewById(R.id.card_view4);
         CardView nightTempCard = (CardView)view.findViewById(R.id.card_view5);
@@ -94,14 +100,37 @@ public class Schedule extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 
-                if (position == 0) {
-                    Intent intent = new Intent(view.getContext(), Monday.class);
-                    startActivity(intent);
+                String day = "";
+                switch (position) {
+                    case 0:
+                        day = "Monday";
+                        break;
+                    case 1:
+                        day = "Tuesday";
+                        break;
+                    case 2:
+                        day = "Wednesday";
+                        break;
+                    case 3:
+                        day = "Thursday";
+                        break;
+                    case 4:
+                        day = "Friday";
+                        break;
+                    case 5:
+                        day = "Saturday";
+                        break;
+                    case 6:
+                        day = "Sunday";
+                        break;
+                    }
+                Intent intent = new Intent(getContext(), Day.class);
+                intent.putExtra("day", day);
+                startActivity(intent);
                 }
-            }
+
 
         });
 
@@ -124,6 +153,8 @@ public class Schedule extends Fragment {
         //Change R.layout.schedule in you classes
         return view;
     }
+
+
 
     private void dialog(final String name, final TextView tempText){
         double temp = 0.0;
@@ -198,7 +229,10 @@ public class Schedule extends Fragment {
                 dialog.dismiss();
             }
         });
+
         dialog.show();
+
+
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {

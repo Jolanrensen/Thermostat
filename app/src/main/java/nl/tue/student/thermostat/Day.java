@@ -7,14 +7,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class Monday extends AppCompatActivity {
+public class Day extends AppCompatActivity {
+
+    String day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.monday);
+        setContentView(R.layout.day);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            day = extras.getString("day");
+        }
+        toolbar.setTitle(day);
         setSupportActionBar(toolbar);
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
