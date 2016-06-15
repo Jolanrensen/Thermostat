@@ -209,10 +209,11 @@ public class Schedule extends Fragment {
                     @Override
                     public void run() {
                         try {
+                            double value = (double)np.getValue() + (double)dp.getValue()/10;
                             if(name.equals("Day temperature")){
-                                HeatingSystem.put("dayTemperature", String.valueOf(np.getValue()));
+                                HeatingSystem.put("dayTemperature", String.valueOf(value));
                             }else{
-                                HeatingSystem.put("nightTemperature", String.valueOf(np.getValue()));
+                                HeatingSystem.put("nightTemperature", String.valueOf(value));
                             }
                         } catch (Exception e) {
                             System.err.println("Error from getdata "+e);
