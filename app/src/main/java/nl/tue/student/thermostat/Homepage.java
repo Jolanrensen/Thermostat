@@ -33,6 +33,8 @@ public class Homepage extends Fragment {
     Thread secondaryThreadHome; //Thread that gets started by task
     long clockDelay = 200; //delay for updating the clock
 
+    public static boolean customlistadaptercreated = false;
+
     static CustomListAdapter customlistadapter;
     static ListView listView;
     Time time = MainActivity.time;
@@ -243,6 +245,7 @@ public class Homepage extends Fragment {
         //importing the upcoming changes list
         listView = (ListView) view.findViewById(R.id.upcomingChangesList);
         customlistadapter = new CustomListAdapter(this.getContext());
+        customlistadaptercreated = true;
         listView.setAdapter(customlistadapter);
         setViewListVisible(false);
         customlistadapter.addItem("12:45 PM  |  20 °C", R.drawable.night);

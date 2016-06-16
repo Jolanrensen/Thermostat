@@ -32,8 +32,6 @@ import java.util.TimerTask;
 public class Schedule extends Fragment {
     TimerTask taskSchedule;
 
-
-
     protected static TextView tv;
     static Dialog dialog;
 

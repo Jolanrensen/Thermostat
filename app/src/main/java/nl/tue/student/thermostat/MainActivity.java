@@ -192,12 +192,16 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                         if (useSchedule) {
                             if (!useScheduleSwitch.isChecked()) {
                                 useScheduleSwitch.setChecked(true);
-                                Homepage.setViewListVisible(true);
+                                if(Homepage.customlistadaptercreated) {
+                                    Homepage.setViewListVisible(true);
+                                }
                             }
                         } else if (!useSchedule){
                             if (useScheduleSwitch.isChecked()) {
                                 useScheduleSwitch.setChecked(false);
-                                Homepage.setViewListVisible(false);
+                                if(Homepage.customlistadaptercreated) {
+                                    Homepage.setViewListVisible(false);
+                                }
                             }
                         }
                     }
