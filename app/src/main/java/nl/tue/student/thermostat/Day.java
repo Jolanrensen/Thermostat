@@ -22,9 +22,11 @@ import java.util.ArrayList;
 public class Day extends AppCompatActivity {
     private SuperListview superList;
     String day;
-    private ArrayAdapter<String> mAdapter;
+    //private ArrayAdapter<String> mAdapter;
+    private CustomListAdapter2 adapter;
     static Dialog d;
     static Dialog addDialog;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +42,12 @@ public class Day extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ArrayList<String> lst = new ArrayList<String>();
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, lst);
+        //mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, lst);
+        adapter = new CustomListAdapter2(getApplicationContext());
+        adapter.viewListVisible(true);
 
         superList = (SuperListview) findViewById(R.id.superList);
-        superList.setAdapter(mAdapter);
+        superList.setAdapter(adapter);
         superList.setupSwipeToDismiss(new SwipeDismissListViewTouchListener.DismissCallbacks() {
             int selectedPosition;
 
@@ -71,7 +75,8 @@ public class Day extends AppCompatActivity {
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mAdapter.remove(mAdapter.getItem(selectedPosition));
+                        adapter.removeItem(selectedPosition);
+                        ableDisableFab(adapter);
                         d.dismiss();
                     }
                 });
@@ -81,12 +86,12 @@ public class Day extends AppCompatActivity {
         },false);
 
         //Retrieve items from the server and add them to the list.
-        mAdapter.add("Item1");
-        mAdapter.add("Item2");
-        mAdapter.add("Item3");
-        mAdapter.add("Item4");
+        adapter.addItem("Item1","Item1");
+        adapter.addItem("Item2","Item2");
+        adapter.addItem("Item3","Item3");
+        adapter.addItem("Item4","Item4");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +115,8 @@ public class Day extends AppCompatActivity {
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mAdapter.add("new");
+                        adapter.addItem("new","new");
+                        ableDisableFab(adapter);
                         addDialog.dismiss();
                     }
                 });
@@ -118,6 +124,15 @@ public class Day extends AppCompatActivity {
                 addDialog.show();
             }
         });
+        ableDisableFab(adapter);
+    }
+
+    private void ableDisableFab(Adapter a){
+        if(a.getCount() > 4){
+            fab.hide();
+        }else{
+            fab.show();
+        }
     }
 
 }
