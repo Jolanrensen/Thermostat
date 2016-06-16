@@ -12,6 +12,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 
 import com.quentindommerc.superlistview.SuperListview;
 import com.quentindommerc.superlistview.SwipeDismissListViewTouchListener;
@@ -102,6 +103,24 @@ public class Day extends AppCompatActivity {
                 addDialog = new Dialog(superList.getContext());
                 addDialog.setTitle("Add schedule");
                 addDialog.setContentView(R.layout.dialog3);
+
+                NumberPicker np0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker3);
+                np0.setMinValue(00);
+                np0.setMaxValue(11);
+                np0.setWrapSelectorWheel(false);
+                NumberPicker dp0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker4);
+                dp0.setMinValue(00);
+                dp0.setMaxValue(59);
+                dp0.setWrapSelectorWheel(false);
+
+                NumberPicker np1 = (NumberPicker) addDialog.findViewById(R.id.numberPicker5);
+                np1.setMinValue(00);
+                np1.setMaxValue(11);
+                np1.setWrapSelectorWheel(false);
+                NumberPicker dp1 = (NumberPicker) addDialog.findViewById(R.id.numberPicker6);
+                dp1.setMinValue(00);
+                dp1.setMaxValue(59);
+                dp1.setWrapSelectorWheel(false);
 
                 Button cancel = (Button) addDialog.findViewById(R.id.button5);
                 cancel.setOnClickListener(new View.OnClickListener() {
