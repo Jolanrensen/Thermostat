@@ -17,6 +17,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import org.thermostatapp.util.HeatingSystem;
+import org.thermostatapp.util.WeekProgram;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public static double currentDayTemp;
     public static double currentNightTemp;
     public static double targetTemp;
+    public static WeekProgram weekProgram;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +146,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                     String getDayTemp;
                     String getNightTemp;
                     String getTargetTemp;
+
+
+                    weekProgram = HeatingSystem.getWeekProgram();
+
 
                     getTargetTemp = HeatingSystem.get("targetTemperature");
                     targetTemp = Double.parseDouble(getTargetTemp);

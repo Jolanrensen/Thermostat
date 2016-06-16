@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.thermostatapp.util.HeatingSystem;
+import org.thermostatapp.util.WeekProgram;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,6 +39,7 @@ public class Homepage extends Fragment {
     static CustomListAdapter customlistadapter;
     static ListView listView;
     Time time = MainActivity.time;
+    WeekProgram weekProgram = MainActivity.weekProgram;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,7 +67,6 @@ public class Homepage extends Fragment {
         task = new TimerTask() {
             @Override
             public void run() {
-
                 currentTime.post(new Runnable() {
                     @Override
                     public void run() {
@@ -77,6 +78,7 @@ public class Homepage extends Fragment {
                         if (!seekArcIsBeingTouched) {
                             seekArc.setProgress((int) ((10 *MainActivity.targetTemp) - 50));
                         }
+
 
                     }
                 });
