@@ -10,10 +10,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.thermostatapp.util.CorruptWeekProgramException;
 import org.thermostatapp.util.HeatingSystem;
 import org.thermostatapp.util.Switch;
 import org.thermostatapp.util.WeekProgram;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,7 +43,7 @@ public class Homepage extends Fragment {
     static CustomListAdapter customlistadapter;
     static ListView listView;
     Time time = MainActivity.time;
-    WeekProgram weekProgram = MainActivity.weekProgram;
+    //WeekProgram weekProgram = MainActivity.weekProgram;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,10 +67,74 @@ public class Homepage extends Fragment {
         //import up button
         imageButtonUp = (ImageButton) view.findViewById(R.id.imageButtonUp);
 
+        //THIS IS HOW YOU ADD STUFF TO THE WEEK SCHEDULE
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    WeekProgram weekProgram = HeatingSystem.getWeekProgram();
+                    weekProgram.data.get("Thursday").set(3, new Switch("night", true, "20:04"));
+                    //weekProgram.data.get("Tuesday").set(7, new Switch("day", true, "22:30"));
+                    HeatingSystem.setWeekProgram(weekProgram);
+                } catch (ConnectException e) {
+                    //System.err.println("Error from getdata " + e);
+                } catch (CorruptWeekProgramException e) {
+                    //e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+
+
         //run the thread every clockDelay
         task = new TimerTask() {
             @Override
             public void run() {
+
+                //THIS IS HOW YOU GET DATA FROM THE WEEKPROGRAM ON THE SERVER AND DO SOMETHING WITH IT
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            WeekProgram weekProgram = HeatingSystem.getWeekProgram();
+                            ArrayList<Switch> todaysSwitches = weekProgram.data.get(time.getDaysString());
+
+                            for (int i=0; i < todaysSwitches.size(); i++) {
+                                Switch aSwitch = todaysSwitches.get(i);
+                                if (aSwitch.getState() /*and if the time is after the current time*/) {
+                                    final int icon;
+                                    final String time;
+                                    final String temp;
+
+                                    time = aSwitch.getTime();
+                                    if (aSwitch.getType().equals("day")) {
+                                        icon = R.drawable.day;
+                                        temp = Double.toString(MainActivity.currentDayTemp);
+                                    } else {
+                                        icon = R.drawable.night;
+                                        temp = Double.toString(MainActivity.currentNightTemp);
+                                    }
+
+                                    //THESE ARE NEEDED BECAUSE THIS THREAD CAN'T ACCESS THE THINGS YOU DECLARE IN ONCREATE
+                                    listView.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            customlistadapter.removeAll();
+                                            customlistadapter.addItem(time + " H  |  " + temp + "°C", icon);
+                                        }
+                                    });
+
+                                }
+                            }
+                        } catch (ConnectException e) {
+                            //System.err.println("Error from getdata " + e);
+                        } catch (CorruptWeekProgramException e) {
+                            //e.printStackTrace();
+                        }
+                    }
+                }).run();
+
                 currentTime.post(new Runnable() {
                     @Override
                     public void run() {
@@ -81,30 +147,6 @@ public class Homepage extends Fragment {
                             seekArc.setProgress((int) ((10 *MainActivity.targetTemp) - 50));
                         }
 
-                        ArrayList<Switch> todaysSwitches = weekProgram.data.get(time.getDaysString());
-                        customlistadapter.removeAll();
-                        customlistadapter.removeAll();
-
-                        for (int i=0; i < todaysSwitches.size(); i++) {
-                            Switch aSwitch = todaysSwitches.get(i);
-                            if (aSwitch.getState()) {
-                                int icon;
-                                String time;
-                                String temp;
-
-                                time = aSwitch.getTime();
-                                if (aSwitch.getType().equals("day")) {
-                                    icon = R.drawable.day;
-                                    temp = Double.toString(MainActivity.currentDayTemp);
-                                } else {
-                                    icon = R.drawable.night;
-                                    temp = Double.toString(MainActivity.currentNightTemp);
-                                }
-
-                                customlistadapter.addItem(time + " H  |  " + temp + "°C", icon);
-                                //customlistadapter.addItem("18:00 PM  |  20 °C", R.drawable.night);
-                            }
-                        }
                     }
                 });
             }
@@ -113,20 +155,7 @@ public class Homepage extends Fragment {
         Timer timer = new Timer();
         timer.schedule(task, 0, clockDelay);
 
-        //EXAMPLE
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    weekProgram.data.get("Tuesday").set(0, new Switch("night", true, "23:00"));
-                    weekProgram.data.get("Tuesday").set(7, new Switch("day", true, "22:30"));
-                    HeatingSystem.setWeekProgram(weekProgram);
 
-                } catch (Exception e) {
-                    System.err.println("Error from getdata "+e);
-                }
-            }
-        }).start();
 
         //importing the arc
         seekArc = (SeekArc)view.findViewById(R.id.seekArc);
@@ -315,6 +344,7 @@ public class Homepage extends Fragment {
             listView.setBackgroundResource(0);
         }
     }
+
 
 
 
