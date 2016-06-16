@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public static double currentDayTemp;
     public static double currentNightTemp;
     public static double targetTemp;
-    public static WeekProgram weekProgram;
+    public static WeekProgram weekProgram = new WeekProgram();
 
 
     @Override

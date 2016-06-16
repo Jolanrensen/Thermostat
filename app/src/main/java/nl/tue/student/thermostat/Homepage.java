@@ -11,8 +11,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.thermostatapp.util.HeatingSystem;
+import org.thermostatapp.util.Switch;
 import org.thermostatapp.util.WeekProgram;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -79,7 +81,30 @@ public class Homepage extends Fragment {
                             seekArc.setProgress((int) ((10 *MainActivity.targetTemp) - 50));
                         }
 
+                        ArrayList<Switch> todaysSwitches = weekProgram.data.get(time.getDaysString());
+                        customlistadapter.removeAll();
+                        customlistadapter.removeAll();
 
+                        for (int i=0; i < todaysSwitches.size(); i++) {
+                            Switch aSwitch = todaysSwitches.get(i);
+                            if (aSwitch.getState()) {
+                                int icon;
+                                String time;
+                                String temp;
+
+                                time = aSwitch.getTime();
+                                if (aSwitch.getType().equals("day")) {
+                                    icon = R.drawable.day;
+                                    temp = Double.toString(MainActivity.currentDayTemp);
+                                } else {
+                                    icon = R.drawable.night;
+                                    temp = Double.toString(MainActivity.currentNightTemp);
+                                }
+
+                                customlistadapter.addItem(time + " H  |  " + temp + "°C", icon);
+                                //customlistadapter.addItem("18:00 PM  |  20 °C", R.drawable.night);
+                            }
+                        }
                     }
                 });
             }
@@ -88,9 +113,20 @@ public class Homepage extends Fragment {
         Timer timer = new Timer();
         timer.schedule(task, 0, clockDelay);
 
+        //EXAMPLE
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    weekProgram.data.get("Tuesday").set(0, new Switch("night", true, "23:00"));
+                    weekProgram.data.get("Tuesday").set(7, new Switch("day", true, "22:30"));
+                    HeatingSystem.setWeekProgram(weekProgram);
 
-
-
+                } catch (Exception e) {
+                    System.err.println("Error from getdata "+e);
+                }
+            }
+        }).start();
 
         //importing the arc
         seekArc = (SeekArc)view.findViewById(R.id.seekArc);
@@ -250,6 +286,7 @@ public class Homepage extends Fragment {
         customlistadaptercreated = true;
         listView.setAdapter(customlistadapter);
         setViewListVisible(false);
+        /*
         customlistadapter.addItem("12:45 PM  |  20 °C", R.drawable.night);
         customlistadapter.addItem("14:30 PM  |  18 °C", R.drawable.day);
         customlistadapter.addItem("18:00 PM  |  20 °C", R.drawable.night);
@@ -258,7 +295,7 @@ public class Homepage extends Fragment {
         //customlistadapter.removeFirst();
        // customlistadapter.removeFirst();
        // customlistadapter.removeAll();
-
+*/
         //updating the current temperature
         targetTemp.setText(Double.toString(((double) seekArc.getProgress())/10 + 5) + " \u00B0" + "C");
 

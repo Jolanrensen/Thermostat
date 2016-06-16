@@ -59,19 +59,16 @@ public class Schedule extends Fragment {
         taskSchedule = new TimerTask() {
             @Override
             public void run() {
-                            dayTempText.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    dayTemp = MainActivity.currentDayTemp + " °C";
-                                    dayTempText.setText(dayTemp);
-
-                                    nightTemp = MainActivity.currentNightTemp + " °C";
-                                    nightTempText.setText(nightTemp);
-                                }
-                            });
-
+                dayTempText.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        dayTemp = MainActivity.currentDayTemp + " °C";
+                        dayTempText.setText(dayTemp);
+                        nightTemp = MainActivity.currentNightTemp + " °C";
+                        nightTempText.setText(nightTemp);
                     }
-
+                });
+            }
         };
         Timer timer = new Timer();
         timer.schedule(taskSchedule, 0, clockDelay);
