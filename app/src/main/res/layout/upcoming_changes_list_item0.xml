@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:divider="@color/colorTextSecondary"
+
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:divider="@color/colorTextSecondary"
+        >
+
+    <ImageView
+        android:scaleType="fitCenter"
+        android:src="@drawable/day"
+        android:id="@+id/iv_icon0"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="0dp" />
+    <TextView
+        android:id="@+id/txt_name0"
+        android:text="10:30 H  |  20*C"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:paddingTop="5dp"
+        android:textColor="@color/colorTextSecondary"
+        android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        android:divider="@color/colorTextSecondary"
+        >
+
+        <ImageView
+            android:scaleType="fitCenter"
+            android:src="@drawable/night"
+            android:id="@+id/iv_icon1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="0dp" />
+        <TextView
+            android:id="@+id/txt_name1"
+            android:text="10:30 H  |  21*C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingTop="5dp"
+            android:textColor="@color/colorTextSecondary"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:divider="@color/colorTextSecondary"
+        >
+
+        <ImageView
+            android:scaleType="fitCenter"
+            android:src="@drawable/night"
+            android:id="@+id/iv_icon2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="0dp" />
+        <TextView
+            android:id="@+id/txt_name2"
+            android:text="10:30 H  |  21*C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingTop="5dp"
+            android:textColor="@color/colorTextSecondary"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>

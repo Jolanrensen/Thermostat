@@ -121,7 +121,7 @@
             android:layout_above="@+id/listView"/>
 
     <ListView
-        tools:listitem="@layout/upcoming_changes_list_item"
+        tools:listitem="@layout/upcoming_changes_list_item0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
