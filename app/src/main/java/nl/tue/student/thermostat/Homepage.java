@@ -73,8 +73,10 @@ public class Homepage extends Fragment {
             public void run() {
                 try {
                     WeekProgram weekProgram = HeatingSystem.getWeekProgram();
-                    weekProgram.data.get("Thursday").set(3, new Switch("night", true, "20:04"));
-                    //weekProgram.data.get("Tuesday").set(7, new Switch("day", true, "22:30"));
+                    weekProgram.setDefault();
+                    weekProgram.data.get("Tuesday").set(3, new Switch("night", true, "20:04"));
+                    weekProgram.data.get("Tuesday").set(7, new Switch("day", true, "22:30"));
+                    weekProgram.data.get("Sunday").set(5, new Switch("night", true, "19:00"));
                     HeatingSystem.setWeekProgram(weekProgram);
                 } catch (ConnectException e) {
                     //System.err.println("Error from getdata " + e);
@@ -100,6 +102,13 @@ public class Homepage extends Fragment {
                             WeekProgram weekProgram = HeatingSystem.getWeekProgram();
                             ArrayList<Switch> todaysSwitches = weekProgram.data.get(time.getDaysString());
 
+                            listView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    customlistadapter.removeAll();
+                                }
+                            });
+
                             for (int i=0; i < todaysSwitches.size(); i++) {
                                 Switch aSwitch = todaysSwitches.get(i);
                                 if (aSwitch.getState() /*and if the time is after the current time*/) {
@@ -120,7 +129,6 @@ public class Homepage extends Fragment {
                                     listView.post(new Runnable() {
                                         @Override
                                         public void run() {
-                                            customlistadapter.removeAll();
                                             customlistadapter.addItem(time + " H  |  " + temp + "°C", icon);
                                         }
                                     });

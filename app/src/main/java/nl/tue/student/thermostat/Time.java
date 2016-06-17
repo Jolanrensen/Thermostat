@@ -106,4 +106,19 @@ public class Time {
     public int getDays() {
         return days;
     }
+
+    public boolean hasNotYetComeToPass(String time) { //I feel poetic
+        String[] timeSplit = time.split(":");
+        int hh = Integer.parseInt(timeSplit[0]);
+        int mm = Integer.parseInt(timeSplit[1]);
+
+        if (hh > hours) {
+            return true;
+        } else if (hh == hours && mm >= minutes) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }
