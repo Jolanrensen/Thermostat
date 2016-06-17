@@ -106,14 +106,14 @@ public class Day extends AppCompatActivity {
 
                 NumberPicker np0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker3);
                 np0.setMinValue(00);
-                np0.setMaxValue(11);
+                np0.setMaxValue(23);
                 np0.setWrapSelectorWheel(false);
                 NumberPicker dp0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker4);
                 dp0.setMinValue(00);
                 dp0.setMaxValue(59);
                 dp0.setWrapSelectorWheel(false);
 
-                NumberPicker np1 = (NumberPicker) addDialog.findViewById(R.id.numberPicker5);
+               /* NumberPicker np1 = (NumberPicker) addDialog.findViewById(R.id.numberPicker5);
                 np1.setMinValue(00);
                 np1.setMaxValue(11);
                 np1.setWrapSelectorWheel(false);
@@ -121,7 +121,7 @@ public class Day extends AppCompatActivity {
                 dp1.setMinValue(00);
                 dp1.setMaxValue(59);
                 dp1.setWrapSelectorWheel(false);
-
+*/
                 Button cancel = (Button) addDialog.findViewById(R.id.button5);
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
