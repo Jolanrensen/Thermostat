@@ -1,4 +1,4 @@
-package nl.tue.student.thermostat;
+/*package nl.tue.student.thermostat;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -114,3 +114,4 @@ public class CustomListAdapter extends BaseAdapter {
 
 
 }
+*/

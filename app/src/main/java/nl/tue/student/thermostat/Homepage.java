@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.thermostatapp.util.CorruptWeekProgramException;
@@ -38,10 +37,7 @@ public class Homepage extends Fragment {
     Thread secondaryThreadHome; //Thread that gets started by task
     long clockDelay = 200; //delay for updating the clock
 
-    public static boolean customlistadaptercreated = false;
 
-    static CustomListAdapter customlistadapter;
-    static ListView listView;
     Time time = MainActivity.time;
     //WeekProgram weekProgram = MainActivity.weekProgram;
 
@@ -102,12 +98,7 @@ public class Homepage extends Fragment {
                             WeekProgram weekProgram = HeatingSystem.getWeekProgram();
                             ArrayList<Switch> todaysSwitches = weekProgram.data.get(time.getDaysString());
 
-                            listView.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    customlistadapter.removeAll();
-                                }
-                            });
+
 
                             for (int i=0; i < todaysSwitches.size(); i++) {
                                 Switch aSwitch = todaysSwitches.get(i);
@@ -126,12 +117,7 @@ public class Homepage extends Fragment {
                                     }
 
                                     //THESE ARE NEEDED BECAUSE THIS THREAD CAN'T ACCESS THE THINGS YOU DECLARE IN ONCREATE
-                                    listView.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            customlistadapter.addItem(time + " H  |  " + temp + "°C", icon);
-                                        }
-                                    });
+
 
                                 }
                             }
@@ -317,22 +303,7 @@ public class Homepage extends Fragment {
             }
         });
 
-        //importing the upcoming changes list
-        listView = (ListView) view.findViewById(R.id.upcomingChangesList);
-        customlistadapter = new CustomListAdapter(this.getContext());
-        customlistadaptercreated = true;
-        listView.setAdapter(customlistadapter);
-        setViewListVisible(false);
-        /*
-        customlistadapter.addItem("12:45 PM  |  20 °C", R.drawable.night);
-        customlistadapter.addItem("14:30 PM  |  18 °C", R.drawable.day);
-        customlistadapter.addItem("18:00 PM  |  20 °C", R.drawable.night);
-        customlistadapter.addItem("20:00 PM  |  20 °C", R.drawable.night);
-        customlistadapter.addItem("22:00 PM  |  18 °C", R.drawable.day);
-        //customlistadapter.removeFirst();
-       // customlistadapter.removeFirst();
-       // customlistadapter.removeAll();
-*/
+
         //updating the current temperature
         targetTemp.setText(Double.toString(((double) seekArc.getProgress())/10 + 5) + " \u00B0" + "C");
 
@@ -343,13 +314,13 @@ public class Homepage extends Fragment {
         return view;
     }
 
-    public static void setViewListVisible(boolean b) {
+    public static void setUpcomingChangesListVisible(boolean b) {
         if (!b) {
-            customlistadapter.viewListVisible(false);
-            listView.setBackgroundResource(R.drawable.noschedule);   ////background of upcoming changes!!
+            //customlistadapter.viewListVisible(false);
+            //listView.setBackgroundResource(R.drawable.noschedule);   ////background of upcoming changes!!
         } else if (b) {
-            customlistadapter.viewListVisible(true);
-            listView.setBackgroundResource(0);
+            //customlistadapter.viewListVisible(true);
+            //listView.setBackgroundResource(0);
         }
     }
 

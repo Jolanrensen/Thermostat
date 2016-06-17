@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             public void onClick(View v) {
                 if (useSchedule) {
                     useSchedule = false;
-                    Homepage.setViewListVisible(false);
+                    Homepage.setUpcomingChangesListVisible(false);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                     }).start();
                 } else {
                     useSchedule = true;
-                    Homepage.setViewListVisible(true);
+                    Homepage.setUpcomingChangesListVisible(true);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -198,16 +198,14 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                         if (useSchedule) {
                             if (!useScheduleSwitch.isChecked()) {
                                 useScheduleSwitch.setChecked(true);
-                                if(Homepage.customlistadaptercreated) {
-                                    Homepage.setViewListVisible(true);
-                                }
+                                    Homepage.setUpcomingChangesListVisible(true);
+
                             }
                         } else if (!useSchedule){
                             if (useScheduleSwitch.isChecked()) {
                                 useScheduleSwitch.setChecked(false);
-                                if(Homepage.customlistadaptercreated) {
-                                    Homepage.setViewListVisible(false);
-                                }
+                                    Homepage.setUpcomingChangesListVisible(false);
+
                             }
                         }
                     }
