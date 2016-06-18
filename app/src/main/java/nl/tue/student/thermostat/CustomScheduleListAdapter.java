@@ -151,7 +151,7 @@ public class CustomScheduleListAdapter extends BaseAdapter {
                     ok.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            day.uploadData(position,"night",false,"00:00");
+                            day.uploadData(position,"",false,"00:00");
                             d.dismiss();
                         }
                     });
