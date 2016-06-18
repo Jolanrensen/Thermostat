@@ -36,6 +36,9 @@ public class Homepage extends Fragment {
     TimerTask task; //Timertask that runs every clockdelay
     long clockDelay = 200; //delay for updating the clock
 
+    static boolean upcomingChangesVisible = true;
+    ImageView noSchedule;
+
     ImageView iv_icon0;
     TextView txt_name0;
     ImageView iv_icon1;
@@ -84,6 +87,8 @@ public class Homepage extends Fragment {
         textViews.add(txt_name1);
         imageViews.add(iv_icon2);
         textViews.add(txt_name2);
+
+        noSchedule = (ImageView) view.findViewById(R.id.noSchedule);
 
 
 
@@ -177,34 +182,43 @@ public class Homepage extends Fragment {
                             txt_name0.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (icons.size() > 2) {
-                                        for (int i=0; i < 3; i++) {
-                                            imageViews.get(i).setImageResource(icons.get(i));
-                                            textViews.get(i).setText(texts.get(i));
-                                        }
+                                    if (upcomingChangesVisible) {
+                                        noSchedule.setVisibility(View.INVISIBLE);
+                                        if (icons.size() > 2) {
+                                            for (int i = 0; i < 3; i++) {
+                                                imageViews.get(i).setImageResource(icons.get(i));
+                                                textViews.get(i).setText(texts.get(i));
+                                            }
 
-                                    } else if (icons.size() == 2) {
-                                        for (int i=0; i < 2; i++) {
-                                            imageViews.get(i).setImageResource(icons.get(i));
-                                            textViews.get(i).setText(texts.get(i));
-                                        }
-                                        imageViews.get(2).setImageResource(0);
-                                        textViews.get(2).setText("");
+                                        } else if (icons.size() == 2) {
+                                            for (int i = 0; i < 2; i++) {
+                                                imageViews.get(i).setImageResource(icons.get(i));
+                                                textViews.get(i).setText(texts.get(i));
+                                            }
+                                            imageViews.get(2).setImageResource(0);
+                                            textViews.get(2).setText("");
 
-                                    } else if (icons.size() == 1) {
-                                        imageViews.get(0).setImageResource(icons.get(0));
-                                        textViews.get(0).setText(texts.get(0));
-                                        for (int i=1; i < 3; i++){
-                                            imageViews.get(i).setImageResource(0);
-                                            textViews.get(i).setText(" ");
-                                        }
+                                        } else if (icons.size() == 1) {
+                                            imageViews.get(0).setImageResource(icons.get(0));
+                                            textViews.get(0).setText(texts.get(0));
+                                            for (int i = 1; i < 3; i++) {
+                                                imageViews.get(i).setImageResource(0);
+                                                textViews.get(i).setText(" ");
+                                            }
 
+                                        } else {
+                                            for (int i = 0; i < 3; i++) {
+                                                imageViews.get(i).setImageResource(0);
+                                                textViews.get(i).setText("");
+                                            }
+                                            textViews.get(1).setText("There currently are no upcoming changes");
+                                        }
                                     } else {
-                                        for (int i=0; i < 3; i++) {
+                                        for (int i=0; i<3; i++) {
                                             imageViews.get(i).setImageResource(0);
                                             textViews.get(i).setText("");
                                         }
-                                        textViews.get(1).setText("There currently are no upcoming changes");
+                                        noSchedule.setVisibility(View.VISIBLE);
                                     }
                                 }
                             });
@@ -410,11 +424,9 @@ public class Homepage extends Fragment {
 
     public static void setUpcomingChangesListVisible(boolean b) {
         if (!b) {
-            //customlistadapter.viewListVisible(false);
-            //listView.setBackgroundResource(R.drawable.noschedule);   ////background of upcoming changes!!
+            upcomingChangesVisible = false;
         } else if (b) {
-            //customlistadapter.viewListVisible(true);
-            //listView.setBackgroundResource(0);
+            upcomingChangesVisible = true;
         }
     }
 
