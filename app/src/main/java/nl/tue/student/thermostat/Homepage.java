@@ -124,21 +124,22 @@ public class Homepage extends Fragment {
                             WeekProgram weekProgram = HeatingSystem.getWeekProgram();
 
                             ArrayList<Switch> todaysSwitches = weekProgram.data.get(time.getDayString());
+                            ArrayList<Switch> tomorrowsSwitches = weekProgram.data.get(time.getTomorrowString());
                             //todaysSwitches.add(new Switch("day", true, "22:00"));
                             //todaysSwitches.add(new Switch("night", true, "23:00"));
 
                             final ArrayList<Integer> icons = new ArrayList<Integer>();
                             final ArrayList<String> texts = new ArrayList<String>();
 
-                            //putting all the correct texts and icons in the arraylists
+                            //putting all the correct texts and icons in the arraylists of today
                             for (int i=0; i < todaysSwitches.size(); i++) {
                                 Switch aSwitch = todaysSwitches.get(i);
                                 if (aSwitch.getState() && time.hasNotYetComeToPass(aSwitch.getTime())) {
                                     final int icon;
-                                    final String time;
+                                    final String getTime;
                                     final String temp;
 
-                                    time = aSwitch.getTime();
+                                    getTime = aSwitch.getTime();
                                     if (aSwitch.getType().equals("day")) {
                                         icon = R.drawable.day;
                                         temp = Double.toString(MainActivity.currentDayTemp);
@@ -147,7 +148,28 @@ public class Homepage extends Fragment {
                                         temp = Double.toString(MainActivity.currentNightTemp);
                                     }
                                     icons.add(icon);
-                                    texts.add(time + "H  |  " + temp + "°C");
+                                    texts.add(time.getDayString() + " " + getTime + "H  |  " + temp + "°C");
+                                }
+                            }
+
+                            //putting all the correct texts and icons in the arraylists of tomorrow
+                            for (int i=0; i < tomorrowsSwitches.size(); i++) {
+                                Switch aSwitch = tomorrowsSwitches.get(i);
+                                if (aSwitch.getState()) {
+                                    final int icon;
+                                    final String getTime;
+                                    final String temp;
+
+                                    getTime = aSwitch.getTime();
+                                    if (aSwitch.getType().equals("day")) {
+                                        icon = R.drawable.day;
+                                        temp = Double.toString(MainActivity.currentDayTemp);
+                                    } else {
+                                        icon = R.drawable.night;
+                                        temp = Double.toString(MainActivity.currentNightTemp);
+                                    }
+                                    icons.add(icon);
+                                    texts.add(time.getTomorrowString() + " " + getTime + "H  |  " + temp + "°C  tomorrow");
                                 }
                             }
 
