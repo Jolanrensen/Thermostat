@@ -113,12 +113,19 @@ public class CustomListAdapter2 extends BaseAdapter {
             ImageView editIcon = (ImageView) row.findViewById(R.id.edit_icon);
             ImageView deleteIcon = (ImageView) row.findViewById(R.id.delete_icon);
 
+            ImageView abegin = (ImageView) row.findViewById(R.id.abegin_icon);
+            ImageView aend = (ImageView) row.findViewById(R.id.aend_icon);
+
             dayIcon.setBackgroundResource(R.drawable.day);
             textview.setText(begin.get(position));
             //textview2.setText(end.get(position));
             nightIcon.setBackgroundResource(R.drawable.night);
-            editIcon.setBackgroundResource(R.mipmap.edit);
-            deleteIcon.setBackgroundResource(R.mipmap.delete);
+            editIcon.setBackgroundResource(R.drawable.edit);
+            deleteIcon.setBackgroundResource(R.drawable.delete);
+
+            abegin.setBackgroundResource(R.drawable.abegin);
+            aend.setBackgroundResource(R.drawable.aend);
+
         }else{
             row=convertView;
         }
