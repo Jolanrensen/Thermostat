@@ -32,12 +32,14 @@ public class Day extends AppCompatActivity {
     Thread loadFromServer;
     Thread uploadToServer;
     ArrayList<Switch> todaysSwitches;
+    boolean daysAvailable = false;
+    boolean nightsAvailable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.day);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -82,8 +84,7 @@ public class Day extends AppCompatActivity {
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //adapter.removeItem(selectedPosition);
-                        ableDisableFab(adapter);
+                        uploadData(selectedPosition,todaysSwitches.get(selectedPosition).getType(),false,"00:00");
                         d.dismiss();
                     }
                 });
@@ -99,6 +100,14 @@ public class Day extends AppCompatActivity {
                 try {
                     WeekProgram weekprogram = HeatingSystem.getWeekProgram();
                     todaysSwitches = weekprogram.data.get(day);
+                    for (int i = 0; i < todaysSwitches.size(); i++) {
+                        if(!todaysSwitches.get(i).getState()&&todaysSwitches.get(i).getType().equals("night")){
+                            nightsAvailable = true;
+                        }
+                        if(!todaysSwitches.get(i).getState()&&todaysSwitches.get(i).getType().equals("day")){
+                            daysAvailable = true;
+                        }
+                    }
                     superList.post(new Runnable() {
                         @Override
                         public void run() {
@@ -166,7 +175,7 @@ public class Day extends AppCompatActivity {
     }
 
     void ableDisableFab(Adapter a){
-        if(a.getCount() > 4){
+        if(a.getCount() > 9){
             fab.hide();
             Snackbar.make(fab.getRootView(), "You can not have more than 5 changes", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -180,9 +189,14 @@ public class Day extends AppCompatActivity {
             @Override
             public void run() {
                 try{
+                    String newType;
                     WeekProgram weekprogram = HeatingSystem.getWeekProgram();
                     ArrayList<Switch> todaysSwitches = weekprogram.data.get(day);
-                    System.out.println("started!");
+                    if(type.equals("")){
+                        newType = todaysSwitches.get(position).getType();
+                    }else{
+                        newType = type;
+                    }
                     int i = 0;
                     while(i<todaysSwitches.size()&&!todaysSwitches.get(i).getState()){
                         i++;
