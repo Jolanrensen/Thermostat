@@ -1,14 +1,17 @@
 package nl.tue.student.thermostat;
 
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -40,12 +43,17 @@ public class Day extends AppCompatActivity {
     ArrayList<Switch> todaysSwitches;
     boolean daysAvailable = false;
     boolean nightsAvailable = false;
+    public String choice;
+    public String time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.day);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -89,7 +97,9 @@ public class Day extends AppCompatActivity {
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        uploadData(selectedPosition,todaysSwitches.get(selectedPosition).getType(),false,"00:00");
+                        time = "00:00";
+                        System.out.println(todaysSwitches.get(selectedPosition).getType());
+                        uploadData(selectedPosition,todaysSwitches.get(selectedPosition).getType(),false);
                         d.dismiss();
                     }
                 });
@@ -145,11 +155,23 @@ public class Day extends AppCompatActivity {
                 addDialog.setContentView(R.layout.dialog3);
 
                 final NumberPicker np0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker3);
+                np0.setFormatter(new NumberPicker.Formatter() {
+                    @Override
+                    public String format(int i) {
+                        return String.format("%02d", i);
+                    }
+                });
                 np0.setMinValue(00);
                 np0.setMaxValue(11);
                 np0.setValue(6);
                 np0.setWrapSelectorWheel(false);
                 final NumberPicker dp0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker4);
+                dp0.setFormatter(new NumberPicker.Formatter() {
+                    @Override
+                    public String format(int i) {
+                        return String.format("%02d", i);
+                    }
+                });
                 dp0.setMinValue(00);
                 dp0.setMaxValue(59);
                 dp0.setValue(30);
@@ -167,8 +189,30 @@ public class Day extends AppCompatActivity {
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //adapter.addItem(np0.getValue()+":" + dp0.getValue(),"");
-                        ableDisableFab(adapter);
+                        String hours = ""+np0.getValue();
+                        if(hours.length() == 1){
+                            hours = "0" + hours;
+                        }
+
+                        String minutes = ""+dp0.getValue();
+                        if(minutes.length() == 1){
+                            minutes = "0" + minutes;
+                        }
+                        time = hours + ":" + minutes;
+
+                        String preChoice = "day";
+
+                        if(daysAvailable && nightsAvailable){
+
+                        }else if(daysAvailable){
+
+                        }else if(nightsAvailable){
+
+                        }
+
+                        choice = preChoice;
+
+                        uploadData(-1,choice,true);
                         addDialog.dismiss();
                     }
                 });
@@ -189,25 +233,37 @@ public class Day extends AppCompatActivity {
         }
     }
 
-    void uploadData(final int position, final String type, final boolean bool, final String time){
+    void uploadData(final int position, final String type, final boolean bool){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
-                    String newType;
                     WeekProgram weekprogram = HeatingSystem.getWeekProgram();
                     ArrayList<Switch> todaysSwitches = weekprogram.data.get(day);
+                    int newPosition = 0;
+                    if(position == -1) {
+                        for (int i = 0; i < todaysSwitches.size(); i++) {
+                            if (todaysSwitches.get(i).getType().equals(type) && !todaysSwitches.get(i).getState()){
+                                newPosition = i;
+                            }
+                        }
+                    }else{
+                        int j = 0;
+                        while(j < todaysSwitches.size() && !todaysSwitches.get(j).getState()){
+                            j++;
+                        }
+                        newPosition = position + j;
+                    }
+                    String newType;
+                    System.out.println("type: " + type);
                     if(type.equals("")){
+                        System.out.println(todaysSwitches.get(position).getType());
                         newType = todaysSwitches.get(position).getType();
                     }else{
                         newType = type;
                     }
-                    int i = 0;
-                    while(i<todaysSwitches.size()&&!todaysSwitches.get(i).getState()){
-                        i++;
-                    }
-                    System.out.println("Day: " + day + ", position: " + position + ", i: " + i + "time of i: " + todaysSwitches.get(i).getTime() + ", type: " + type + ", bool: " + bool + ", time:" + time);
-                    weekprogram.data.get(day).set(position+i,new Switch(type,bool,time));
+                    System.out.println("Day: " + day + ", position: " + newPosition + "time of position: " + todaysSwitches.get(newPosition).getTime() + ", type: " + newType + ", bool: " + bool + ", time:" + time);
+                    weekprogram.data.get(day).set(newPosition,new Switch(newType,bool,time));
                     HeatingSystem.setWeekProgram(weekprogram);
                 }catch (Exception e){
                     e.printStackTrace();
@@ -215,5 +271,23 @@ public class Day extends AppCompatActivity {
             }
         }).start();
         recreate();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent parentIntent = NavUtils.getParentActivityIntent(this);
+                if(parentIntent == null) {
+                    finish();
+                    return true;
+                } else {
+                    parentIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(parentIntent);
+                    finish();
+                    return true;
+                }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -122,10 +122,15 @@ public class CustomScheduleListAdapter extends BaseAdapter {
             ImageView abegin = (ImageView) row.findViewById(R.id.abegin_icon);
             ImageView aend = (ImageView) row.findViewById(R.id.aend_icon);
 
-            dayIcon.setBackgroundResource(R.drawable.day);
+            if(switchto.get(position).equals("day")){
+                dayIcon.setBackgroundResource(R.drawable.night);
+                nightIcon.setBackgroundResource(R.drawable.day);
+            }else if(switchto.get(position).equals("night")){
+                dayIcon.setBackgroundResource(R.drawable.day);
+                nightIcon.setBackgroundResource(R.drawable.night);
+            }
             //textview1.setText(switchto.get(position));
             textview.setText(time.get(position));
-            nightIcon.setBackgroundResource(R.drawable.night);
             editIcon.setBackgroundResource(R.drawable.edit);
             deleteIcon.setBackgroundResource(R.drawable.delete);
 
@@ -151,7 +156,8 @@ public class CustomScheduleListAdapter extends BaseAdapter {
                     ok.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            day.uploadData(position,"",false,"00:00");
+                            day.time = "00:00";
+                            day.uploadData(position,"",false);
                             d.dismiss();
                         }
                     });
