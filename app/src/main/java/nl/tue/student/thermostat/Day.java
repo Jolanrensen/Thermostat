@@ -2,6 +2,7 @@ package nl.tue.student.thermostat;
 
 import android.app.ActionBar;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -157,7 +158,7 @@ public class Day extends AppCompatActivity {
                     }
                 });
                 np0.setMinValue(00);
-                np0.setMaxValue(11);
+                np0.setMaxValue(23);
                 np0.setValue(6);
                 np0.setWrapSelectorWheel(false);
                 final NumberPicker dp0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker4);
@@ -252,8 +253,8 @@ public class Day extends AppCompatActivity {
                     String newType;
                     System.out.println("type: " + type);
                     if(type.equals("")){
-                        System.out.println(todaysSwitches.get(position).getType());
-                        newType = todaysSwitches.get(position).getType();
+                        System.out.println(todaysSwitches.get(newPosition).getType());
+                        newType = todaysSwitches.get(newPosition).getType();
                     }else{
                         newType = type;
                     }
