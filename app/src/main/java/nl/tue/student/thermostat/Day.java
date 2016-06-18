@@ -1,7 +1,9 @@
 package nl.tue.student.thermostat;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,21 +15,29 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.quentindommerc.superlistview.SuperListview;
 import com.quentindommerc.superlistview.SwipeDismissListViewTouchListener;
+
+import org.thermostatapp.util.HeatingSystem;
+import org.thermostatapp.util.Switch;
+import org.thermostatapp.util.WeekProgram;
 
 import java.util.List;
 import java.util.ArrayList;
 
 public class Day extends AppCompatActivity {
-    private SuperListview superList;
+    SuperListview superList;
     String day;
-    //private ArrayAdapter<String> mAdapter;
-    private CustomListAdapter2 adapter;
+    //private ArrayAdapter<String> adapter;
+    CustomScheduleListAdapter adapter;
     static Dialog d;
     static Dialog addDialog;
     FloatingActionButton fab;
+    Thread loadFromServer;
+    Thread uploadToServer;
+    ArrayList<Switch> todaysSwitches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +53,12 @@ public class Day extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ArrayList<String> lst = new ArrayList<String>();
-        //mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, lst);
-        adapter = new CustomListAdapter2(getApplicationContext());
-        adapter.viewListVisible(true);
+        //adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, lst);
 
         superList = (SuperListview) findViewById(R.id.superList);
+        adapter = new CustomScheduleListAdapter(superList.getContext(),this);
+        adapter.viewListVisible(true);
+
         superList.setAdapter(adapter);
         superList.setupSwipeToDismiss(new SwipeDismissListViewTouchListener.DismissCallbacks() {
             int selectedPosition;
@@ -76,7 +87,7 @@ public class Day extends AppCompatActivity {
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        adapter.removeItem(selectedPosition);
+                        //adapter.removeItem(selectedPosition);
                         ableDisableFab(adapter);
                         d.dismiss();
                     }
@@ -87,10 +98,30 @@ public class Day extends AppCompatActivity {
         },false);
 
         //Retrieve items from the server and add them to the list.
-        adapter.addItem("Item1","Item1");
-        adapter.addItem("Item2","Item2");
-        adapter.addItem("Item3","Item3");
-        adapter.addItem("Item4","Item4");
+        loadFromServer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    WeekProgram weekprogram = HeatingSystem.getWeekProgram();
+                    todaysSwitches = weekprogram.data.get(day);
+                    superList.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.removeAll();
+                            for (int i = 0; i < todaysSwitches.size(); i++) {
+                                if (!todaysSwitches.get(i).getTime().equals("00:00")) {
+                                    adapter.addItem(todaysSwitches.get(i).getTime(), todaysSwitches.get(i).getType());
+                                }
+                            }
+                            ableDisableFab(adapter);
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        loadFromServer.start();
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -104,24 +135,17 @@ public class Day extends AppCompatActivity {
                 addDialog.setTitle("Add schedule");
                 addDialog.setContentView(R.layout.dialog3);
 
-                NumberPicker np0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker3);
+                final NumberPicker np0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker3);
                 np0.setMinValue(00);
-                np0.setMaxValue(23);
+                np0.setMaxValue(11);
+                np0.setValue(6);
                 np0.setWrapSelectorWheel(false);
-                NumberPicker dp0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker4);
+                final NumberPicker dp0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker4);
                 dp0.setMinValue(00);
                 dp0.setMaxValue(59);
+                dp0.setValue(30);
                 dp0.setWrapSelectorWheel(false);
 
-               /* NumberPicker np1 = (NumberPicker) addDialog.findViewById(R.id.numberPicker5);
-                np1.setMinValue(00);
-                np1.setMaxValue(11);
-                np1.setWrapSelectorWheel(false);
-                NumberPicker dp1 = (NumberPicker) addDialog.findViewById(R.id.numberPicker6);
-                dp1.setMinValue(00);
-                dp1.setMaxValue(59);
-                dp1.setWrapSelectorWheel(false);
-*/
                 Button cancel = (Button) addDialog.findViewById(R.id.button5);
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -134,7 +158,7 @@ public class Day extends AppCompatActivity {
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        adapter.addItem("new","new");
+                        //adapter.addItem(np0.getValue()+":" + dp0.getValue(),"");
                         ableDisableFab(adapter);
                         addDialog.dismiss();
                     }
@@ -146,12 +170,36 @@ public class Day extends AppCompatActivity {
         ableDisableFab(adapter);
     }
 
-    private void ableDisableFab(Adapter a){
+    void ableDisableFab(Adapter a){
         if(a.getCount() > 4){
             fab.hide();
+            Snackbar.make(fab.getRootView(), "You can not have more than 5 changes", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }else{
             fab.show();
         }
     }
 
+    void uploadData(final int position, final String type, final boolean bool, final String time){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    WeekProgram weekprogram = HeatingSystem.getWeekProgram();
+                    ArrayList<Switch> todaysSwitches = weekprogram.data.get(day);
+                    System.out.println("started!");
+                    int i = 0;
+                    while(i<todaysSwitches.size()&&!todaysSwitches.get(i).getState()){
+                        i++;
+                    }
+                    System.out.println("Day: " + day + ", position: " + position + ", i: " + i + "time of i: " + todaysSwitches.get(i).getTime() + ", type: " + type + ", bool: " + bool + ", time:" + time);
+                    weekprogram.data.get(day).set(position+i,new Switch(type,bool,time));
+                    HeatingSystem.setWeekProgram(weekprogram);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        recreate();
+    }
 }
