@@ -42,8 +42,8 @@ public class Homepage extends Fragment {
     TextView txt_name1;
     ImageView iv_icon2;
     TextView txt_name2;
-    ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
-    ArrayList<TextView> textViews = new ArrayList<TextView>();
+    ArrayList<ImageView> imageViews = new ArrayList<>();
+    ArrayList<TextView> textViews = new ArrayList<>();
 
 
     Time time = MainActivity.time;
@@ -79,23 +79,25 @@ public class Homepage extends Fragment {
         iv_icon2 = (ImageView) view.findViewById(R.id.iv_icon2);
         txt_name2 = (TextView) view.findViewById(R.id.txt_name2);
         imageViews.add(iv_icon0);
-        imageViews.add(iv_icon1);
-        imageViews.add(iv_icon2);
         textViews.add(txt_name0);
+        imageViews.add(iv_icon1);
         textViews.add(txt_name1);
+        imageViews.add(iv_icon2);
         textViews.add(txt_name2);
 
+
+
         //THIS IS HOW YOU ADD STUFF TO THE WEEK SCHEDULE
-       /* new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     WeekProgram weekProgram = HeatingSystem.getWeekProgram();
-                    weekProgram.setDefault();
-                    weekProgram.setDefault();
-                    weekProgram.data.get("Wednesday").set(3, new Switch("night", true, "20:04"));
-                    weekProgram.data.get("Wednesday").set(7, new Switch("day", true, "22:30"));
-                    weekProgram.data.get("Wednesday").set(5, new Switch("night", true, "19:00"));
+                    //weekProgram.setDefault();
+                    //weekProgram.setDefault();
+                    weekProgram.data.get("Friday").set(3, new Switch("night", true, "20:04"));
+                    weekProgram.data.get("Friday").set(7, new Switch("day", true, "22:30"));
+                    weekProgram.data.get("Friday").set(5, new Switch("night", true, "19:00"));
                     HeatingSystem.setWeekProgram(weekProgram);
                 } catch (ConnectException e) {
                     //System.err.println("Error from getdata " + e);
@@ -120,7 +122,10 @@ public class Homepage extends Fragment {
                         try {
                             //getting it from the server
                             WeekProgram weekProgram = HeatingSystem.getWeekProgram();
+
                             ArrayList<Switch> todaysSwitches = weekProgram.data.get(time.getDaysString());
+                            //todaysSwitches.add(new Switch("day", true, "22:00"));
+                            //todaysSwitches.add(new Switch("night", true, "23:00"));
 
                             final ArrayList<Integer> icons = new ArrayList<Integer>();
                             final ArrayList<String> texts = new ArrayList<String>();
@@ -141,7 +146,6 @@ public class Homepage extends Fragment {
                                         icon = R.drawable.night;
                                         temp = Double.toString(MainActivity.currentNightTemp);
                                     }
-
                                     icons.add(icon);
                                     texts.add(time + "H  |  " + temp + "°C");
                                 }
@@ -170,7 +174,7 @@ public class Homepage extends Fragment {
                                         textViews.get(0).setText(texts.get(0));
                                         for (int i=1; i < 3; i++){
                                             imageViews.get(i).setImageResource(0);
-                                            textViews.get(0).setText("");
+                                            textViews.get(i).setText(" ");
                                         }
 
                                     } else {
@@ -178,6 +182,7 @@ public class Homepage extends Fragment {
                                             imageViews.get(i).setImageResource(0);
                                             textViews.get(i).setText("");
                                         }
+                                        textViews.get(1).setText("There currently are no upcoming changes");
                                     }
                                 }
                             });
