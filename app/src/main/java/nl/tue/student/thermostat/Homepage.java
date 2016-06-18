@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.thermostatapp.util.CorruptWeekProgramException;
@@ -32,10 +33,17 @@ public class Homepage extends Fragment {
     SeekArc seekArc;
     boolean seekArcIsBeingTouched = false;
     double arcTemp;
-    String getParamTime;    //time pulled from the server
     TimerTask task; //Timertask that runs every clockdelay
-    Thread secondaryThreadHome; //Thread that gets started by task
     long clockDelay = 200; //delay for updating the clock
+
+    ImageView iv_icon0;
+    TextView txt_name0;
+    ImageView iv_icon1;
+    TextView txt_name1;
+    ImageView iv_icon2;
+    TextView txt_name2;
+    ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
+    ArrayList<TextView> textViews = new ArrayList<TextView>();
 
 
     Time time = MainActivity.time;
@@ -63,16 +71,31 @@ public class Homepage extends Fragment {
         //import up button
         imageButtonUp = (ImageButton) view.findViewById(R.id.imageButtonUp);
 
+        //import all the images and textviews for the upcoming changes
+        iv_icon0 = (ImageView) view.findViewById(R.id.iv_icon0);
+        txt_name0 = (TextView) view.findViewById(R.id.txt_name0);
+        iv_icon1 = (ImageView) view.findViewById(R.id.iv_icon1);
+        txt_name1 = (TextView) view.findViewById(R.id.txt_name1);
+        iv_icon2 = (ImageView) view.findViewById(R.id.iv_icon2);
+        txt_name2 = (TextView) view.findViewById(R.id.txt_name2);
+        imageViews.add(iv_icon0);
+        imageViews.add(iv_icon1);
+        imageViews.add(iv_icon2);
+        textViews.add(txt_name0);
+        textViews.add(txt_name1);
+        textViews.add(txt_name2);
+
         //THIS IS HOW YOU ADD STUFF TO THE WEEK SCHEDULE
-        new Thread(new Runnable() {
+       /* new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     WeekProgram weekProgram = HeatingSystem.getWeekProgram();
                     weekProgram.setDefault();
-                    weekProgram.data.get("Tuesday").set(3, new Switch("night", true, "20:04"));
-                    weekProgram.data.get("Tuesday").set(7, new Switch("day", true, "22:30"));
-                    weekProgram.data.get("Sunday").set(5, new Switch("night", true, "19:00"));
+                    weekProgram.setDefault();
+                    weekProgram.data.get("Wednesday").set(3, new Switch("night", true, "20:04"));
+                    weekProgram.data.get("Wednesday").set(7, new Switch("day", true, "22:30"));
+                    weekProgram.data.get("Wednesday").set(5, new Switch("night", true, "19:00"));
                     HeatingSystem.setWeekProgram(weekProgram);
                 } catch (ConnectException e) {
                     //System.err.println("Error from getdata " + e);
@@ -80,7 +103,7 @@ public class Homepage extends Fragment {
                     //e.printStackTrace();
                 }
             }
-        }).start();
+        }).start(); */
 
 
 
@@ -95,14 +118,17 @@ public class Homepage extends Fragment {
                     @Override
                     public void run() {
                         try {
+                            //getting it from the server
                             WeekProgram weekProgram = HeatingSystem.getWeekProgram();
                             ArrayList<Switch> todaysSwitches = weekProgram.data.get(time.getDaysString());
 
+                            final ArrayList<Integer> icons = new ArrayList<Integer>();
+                            final ArrayList<String> texts = new ArrayList<String>();
 
-
+                            //putting all the correct texts and icons in the arraylists
                             for (int i=0; i < todaysSwitches.size(); i++) {
                                 Switch aSwitch = todaysSwitches.get(i);
-                                if (aSwitch.getState() /*and if the time is after the current time*/) {
+                                if (aSwitch.getState() && time.hasNotYetComeToPass(aSwitch.getTime())) {
                                     final int icon;
                                     final String time;
                                     final String temp;
@@ -116,11 +142,52 @@ public class Homepage extends Fragment {
                                         temp = Double.toString(MainActivity.currentNightTemp);
                                     }
 
-                                    //THESE ARE NEEDED BECAUSE THIS THREAD CAN'T ACCESS THE THINGS YOU DECLARE IN ONCREATE
-
-
+                                    icons.add(icon);
+                                    texts.add(time + "H  |  " + temp + "°C");
                                 }
                             }
+
+                            //getting the icons and texts from the arraylists to the correct imageviews and textviews
+                            txt_name0.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (icons.size() > 2) {
+                                        for (int i=0; i < 3; i++) {
+                                            imageViews.get(i).setImageResource(icons.get(i));
+                                            textViews.get(i).setText(texts.get(i));
+                                        }
+
+                                    } else if (icons.size() == 2) {
+                                        for (int i=0; i < 2; i++) {
+                                            imageViews.get(i).setImageResource(icons.get(i));
+                                            textViews.get(i).setText(texts.get(i));
+                                        }
+                                        imageViews.get(2).setImageResource(0);
+                                        textViews.get(2).setText("");
+
+                                    } else if (icons.size() == 1) {
+                                        imageViews.get(0).setImageResource(icons.get(0));
+                                        textViews.get(0).setText(texts.get(0));
+                                        for (int i=1; i < 3; i++){
+                                            imageViews.get(i).setImageResource(0);
+                                            textViews.get(0).setText("");
+                                        }
+
+                                    } else {
+                                        for (int i=0; i < 3; i++) {
+                                            imageViews.get(i).setImageResource(0);
+                                            textViews.get(i).setText("");
+                                        }
+                                    }
+                                }
+                            });
+
+
+
+
+
+
+
                         } catch (ConnectException e) {
                             //System.err.println("Error from getdata " + e);
                         } catch (CorruptWeekProgramException e) {
