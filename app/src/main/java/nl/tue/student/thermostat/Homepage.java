@@ -123,7 +123,7 @@ public class Homepage extends Fragment {
                             //getting it from the server
                             WeekProgram weekProgram = HeatingSystem.getWeekProgram();
 
-                            ArrayList<Switch> todaysSwitches = weekProgram.data.get(time.getDaysString());
+                            ArrayList<Switch> todaysSwitches = weekProgram.data.get(time.getDayString());
                             //todaysSwitches.add(new Switch("day", true, "22:00"));
                             //todaysSwitches.add(new Switch("night", true, "23:00"));
 
@@ -207,7 +207,7 @@ public class Homepage extends Fragment {
                         currentTime.setText(time.getHoursString() + ":" + time.getMinutesString());
                         time.increaseTime();
                         currentTemp.setText(Double.toString(MainActivity.currentTemp) + " \u00B0" + "C");
-                        currentDay.setText(time.getDaysString());
+                        currentDay.setText(time.getDayString());
 
                         if (!seekArcIsBeingTouched) {
                             seekArc.setProgress((int) ((10 *MainActivity.targetTemp) - 50));

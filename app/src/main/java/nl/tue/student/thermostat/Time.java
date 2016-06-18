@@ -6,10 +6,10 @@ package nl.tue.student.thermostat;
 public class Time {
     int minutes = 0;
     int hours = 0;
-    int days = 0; //day 0 is monday
+    int day = 0; //day 0 is monday
 
     public void setTime(int days, int hours, int minutes) {
-        days = this.days;
+        days = this.day;
         hours = this.hours;
         minutes = this.hours;
     }
@@ -17,25 +17,25 @@ public class Time {
     public void setTime(String day, String time) {
         switch (day) {
             case "Monday":
-                days = 0;
+                this.day = 0;
                 break;
             case "Tuesday":
-                days = 1;
+                this.day = 1;
                 break;
             case "Wednesday":
-                days = 2;
+                this.day = 2;
                 break;
             case "Thursday":
-                days = 3;
+                this.day = 3;
                 break;
             case "Friday":
-                days = 4;
+                this.day = 4;
                 break;
             case "Saturday":
-                days = 5;
+                this.day = 5;
                 break;
             case "Sunday":
-                days = 6;
+                this.day = 6;
                 break;
         }
         String[] timeSplit = time.split(":");
@@ -51,10 +51,10 @@ public class Time {
         }
         if (hours == 24) {
             hours = 0;
-            days++;
+            day++;
         }
-        if (days == 7) {
-            days = 0;
+        if (day == 7) {
+            day = 0;
         }
     }
 
@@ -74,8 +74,19 @@ public class Time {
         return hoursS;
     }
 
-    public String getDaysString() {
-        switch (days) {
+    public String getTomorrowString() {
+        this.day++;
+        if (this.day == 7)
+            this.day = 0;
+        String day = getDayString();
+        this.day--;
+        if (this.day == -1)
+            this.day = 6;
+        return day;
+    }
+
+    public String getDayString() {
+        switch (day) {
             case 0:
                 return "Monday";
             case 1:
@@ -103,8 +114,8 @@ public class Time {
         return hours;
     }
 
-    public int getDays() {
-        return days;
+    public int getDay() {
+        return day;
     }
 
     public boolean hasNotYetComeToPass(String time) { //I feel poetic
