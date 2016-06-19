@@ -51,10 +51,12 @@ public class Homepage extends Fragment {
     TextView txt_name11;
     ImageView iv_icon22;
     TextView txt_name22;
+
     ArrayList<ImageView> imageViews = new ArrayList<>();
     ArrayList<TextView> textViews = new ArrayList<>();
     ArrayList<ImageView> imageViews1 = new ArrayList<>();
     ArrayList<TextView> textViews1 = new ArrayList<>();
+
 
     Time time = MainActivity.time;
 
@@ -109,6 +111,7 @@ public class Homepage extends Fragment {
         textViews1.add(txt_name11);
         imageViews1.add(iv_icon22);
         textViews1.add(txt_name22);
+
 
         noSchedule = (ImageView) view.findViewById(R.id.noSchedule);
 
@@ -181,7 +184,8 @@ public class Homepage extends Fragment {
                                             temp = Double.toString(MainActivity.currentNightTemp);
                                         }
                                         icons.add(icon);
-                                        texts.add("-" + getTime + "→");
+                                        //texts.add(getTime);
+                                        texts.add("-- " + getTime + " -->");
                                         icons2.add(icon2);
                                         texts2.add(temp + "°C  |  today");
                                     }
@@ -209,7 +213,8 @@ public class Homepage extends Fragment {
                                             temp = Double.toString(MainActivity.currentNightTemp);
                                         }
                                         icons.add(icon);
-                                        texts.add("-" + getTime + "→");
+                                        //texts.add(getTime);
+                                        texts.add("-- " + getTime + " -->");
                                         icons2.add(icon2);
                                         texts2.add(temp + "°C  |  tomorrow");
                                     }
