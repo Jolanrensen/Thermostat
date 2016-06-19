@@ -32,6 +32,9 @@
             android:name=".Day"
             android:label="Day"
             ></activity>
+        <activity android:name=".Faq"
+            android:label="FAQ"
+            ></activity>
         <activity android:name=".About"
             android:label="About"
             ></activity>

@@ -288,6 +288,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
             Intent intent = new Intent(this, About.class);
             startActivity(intent);
         } else if (id == R.id.faq) {
+            Intent intent = new Intent(this, Faq.class);
+            startActivity(intent);
 
         }
 
