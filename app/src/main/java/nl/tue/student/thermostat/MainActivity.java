@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     Switch useScheduleSwitch;
     NavigationView navigationView;
 
-    //String getParam = "";
     static boolean useSchedule;
 
     TimerTask uiUpdateTask;
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public static double currentDayTemp;
     public static double currentNightTemp;
     public static double targetTemp;
-    //public static WeekProgram weekProgram = new WeekProgram();
 
 
     @Override
@@ -170,8 +168,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                     getParam = HeatingSystem.get("weekProgramState");
                     if (getParam.equals("on")) {
                         useSchedule = true;
+                        Homepage.setUpcomingChangesListVisible(true);
                     } else if (getParam.equals("off")){
                         useSchedule = false;
+                        Homepage.setUpcomingChangesListVisible(false);
                     }
                     secondaryThread.wait();
                 } catch (Exception e) {

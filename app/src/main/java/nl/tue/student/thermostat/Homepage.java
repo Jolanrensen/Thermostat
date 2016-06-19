@@ -57,7 +57,6 @@ public class Homepage extends Fragment {
     ArrayList<TextView> textViews1 = new ArrayList<>();
 
     Time time = MainActivity.time;
-    //WeekProgram weekProgram = MainActivity.weekProgram;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
