@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         display.getSize(size);
         int width = size.x;
         int height = size.y;
-        if (width != 1440 && height != 2392) {
+        if (width != 1440 || height != 2392) {
             Toast.makeText(getApplicationContext(), "This app was made for the Nexus 6P, so it might look off on another device. Please use this device to get the proper experience." , Toast.LENGTH_LONG).show();
         }
 
