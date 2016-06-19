@@ -263,7 +263,7 @@ public class Homepage extends Fragment {
                                     } else {
                                         for (int i=0; i<3; i++) {
                                             imageViews.get(i).setImageResource(0);
-                                            imageViews.get(i).setImageResource(0);
+                                            imageViews1.get(i).setImageResource(0);
                                             textViews.get(i).setText("");
                                             textViews1.get(i).setText("");
                                         }
