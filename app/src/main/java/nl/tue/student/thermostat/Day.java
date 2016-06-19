@@ -1,6 +1,5 @@
 package nl.tue.student.thermostat;
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +8,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import com.quentindommerc.superlistview.SuperListview;
 import com.quentindommerc.superlistview.SwipeDismissListViewTouchListener;
@@ -326,6 +328,21 @@ public class Day extends AppCompatActivity {
                     finish();
                     return true;
                 }
+            case R.id.help:
+                //do something helpful
+                ;
+                //Toast toast = Toast.makeText(getApplicationContext(), "Not yet implemented", Toast.LENGTH_LONG);
+                //toast.show();
+                for (int i=0; i < 4; i++)
+                {
+                    Toast.makeText(getApplicationContext(), "To adjust the current temperature" +
+                            " drag the slider or tap the arrows. To adjust the temperature permanently open the side menu" +
+                            " and tap the 'Use Schedule' switch. Then adjust the temperature to your desire." +
+                            " To adjust the day/night temperature go to 'Schedule' and " +
+                            " tap on the temperature box itself." , Toast.LENGTH_LONG).show();
+                }
+
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -335,5 +352,12 @@ public class Day extends AppCompatActivity {
         System.out.println("Restarted day activity!");
         finish();
         startActivity(starterIntent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.help_menu, menu);
+        return true;
     }
 }
