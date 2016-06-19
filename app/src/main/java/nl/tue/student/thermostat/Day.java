@@ -1,20 +1,26 @@
 package nl.tue.student.thermostat;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -127,7 +133,7 @@ public class Day extends AppCompatActivity {
                         Thread.sleep(10);
                         System.out.println("Waited 10 milliseconds so that the window can be attached to the superlist!");
                     }
-                    WeekProgram weekprogram = HeatingSystem.getWeekProgram();
+                    final WeekProgram weekprogram = HeatingSystem.getWeekProgram();
                     todaysSwitches = weekprogram.data.get(day);
                     System.out.println("Done retrieving heatingsystem from the server!");
                     for (int i = 0; i < todaysSwitches.size(); i++) {
@@ -146,22 +152,23 @@ public class Day extends AppCompatActivity {
                             System.out.println("Adapter length: " + adapter.count);
                             adapter.removeAll();
                             System.out.println("Adapter length after removeall: " + adapter.count);
+                            int counter = 0;
+                            for(int j = 0; j < todaysSwitches.size(); j++){
+                                if(todaysSwitches.get(j).getState()){
+                                    counter++;
+                                }
+                            }
+                            System.out.println("counter: " + counter);
                             for (int i = 0; i < todaysSwitches.size(); i++) {
                                 if (todaysSwitches.get(i).getState()) {
                                     adapter.addItem(todaysSwitches.get(i).getTime(), todaysSwitches.get(i).getType());
                                     System.out.println("Added switch: (time: " + todaysSwitches.get(i).getTime() + ", type: " + todaysSwitches.get(i).getType() + ")");
                                     System.out.println(adapter.time.size());
-                                    while(adapter.count < 1){
-                                        try {
-                                            Thread.sleep(10);
-                                        }catch (InterruptedException e){
-                                            e.printStackTrace();
-                                        }
-                                    }
                                 }
                             }
                             ableDisableFab(adapter);
                             System.out.println("Done posting data to superList");
+
                         }
                     });
                     System.out.println("Done with load thread!");
