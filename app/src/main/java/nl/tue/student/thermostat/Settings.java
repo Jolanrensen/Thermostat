@@ -43,16 +43,19 @@ public class Settings extends AppCompatActivity {
         String[] values = new String[] { "",
                 "THIS IS FOR DEMO PURPOSES, NONE OF THESE SETTINGS EXCEPT FOR THE FIRST ONE HAVE ACTUALLY BEEN IMPLEMENTED",
                 "Wipe entire schedule",
-                "Change temperature scale",
-                "Change date and time",
-                "Connect to a new thermostat",
-                "Reboot thermostat",
-                "Reset the app",
-                "Change app's theme",
-                "Notification behaviour"
+                "X Change temperature scale",
+                "X Change date and time",
+                "X Connect to a new thermostat",
+                "X Reboot thermostat",
+                "X Reset the app",
+                "X Change app's theme",
+                "X Notification behaviour"
+
+
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_2, android.R.id.text1, values);
+                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+
 
         listView.setAdapter(adapter);
 
