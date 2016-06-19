@@ -169,7 +169,8 @@ public class CustomScheduleListAdapter extends BaseAdapter {
                     final Button setButton = (Button) editDialog.findViewById(R.id.button6);
                     setButton.setText("update");
                     final Button typeChoice = (Button) editDialog.findViewById(R.id.button7);
-                    if((day.daysAvailable && day.nightsAvailable) || (day.daysAvailable && day.choice.equals("night")) || (day.nightsAvailable && day.choice.equals("day"))){
+                    typeChoice.setVisibility(View.INVISIBLE);
+                    /*if((day.daysAvailable && day.nightsAvailable) || (day.daysAvailable && day.choice.equals("night")) || (day.nightsAvailable && day.choice.equals("day"))){
                         typeChoice.setVisibility(View.INVISIBLE);
                         //typeChoice.setEnabled(false);
                     }else if(day.daysAvailable){
@@ -180,7 +181,9 @@ public class CustomScheduleListAdapter extends BaseAdapter {
                         day.choice = "night";
                         typeChoice.setVisibility(View.INVISIBLE);
                         //typeChoice.setEnabled(false);
-                    }
+                    } else {
+                        typeChoice.setVisibility(View.INVISIBLE);
+                    }*/
                     if(day.choice.equals("day")){
                         day.leftImg.setBackgroundResource(R.drawable.night);
                         day.rightImg.setBackgroundResource(R.drawable.day);
