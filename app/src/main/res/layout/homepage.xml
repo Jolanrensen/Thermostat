@@ -210,7 +210,7 @@
             android:text="TARGET TEMP"
             android:textSize="15dp"
             android:layout_marginStart="140dp"
-            android:layout_marginTop="112dp"
+            android:layout_marginTop="114dp"
             />
 
         <TextView
@@ -223,7 +223,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:layout_marginBottom="18dp"
+            android:layout_marginBottom="16dp"
             />
 
         <TextView
@@ -232,7 +232,7 @@
             android:text="ROOM TEMP"
             android:textSize="15dp"
             android:layout_marginStart="148dp"
-            android:layout_marginTop="188dp"
+            android:layout_marginTop="190dp"
             />
 
         <TextView
@@ -240,11 +240,11 @@
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/currentTemp"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:layout_gravity="center_horizontal"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:layout_marginTop="124dp"
+            android:layout_marginTop="126dp"
             android:textColor="@color/colorTextSecondary" />
 
 
@@ -333,7 +333,7 @@
         android:id="@+id/imageButtonDown"
         android:translationZ="@dimen/abc_action_bar_content_inset_material"
         android:background="@drawable/down"
-        android:layout_marginStart="144dp"
+        android:layout_marginStart="142dp"
         android:layout_alignTop="@+id/imageButtonUp"
         android:layout_alignStart="@+id/card_view1" />
 
