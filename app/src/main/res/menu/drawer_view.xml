@@ -3,7 +3,7 @@
 
     <group>
         <item
-            android:id="@+id/nav_first_fragment"
+            android:id="@+id/settingsButton"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="Settings"
             android:checkable="false"
@@ -16,10 +16,10 @@
                     <item
                         android:title="About"
                         android:icon="@drawable/ic_feedback_black_24dp"
-                        android:id="@+id/sub1"/>
+                        android:id="@+id/about"/>
                     <item
                         android:title="FAQ"
-                        android:id="@+id/sub2"
+                        android:id="@+id/faq"
                         android:icon="@drawable/ic_help_black_24dp"/>
                 </group>
             </menu>
