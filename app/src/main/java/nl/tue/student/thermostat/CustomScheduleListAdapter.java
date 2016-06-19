@@ -5,11 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 
 import java.util.ArrayList;
 
@@ -23,6 +19,7 @@ public class CustomScheduleListAdapter extends BaseAdapter {
     Dialog d;
     int count = 1;
     Adapter a;
+    Dialog editDialog;
 
     CustomScheduleListAdapter(Context context, Day day){
         this.context=context;
@@ -109,11 +106,11 @@ public class CustomScheduleListAdapter extends BaseAdapter {
             LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row=inflater.inflate(R.layout.schedule_list_item,parent,false);
 
-            ImageView dayIcon= (ImageView) row.findViewById(R.id.day_icon);
+            final ImageView dayIcon= (ImageView) row.findViewById(R.id.day_icon);
             TextView textview= (TextView) row.findViewById(R.id.txt_begin);
             TextView textview1 = (TextView) row.findViewById(R.id.txt_end);
             ImageView nightIcon = (ImageView) row.findViewById(R.id.night_icon);
-            ImageView editIcon = (ImageView) row.findViewById(R.id.edit_icon);
+            final ImageView editIcon = (ImageView) row.findViewById(R.id.edit_icon);
             ImageView deleteIcon = (ImageView) row.findViewById(R.id.delete_icon);
 
             ImageView abegin = (ImageView) row.findViewById(R.id.abegin_icon);
@@ -134,12 +131,119 @@ public class CustomScheduleListAdapter extends BaseAdapter {
             abegin.setBackgroundResource(R.drawable.abegin);
             aend.setBackgroundResource(R.drawable.aend);
 
+            editIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    editDialog = new Dialog(day.superList.getContext());
+                    editDialog.setTitle("Edit schedule");
+                    editDialog.setContentView(R.layout.dialog3);
+
+                    day.choice = day.adapter.switchto.get(position);
+
+                    final android.widget.NumberPicker np0 = (android.widget.NumberPicker) editDialog.findViewById(R.id.numberPicker3);
+                    np0.setFormatter(new android.widget.NumberPicker.Formatter() {
+                        @Override
+                        public String format(int i) {
+                            return String.format("%02d", i);
+                        }
+                    });
+                    np0.setMinValue(00);
+                    np0.setMaxValue(23);
+                    np0.setValue(Integer.parseInt(day.adapter.time.get(position).substring(0,2)));
+                    np0.setWrapSelectorWheel(false);
+                    final android.widget.NumberPicker dp0 = (android.widget.NumberPicker) editDialog.findViewById(R.id.numberPicker4);
+                    dp0.setFormatter(new android.widget.NumberPicker.Formatter() {
+                        @Override
+                        public String format(int i) {
+                            return String.format("%02d", i);
+                        }
+                    });
+                    dp0.setMinValue(00);
+                    dp0.setMaxValue(59);
+                    dp0.setValue(Integer.parseInt(day.adapter.time.get(position).substring(3,5)));
+                    dp0.setWrapSelectorWheel(false);
+
+                    day.leftImg = (ImageView) editDialog.findViewById(R.id.left_icon);
+                    day.rightImg = (ImageView) editDialog.findViewById(R.id.right_icon);
+                    final Button setButton = (Button) editDialog.findViewById(R.id.button6);
+                    setButton.setText("update");
+                    final Button typeChoice = (Button) editDialog.findViewById(R.id.button7);
+                    if((day.daysAvailable && day.nightsAvailable) || (day.daysAvailable && day.choice.equals("night")) || (day.nightsAvailable && day.choice.equals("day"))){
+                        typeChoice.setEnabled(false);
+                    }else if(day.daysAvailable){
+                        day.choice = "day";
+                        typeChoice.setEnabled(false);
+                    }else if(day.nightsAvailable){
+                        day.choice = "night";
+                        typeChoice.setEnabled(false);
+                    }
+                    if(day.choice.equals("day")){
+                        day.leftImg.setBackgroundResource(R.drawable.night);
+                        day.rightImg.setBackgroundResource(R.drawable.day);
+                    }else{
+                        day.leftImg.setBackgroundResource(R.drawable.day);
+                        day.rightImg.setBackgroundResource(R.drawable.night);
+                    }
+                    typeChoice.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(day.choice.equals("day")){
+                                day.choice = "night";
+                            }else{
+                                day.choice = "day";
+                            }
+                            if(day.choice.equals("day")){
+                                day.leftImg.setBackgroundResource(R.drawable.night);
+                                day.rightImg.setBackgroundResource(R.drawable.day);
+                            }else{
+                                day.leftImg.setBackgroundResource(R.drawable.day);
+                                day.rightImg.setBackgroundResource(R.drawable.night);
+                            }
+                        }
+                    });
+
+                    Button cancel = (Button) editDialog.findViewById(R.id.button5);
+                    cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            editDialog.dismiss();
+                        }
+                    });
+
+                    Button add = (Button) editDialog.findViewById(R.id.button6);
+                    add.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String hours = ""+np0.getValue();
+                            if(hours.length() == 1){
+                                hours = "0" + hours;
+                            }
+
+                            String minutes = ""+dp0.getValue();
+                            if(minutes.length() == 1){
+                                minutes = "0" + minutes;
+                            }
+                            day.time = hours + ":" + minutes;
+
+                            System.out.println("choice: " + day.choice);
+                            day.uploadData(position,day.choice,true);
+                            editDialog.dismiss();
+                        }
+                    });
+
+                    editDialog.show();
+                }
+            });
+
             deleteIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     d = new Dialog(context);
                     d.setTitle("Warning!");
                     d.setContentView(R.layout.dialog2);
+
+                    TextView selectionText = (TextView) d.findViewById(R.id.textView8);
+                    selectionText.setText("Switch to " + day.adapter.switchto.get(position) + " at " + day.adapter.time.get(position) + "H on " + day.day + "?");
 
                     Button cancel = (Button) d.findViewById(R.id.button3);
                     cancel.setOnClickListener(new View.OnClickListener() {

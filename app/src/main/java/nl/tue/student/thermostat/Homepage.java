@@ -279,9 +279,9 @@ public class Homepage extends Fragment {
 
 
                         } catch (ConnectException e) {
-                            //System.err.println("Error from getdata " + e);
+                            System.err.println("Error from getdata " + e);
                         } catch (CorruptWeekProgramException e) {
-                            //e.printStackTrace();
+                            e.printStackTrace();
                         }
                     }
                 }).run();
