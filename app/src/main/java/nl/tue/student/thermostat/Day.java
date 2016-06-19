@@ -267,7 +267,7 @@ public class Day extends AppCompatActivity {
     void ableDisableFab(Adapter a){
         if(a.getCount() > 9){
             fab.hide();
-            Snackbar.make(fab.getRootView(), "You can not have more than 5 changes", Snackbar.LENGTH_LONG)
+            Snackbar.make(fab.getRootView(), "There can only be 5 day-to-night and 5 night-to-day switches", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }else{
             fab.show();
