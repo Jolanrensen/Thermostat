@@ -14,6 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.thermostatapp.util.CorruptWeekProgramException;
+import org.thermostatapp.util.HeatingSystem;
+import org.thermostatapp.util.WeekProgram;
+
+import java.net.ConnectException;
+
 public class Settings extends AppCompatActivity {
     ListView listView;
 
@@ -35,7 +41,8 @@ public class Settings extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list);
 
         String[] values = new String[] { "",
-                "THIS IS FOR DEMO PURPOSES, NONE OF THESE SETTINGS HAVE ACTUALLY BEEN IMPLEMENTED",
+                "THIS IS FOR DEMO PURPOSES, NONE OF THESE SETTINGS EXCEPT FOR THE FIRST ONE HAVE ACTUALLY BEEN IMPLEMENTED",
+                "Wipe entire schedule",
                 "Change temperature scale",
                 "Change date and time",
                 "Connect to a new thermostat",
@@ -61,6 +68,23 @@ public class Settings extends AppCompatActivity {
                 // ListView Clicked item value
                 String  itemValue    = (String) listView.getItemAtPosition(position);
 
+                if (itemPosition == 2) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                WeekProgram weekProgram = HeatingSystem.getWeekProgram();
+                                weekProgram.setDefault();
+                                weekProgram.setDefault();
+                                HeatingSystem.setWeekProgram(weekProgram);
+                            } catch (ConnectException e) {
+                                //System.err.println("Error from getdata " + e);
+                            } catch (CorruptWeekProgramException e) {
+                                //e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                }
                 // Show Alert
                 //Toast.makeText(getApplicationContext(),
                 //        "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
