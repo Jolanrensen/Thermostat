@@ -1,5 +1,6 @@
 package nl.tue.student.thermostat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -280,7 +281,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_first_fragment) {
+        if (id == R.id.settingsButton) {
+            Intent intent = new Intent(this, Settings.class);
+            startActivity(intent);
+        } else if (id == R.id.about) {
+
+        } else if (id == R.id.faq) {
 
         }
 
