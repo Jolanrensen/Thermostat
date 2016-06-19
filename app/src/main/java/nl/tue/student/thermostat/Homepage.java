@@ -201,12 +201,12 @@ public class Homepage extends Fragment {
 
                                         getTime = aSwitch.getTime();
                                         if (aSwitch.getType().equals("day")) {
-                                            icon = R.drawable.day;
-                                            icon2 = R.drawable.night;
+                                            icon2 = R.drawable.day;
+                                            icon = R.drawable.night;
                                             temp = Double.toString(MainActivity.currentDayTemp);
                                         } else {
-                                            icon = R.drawable.night;
-                                            icon2 = R.drawable.day;
+                                            icon2 = R.drawable.night;
+                                            icon = R.drawable.day;
                                             temp = Double.toString(MainActivity.currentNightTemp);
                                         }
                                         icons.add(icon);
