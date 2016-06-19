@@ -4,30 +4,23 @@
     <group>
         <item
             android:id="@+id/nav_first_fragment"
-            android:icon="@drawable/side_nav_bar"
-            android:title="Something"
-            android:checkable="true"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Settings"
+            android:checkable="false"
 
             />
-        <item
-            android:id="@+id/nav_second_fragment"
-            android:icon="@drawable/side_nav_bar"
-            android:title="Something else" />
-        <item
-            android:id="@+id/nav_third_fragment"
-            android:icon="@drawable/side_nav_bar"
-            android:title="Again Something else" />
-        <item android:title="The rest">
+
+        <item android:title="Miscellaneous">
             <menu>
                 <group>
                     <item
                         android:title="About"
-                        android:icon="@drawable/side_nav_bar"
+                        android:icon="@drawable/ic_feedback_black_24dp"
                         android:id="@+id/sub1"/>
                     <item
                         android:title="FAQ"
                         android:id="@+id/sub2"
-                        android:icon="@drawable/side_nav_bar"/>
+                        android:icon="@drawable/ic_help_black_24dp"/>
                 </group>
             </menu>
         </item>

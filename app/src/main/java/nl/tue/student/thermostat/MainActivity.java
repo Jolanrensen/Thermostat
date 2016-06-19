@@ -280,10 +280,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         int id = item.getItemId();
         if (id == R.id.nav_first_fragment) {
 
-        } else if (id == R.id.nav_second_fragment) {
-
-        } else if (id == R.id.nav_third_fragment) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
