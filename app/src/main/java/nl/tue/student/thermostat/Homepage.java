@@ -283,14 +283,16 @@ public class Homepage extends Fragment {
 
 
 
-
-
-
                         } catch (ConnectException e) {
                             System.err.println("Error from getdata " + e);
                         } catch (CorruptWeekProgramException e) {
                             e.printStackTrace();
+                        } catch (NullPointerException e) {
+
                         }
+
+
+
                     }
                 }).run();
 
