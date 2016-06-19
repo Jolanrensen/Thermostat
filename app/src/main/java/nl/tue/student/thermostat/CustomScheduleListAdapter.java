@@ -9,10 +9,7 @@ import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import com.quentindommerc.superlistview.SuperListview;
 
 import java.util.ArrayList;
 
