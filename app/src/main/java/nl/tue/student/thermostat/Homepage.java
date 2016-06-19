@@ -45,9 +45,16 @@ public class Homepage extends Fragment {
     TextView txt_name1;
     ImageView iv_icon2;
     TextView txt_name2;
+    ImageView iv_icon00;
+    TextView txt_name00;
+    ImageView iv_icon11;
+    TextView txt_name11;
+    ImageView iv_icon22;
+    TextView txt_name22;
     ArrayList<ImageView> imageViews = new ArrayList<>();
     ArrayList<TextView> textViews = new ArrayList<>();
-
+    ArrayList<ImageView> imageViews1 = new ArrayList<>();
+    ArrayList<TextView> textViews1 = new ArrayList<>();
 
     Time time = MainActivity.time;
     //WeekProgram weekProgram = MainActivity.weekProgram;
@@ -75,18 +82,34 @@ public class Homepage extends Fragment {
         imageButtonUp = (ImageButton) view.findViewById(R.id.imageButtonUp);
 
         //import all the images and textviews for the upcoming changes
+        //the first icons and texts
         iv_icon0 = (ImageView) view.findViewById(R.id.iv_icon0);
         txt_name0 = (TextView) view.findViewById(R.id.txt_name0);
         iv_icon1 = (ImageView) view.findViewById(R.id.iv_icon1);
         txt_name1 = (TextView) view.findViewById(R.id.txt_name1);
         iv_icon2 = (ImageView) view.findViewById(R.id.iv_icon2);
         txt_name2 = (TextView) view.findViewById(R.id.txt_name2);
+
+        //the second icons and texts
+        iv_icon00 = (ImageView) view.findViewById(R.id.iv_icon00);
+        txt_name00 = (TextView) view.findViewById(R.id.txt_name00);
+        iv_icon11 = (ImageView) view.findViewById(R.id.iv_icon11);
+        txt_name11 = (TextView) view.findViewById(R.id.txt_name11);
+        iv_icon22 = (ImageView) view.findViewById(R.id.iv_icon22);
+        txt_name22 = (TextView) view.findViewById(R.id.txt_name22);
+
         imageViews.add(iv_icon0);
         textViews.add(txt_name0);
         imageViews.add(iv_icon1);
         textViews.add(txt_name1);
         imageViews.add(iv_icon2);
         textViews.add(txt_name2);
+        imageViews1.add(iv_icon00);
+        textViews1.add(txt_name00);
+        imageViews1.add(iv_icon11);
+        textViews1.add(txt_name11);
+        imageViews1.add(iv_icon22);
+        textViews1.add(txt_name22);
 
         noSchedule = (ImageView) view.findViewById(R.id.noSchedule);
 
@@ -134,26 +157,33 @@ public class Homepage extends Fragment {
                             //todaysSwitches.add(new Switch("night", true, "23:00"));
 
                             final ArrayList<Integer> icons = new ArrayList<Integer>();
+                            final ArrayList<Integer> icons2 = new ArrayList<Integer>();
                             final ArrayList<String> texts = new ArrayList<String>();
+                            final ArrayList<String> texts2 = new ArrayList<String>();
 
                             //putting all the correct texts and icons in the arraylists of today
                             for (int i=0; i < todaysSwitches.size(); i++) {
                                 Switch aSwitch = todaysSwitches.get(i);
                                 if (aSwitch.getState() && time.hasNotYetComeToPass(aSwitch.getTime())) {
                                     final int icon;
+                                    final int icon2;
                                     final String getTime;
                                     final String temp;
 
                                     getTime = aSwitch.getTime();
                                     if (aSwitch.getType().equals("day")) {
                                         icon = R.drawable.day;
+                                        icon2 = R.drawable.night;
                                         temp = Double.toString(MainActivity.currentDayTemp);
                                     } else {
                                         icon = R.drawable.night;
+                                        icon2 = R.drawable.day;
                                         temp = Double.toString(MainActivity.currentNightTemp);
                                     }
                                     icons.add(icon);
-                                    texts.add(time.getDayString() + " " + getTime + "H  |  " + temp + "°C");
+                                    texts.add("-" + getTime + "→");
+                                    icons2.add(icon2);
+                                    texts2.add(temp + "°C  |  today");
                                 }
                             }
 
@@ -162,19 +192,24 @@ public class Homepage extends Fragment {
                                 Switch aSwitch = tomorrowsSwitches.get(i);
                                 if (aSwitch.getState()) {
                                     final int icon;
+                                    final int icon2;
                                     final String getTime;
                                     final String temp;
 
                                     getTime = aSwitch.getTime();
                                     if (aSwitch.getType().equals("day")) {
                                         icon = R.drawable.day;
+                                        icon2 = R.drawable.night;
                                         temp = Double.toString(MainActivity.currentDayTemp);
                                     } else {
                                         icon = R.drawable.night;
+                                        icon2 = R.drawable.day;
                                         temp = Double.toString(MainActivity.currentNightTemp);
                                     }
                                     icons.add(icon);
-                                    texts.add(time.getTomorrowString() + " " + getTime + "H  |  " + temp + "°C  tomorrow");
+                                    texts.add("-" + getTime + "→");
+                                    icons2.add(icon2);
+                                    texts2.add(temp + "°C  |  tomorrow");
                                 }
                             }
 
@@ -187,36 +222,50 @@ public class Homepage extends Fragment {
                                         if (icons.size() > 2) {
                                             for (int i = 0; i < 3; i++) {
                                                 imageViews.get(i).setImageResource(icons.get(i));
+                                                imageViews1.get(i).setImageResource(icons2.get(i));
                                                 textViews.get(i).setText(texts.get(i));
+                                                textViews1.get(i).setText(texts2.get(i));
                                             }
 
                                         } else if (icons.size() == 2) {
                                             for (int i = 0; i < 2; i++) {
                                                 imageViews.get(i).setImageResource(icons.get(i));
+                                                imageViews1.get(i).setImageResource(icons2.get(i));
                                                 textViews.get(i).setText(texts.get(i));
+                                                textViews1.get(i).setText(texts2.get(i));
                                             }
                                             imageViews.get(2).setImageResource(0);
+                                            imageViews1.get(2).setImageResource(0);
                                             textViews.get(2).setText("");
+                                            textViews1.get(2).setText("");
 
                                         } else if (icons.size() == 1) {
                                             imageViews.get(0).setImageResource(icons.get(0));
+                                            imageViews1.get(0).setImageResource(icons2.get(0));
                                             textViews.get(0).setText(texts.get(0));
+                                            textViews1.get(0).setText(texts2.get(0));
                                             for (int i = 1; i < 3; i++) {
                                                 imageViews.get(i).setImageResource(0);
+                                                imageViews1.get(i).setImageResource(0);
                                                 textViews.get(i).setText(" ");
+                                                textViews1.get(i).setText(" ");
                                             }
 
                                         } else {
                                             for (int i = 0; i < 3; i++) {
                                                 imageViews.get(i).setImageResource(0);
+                                                imageViews1.get(i).setImageResource(0);
                                                 textViews.get(i).setText("");
+                                                textViews1.get(i).setText("");
                                             }
                                             textViews.get(1).setText("There currently are no upcoming changes");
                                         }
                                     } else {
                                         for (int i=0; i<3; i++) {
                                             imageViews.get(i).setImageResource(0);
+                                            imageViews.get(i).setImageResource(0);
                                             textViews.get(i).setText("");
+                                            textViews1.get(i).setText("");
                                         }
                                         noSchedule.setVisibility(View.VISIBLE);
                                     }

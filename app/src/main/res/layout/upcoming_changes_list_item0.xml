@@ -18,8 +18,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/day"
         android:id="@+id/iv_icon0"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -29,10 +29,29 @@
         android:text="10:30 H  |  20*C"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:paddingTop="5dp"
         android:textColor="@color/colorTextSecondary"
         android:layout_marginTop="8dp"/>
+        <ImageView
+            android:scaleType="fitCenter"
+            android:src="@drawable/day"
+            android:id="@+id/iv_icon00"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="0dp" />
+        <TextView
+            android:id="@+id/txt_name00"
+            android:text="10:30 H  |  20*C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:paddingTop="5dp"
+            android:textColor="@color/colorTextSecondary"
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -47,8 +66,8 @@
             android:scaleType="fitCenter"
             android:src="@drawable/night"
             android:id="@+id/iv_icon1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -58,7 +77,26 @@
             android:text="10:30 H  |  21*C"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="20sp"
+            android:paddingTop="5dp"
+            android:textColor="@color/colorTextSecondary"
+            android:layout_marginTop="8dp"/>
+        <ImageView
+            android:scaleType="fitCenter"
+            android:src="@drawable/night"
+            android:id="@+id/iv_icon11"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="0dp" />
+        <TextView
+            android:id="@+id/txt_name11"
+            android:text="10:30 H  |  21*C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
             android:paddingTop="5dp"
             android:textColor="@color/colorTextSecondary"
             android:layout_marginTop="8dp"/>
@@ -74,8 +112,8 @@
             android:scaleType="fitCenter"
             android:src="@drawable/night"
             android:id="@+id/iv_icon2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -85,10 +123,30 @@
             android:text="10:30 H  |  21*C"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:paddingTop="5dp"
             android:textColor="@color/colorTextSecondary"
             android:layout_marginTop="8dp"/>
+        <ImageView
+            android:scaleType="fitCenter"
+            android:src="@drawable/night"
+            android:id="@+id/iv_icon22"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="0dp" />
+        <TextView
+            android:id="@+id/txt_name22"
+            android:text="10:30 H  |  21*C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:paddingTop="5dp"
+            android:textColor="@color/colorTextSecondary"
+            android:layout_marginTop="8dp"/>
+
     </LinearLayout>
 
 
