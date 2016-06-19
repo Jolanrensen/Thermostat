@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quentindommerc.superlistview.SuperListview;
@@ -89,6 +90,9 @@ public class Day extends AppCompatActivity {
                 d.setTitle("Warning!");
                 d.setContentView(R.layout.dialog2);
 
+                TextView selectionText = (TextView) d.findViewById(R.id.textView8);
+                selectionText.setText("Switch to " + adapter.switchto.get(selectedPosition) + " at " + adapter.time.get(selectedPosition) + "H on " + day + "?");
+
                 Button cancel = (Button) d.findViewById(R.id.button3);
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -103,7 +107,8 @@ public class Day extends AppCompatActivity {
                     public void onClick(View v) {
                         time = "00:00";
                         System.out.println(todaysSwitches.get(selectedPosition).getType());
-                        uploadData(selectedPosition,todaysSwitches.get(selectedPosition).getType(),false);
+                        uploadData(selectedPosition,"",false);
+                        //uploadData(selectedPosition,todaysSwitches.get(selectedPosition).getType(),false);
                         d.dismiss();
                     }
                 });
@@ -143,6 +148,7 @@ public class Day extends AppCompatActivity {
                                 if (!todaysSwitches.get(i).getTime().equals("00:00")) {
                                     adapter.addItem(todaysSwitches.get(i).getTime(), todaysSwitches.get(i).getType());
                                     System.out.println("Added switch: (time: " + todaysSwitches.get(i).getTime() + ", type: " + todaysSwitches.get(i).getType() + ")");
+                                    System.out.println(adapter.time.size());
                                 }
                             }
                             ableDisableFab(adapter);
@@ -197,13 +203,16 @@ public class Day extends AppCompatActivity {
                 final Button typeChoice = (Button) addDialog.findViewById(R.id.button7);
                 if(daysAvailable && nightsAvailable){
                     choice = "day";
-                    typeChoice.setEnabled(true);
+                    typeChoice.setVisibility(View.INVISIBLE);
+                    //typeChoice.setEnabled(true);
                 }else if(daysAvailable){
                     choice = "day";
-                    typeChoice.setEnabled(false);
+                    typeChoice.setVisibility(View.INVISIBLE);
+                    //typeChoice.setEnabled(false);
                 }else if(nightsAvailable){
                     choice = "night";
-                    typeChoice.setEnabled(false);
+                    typeChoice.setVisibility(View.INVISIBLE);
+                    //typeChoice.setEnabled(false);
                 }
                 if(choice.equals("day")){
                     leftImg.setBackgroundResource(R.drawable.night);

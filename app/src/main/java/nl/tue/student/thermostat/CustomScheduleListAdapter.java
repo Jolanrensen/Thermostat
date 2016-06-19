@@ -123,7 +123,7 @@ public class CustomScheduleListAdapter extends BaseAdapter {
                 dayIcon.setBackgroundResource(R.drawable.day);
                 nightIcon.setBackgroundResource(R.drawable.night);
             }
-            //textview1.setText(switchto.get(position));
+            System.out.println("Added " + time.get(position) + " to position: " + position);
             textview.setText(time.get(position));
             editIcon.setBackgroundResource(R.drawable.edit);
             deleteIcon.setBackgroundResource(R.drawable.delete);
@@ -169,13 +169,16 @@ public class CustomScheduleListAdapter extends BaseAdapter {
                     setButton.setText("update");
                     final Button typeChoice = (Button) editDialog.findViewById(R.id.button7);
                     if((day.daysAvailable && day.nightsAvailable) || (day.daysAvailable && day.choice.equals("night")) || (day.nightsAvailable && day.choice.equals("day"))){
-                        typeChoice.setEnabled(false);
+                        typeChoice.setVisibility(View.INVISIBLE);
+                        //typeChoice.setEnabled(false);
                     }else if(day.daysAvailable){
                         day.choice = "day";
-                        typeChoice.setEnabled(false);
+                        typeChoice.setVisibility(View.INVISIBLE);
+                        //typeChoice.setEnabled(false);
                     }else if(day.nightsAvailable){
                         day.choice = "night";
-                        typeChoice.setEnabled(false);
+                        typeChoice.setVisibility(View.INVISIBLE);
+                        //typeChoice.setEnabled(false);
                     }
                     if(day.choice.equals("day")){
                         day.leftImg.setBackgroundResource(R.drawable.night);
