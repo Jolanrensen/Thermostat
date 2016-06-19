@@ -248,8 +248,18 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         switch (item.getItemId()) {
             case R.id.help:
                 //do something helpful
-                Toast toast = Toast.makeText(getApplicationContext(), "Not yet implemented", Toast.LENGTH_SHORT);
-                toast.show();
+                ;
+                //Toast toast = Toast.makeText(getApplicationContext(), "Not yet implemented", Toast.LENGTH_LONG);
+                //toast.show();
+                for (int i=0; i < 4; i++)
+                {
+                    Toast.makeText(getApplicationContext(), "To adjust the current temperature" +
+                            " drag the slider or tap the arrows. To adjust the temperature permanently open the side menu" +
+                            " and tap the 'Use Schedule' switch. Then adjust the temperature to your desire." +
+                            " To adjust the day/night temperature go to 'Schedule' and " +
+                            " tap on the temperature box itself." , Toast.LENGTH_LONG).show();
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
