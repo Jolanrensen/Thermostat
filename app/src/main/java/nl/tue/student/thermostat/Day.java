@@ -41,6 +41,9 @@ public class Day extends AppCompatActivity {
     boolean nightsAvailable = false;
     public String choice;
     public String time;
+    Intent starterIntent;
+    ImageView leftImg;
+    ImageView rightImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +54,13 @@ public class Day extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        starterIntent = getIntent();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             day = extras.getString("day");
         }
         toolbar.setTitle(day);
+        System.out.println("Called oncreate for: " + day);
 
         setSupportActionBar(toolbar);
 
@@ -112,6 +117,7 @@ public class Day extends AppCompatActivity {
                 try {
                     WeekProgram weekprogram = HeatingSystem.getWeekProgram();
                     todaysSwitches = weekprogram.data.get(day);
+                    System.out.println("Done retrieving heatingsystem from the server!");
                     for (int i = 0; i < todaysSwitches.size(); i++) {
                         if(!todaysSwitches.get(i).getState()&&todaysSwitches.get(i).getType().equals("night")){
                             nightsAvailable = true;
@@ -120,18 +126,28 @@ public class Day extends AppCompatActivity {
                             daysAvailable = true;
                         }
                     }
+                    System.out.println("nightsAvailable: " + nightsAvailable + ", daysAvailable: " + daysAvailable);
+                    while(!superList.isAttachedToWindow()) {
+                        Thread.sleep(10);
+                        System.out.println("Waited 10 milliseconds so that the window can be attached to the superlist!");
+                    }
                     superList.post(new Runnable() {
                         @Override
                         public void run() {
+                            System.out.println("Adapter length: " + adapter.count);
                             adapter.removeAll();
+                            System.out.println("Adapter length after removeall: " + adapter.count);
                             for (int i = 0; i < todaysSwitches.size(); i++) {
                                 if (!todaysSwitches.get(i).getTime().equals("00:00")) {
                                     adapter.addItem(todaysSwitches.get(i).getTime(), todaysSwitches.get(i).getType());
+                                    System.out.println("Added switch: (time: " + todaysSwitches.get(i).getTime() + ", type: " + todaysSwitches.get(i).getType() + ")");
                                 }
                             }
                             ableDisableFab(adapter);
+                            System.out.println("Done posting data to superList");
                         }
                     });
+                    System.out.println("Done with load thread!");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -174,6 +190,44 @@ public class Day extends AppCompatActivity {
                 dp0.setValue(30);
                 dp0.setWrapSelectorWheel(false);
 
+                leftImg = (ImageView) addDialog.findViewById(R.id.left_icon);
+                rightImg = (ImageView) addDialog.findViewById(R.id.right_icon);
+                final Button typeChoice = (Button) addDialog.findViewById(R.id.button7);
+                if(daysAvailable && nightsAvailable){
+                    choice = "day";
+                    typeChoice.setEnabled(true);
+                }else if(daysAvailable){
+                    choice = "day";
+                    typeChoice.setEnabled(false);
+                }else if(nightsAvailable){
+                    choice = "night";
+                    typeChoice.setEnabled(false);
+                }
+                if(choice.equals("day")){
+                    leftImg.setBackgroundResource(R.drawable.night);
+                    rightImg.setBackgroundResource(R.drawable.day);
+                }else{
+                    leftImg.setBackgroundResource(R.drawable.day);
+                    rightImg.setBackgroundResource(R.drawable.night);
+                }
+                typeChoice.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(choice.equals("day")){
+                            choice = "night";
+                        }else{
+                            choice = "day";
+                        }
+                        if(choice.equals("day")){
+                            leftImg.setBackgroundResource(R.drawable.night);
+                            rightImg.setBackgroundResource(R.drawable.day);
+                        }else{
+                            leftImg.setBackgroundResource(R.drawable.day);
+                            rightImg.setBackgroundResource(R.drawable.night);
+                        }
+                    }
+                });
+
                 Button cancel = (Button) addDialog.findViewById(R.id.button5);
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -196,18 +250,6 @@ public class Day extends AppCompatActivity {
                             minutes = "0" + minutes;
                         }
                         time = hours + ":" + minutes;
-
-                        String preChoice = "day";
-
-                        if(daysAvailable && nightsAvailable){
-
-                        }else if(daysAvailable){
-
-                        }else if(nightsAvailable){
-
-                        }
-
-                        choice = preChoice;
 
                         uploadData(-1,choice,true);
                         addDialog.dismiss();
@@ -286,5 +328,12 @@ public class Day extends AppCompatActivity {
                 }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void recreate(){
+        System.out.println("Restarted day activity!");
+        finish();
+        startActivity(starterIntent);
     }
 }
