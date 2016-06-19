@@ -2,6 +2,7 @@ package nl.tue.student.thermostat;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -229,7 +230,13 @@ public class CustomScheduleListAdapter extends BaseAdapter {
                             day.time = hours + ":" + minutes;
 
                             System.out.println("choice: " + day.choice);
-                            day.uploadData(position,day.choice,true);
+                            boolean duplicate = Day.checkDuplicate(day.time,day.todaysSwitches);
+                            if(!duplicate) {
+                                day.uploadData(position, day.choice, true);
+                            }else{
+                                Snackbar.make(day.fab.getRootView(), "You can not edit this change to this time because there is already a change at that time of the day!", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+                            }
                             editDialog.dismiss();
                         }
                     });

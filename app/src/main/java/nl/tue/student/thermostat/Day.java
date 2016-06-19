@@ -122,6 +122,11 @@ public class Day extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+                    //Thread.sleep(500);
+                    while(!superList.isAttachedToWindow()) {
+                        Thread.sleep(10);
+                        System.out.println("Waited 10 milliseconds so that the window can be attached to the superlist!");
+                    }
                     WeekProgram weekprogram = HeatingSystem.getWeekProgram();
                     todaysSwitches = weekprogram.data.get(day);
                     System.out.println("Done retrieving heatingsystem from the server!");
@@ -134,10 +139,7 @@ public class Day extends AppCompatActivity {
                         }
                     }
                     System.out.println("nightsAvailable: " + nightsAvailable + ", daysAvailable: " + daysAvailable);
-                    while(!superList.isAttachedToWindow()) {
-                        Thread.sleep(10);
-                        System.out.println("Waited 10 milliseconds so that the window can be attached to the superlist!");
-                    }
+
                     superList.post(new Runnable() {
                         @Override
                         public void run() {
@@ -145,10 +147,17 @@ public class Day extends AppCompatActivity {
                             adapter.removeAll();
                             System.out.println("Adapter length after removeall: " + adapter.count);
                             for (int i = 0; i < todaysSwitches.size(); i++) {
-                                if (!todaysSwitches.get(i).getTime().equals("00:00")) {
+                                if (todaysSwitches.get(i).getState()) {
                                     adapter.addItem(todaysSwitches.get(i).getTime(), todaysSwitches.get(i).getType());
                                     System.out.println("Added switch: (time: " + todaysSwitches.get(i).getTime() + ", type: " + todaysSwitches.get(i).getType() + ")");
                                     System.out.println(adapter.time.size());
+                                    while(adapter.count < 1){
+                                        try {
+                                            Thread.sleep(10);
+                                        }catch (InterruptedException e){
+                                            e.printStackTrace();
+                                        }
+                                    }
                                 }
                             }
                             ableDisableFab(adapter);
@@ -203,7 +212,7 @@ public class Day extends AppCompatActivity {
                 final Button typeChoice = (Button) addDialog.findViewById(R.id.button7);
                 if(daysAvailable && nightsAvailable){
                     choice = "day";
-                    typeChoice.setVisibility(View.INVISIBLE);
+                    typeChoice.setVisibility(View.VISIBLE);
                     //typeChoice.setEnabled(true);
                 }else if(daysAvailable){
                     choice = "day";
@@ -261,8 +270,13 @@ public class Day extends AppCompatActivity {
                             minutes = "0" + minutes;
                         }
                         time = hours + ":" + minutes;
-
-                        uploadData(-1,choice,true);
+                        boolean duplicate = Day.checkDuplicate(time,todaysSwitches);
+                        if(!duplicate) {
+                            uploadData(-1, choice, true);
+                        }else{
+                            Snackbar.make(fab.getRootView(), "You can not add a change here because there is already a change at that time of the day!", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
                         addDialog.dismiss();
                     }
                 });
@@ -357,6 +371,11 @@ public class Day extends AppCompatActivity {
 
     @Override
     public void recreate(){
+        try{
+            Thread.sleep(500);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
         System.out.println("Restarted day activity!");
         finish();
         startActivity(starterIntent);
@@ -367,5 +386,15 @@ public class Day extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.help_menu, menu);
         return true;
+    }
+
+    public static boolean checkDuplicate(String time,ArrayList<Switch> todaysSwitches){
+        boolean duplicate = false;
+        for(int i = 0; i < todaysSwitches.size(); i++){
+            if(todaysSwitches.get(i).getTime().equals(time) && todaysSwitches.get(i).getState()){
+                duplicate = true;
+            }
+        }
+        return duplicate;
     }
 }
