@@ -39,8 +39,8 @@ public class Day extends AppCompatActivity {
     ArrayList<Switch> todaysSwitches;
     boolean daysAvailable = false;
     boolean nightsAvailable = false;
-    public String choice;
-    public String time;
+    public String choice = "day";
+    public String time = "00:00";
     Intent starterIntent;
     ImageView leftImg;
     ImageView rightImg;

@@ -39,6 +39,8 @@ public class Schedule extends Fragment {
     String dayTemp;
     String nightTemp;
 
+    boolean justUpdated = false;
+
     //Overriden method onCreateView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,10 +64,16 @@ public class Schedule extends Fragment {
                 dayTempText.post(new Runnable() {
                     @Override
                     public void run() {
-                        dayTemp = MainActivity.currentDayTemp + " °C";
-                        dayTempText.setText(dayTemp);
-                        nightTemp = MainActivity.currentNightTemp + " °C";
-                        nightTempText.setText(nightTemp);
+                        if(!justUpdated) {
+                            dayTemp = MainActivity.currentDayTemp + " °C";
+                            dayTempText.setText(dayTemp);
+                            nightTemp = MainActivity.currentNightTemp + " °C";
+                            nightTempText.setText(nightTemp);
+                        }else{
+                            if((MainActivity.currentDayTemp + " °C").equals(dayTempText.getText()) && (MainActivity.currentNightTemp + " °C").equals(nightTempText.getText())){
+                                justUpdated = false;
+                            }
+                        }
                     }
                 });
             }
@@ -204,8 +212,10 @@ public class Schedule extends Fragment {
                             double value = (double)np.getValue() + (double)dp.getValue()/10;
                             if(name.equals("Day temperature")){
                                 HeatingSystem.put("dayTemperature", String.valueOf(value));
+                                justUpdated = true;
                             }else{
                                 HeatingSystem.put("nightTemperature", String.valueOf(value));
+                                justUpdated = true;
                             }
                         } catch (Exception e) {
                             System.err.println("Error from getdata "+e);
