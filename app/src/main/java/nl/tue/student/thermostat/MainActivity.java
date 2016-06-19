@@ -256,6 +256,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                     Toast.makeText(getApplicationContext(), "To adjust the current temperature" +
                             " drag the slider or tap the arrows. To adjust the temperature permanently open the side menu" +
                             " and tap the 'Use Schedule' switch. Then adjust the temperature to your desire." +
+                            "                                                                          " +
+                            "                                                                          " +
                             " To adjust the day/night temperature go to 'Schedule' and " +
                             " tap on the temperature box itself." , Toast.LENGTH_LONG).show();
                 }
