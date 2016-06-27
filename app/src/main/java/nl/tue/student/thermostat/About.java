@@ -49,9 +49,15 @@ public class About extends AppCompatActivity {
                 ;
                 //Toast toast = Toast.makeText(getApplicationContext(), "Not yet implemented", Toast.LENGTH_LONG);
                 //toast.show();
+                Intent intent = new Intent(getApplicationContext(), Help.class);
+                intent.putExtra("title","Help for about page");
+                intent.putExtra("text","Do you seriously need help in an About screen? Well... You can go back to the homepage by pressing the 'back' button.");
+                startActivity(intent);
+                /*
                 for (int i = 0; i < 4; i++) {
                     Toast.makeText(getApplicationContext(), "Do you seriously need help in an About screen? Well... You can go back to the homepage by pressing the 'back' button.", Toast.LENGTH_LONG).show();
                 }
+                */
 
                 return true;
         }

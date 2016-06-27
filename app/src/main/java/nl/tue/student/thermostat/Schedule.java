@@ -35,6 +35,8 @@ public class Schedule extends Fragment {
     protected static TextView tv;
     static Dialog dialog;
 
+    int oldValue = -1;
+
     long clockDelay = 1000;
     String dayTemp;
     String nightTemp;
@@ -168,6 +170,7 @@ public class Schedule extends Fragment {
         final NumberPicker np = (NumberPicker) dialog.findViewById(R.id.numberPicker1);
         np.setMaxValue(30);
         np.setMinValue(5);
+        np.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         try {
             int currentValue = Integer.parseInt(((String) tempText.getText()).substring(0, 2));
             np.setValue(currentValue);
@@ -178,22 +181,36 @@ public class Schedule extends Fragment {
             oneLong = true;
         }
         np.setWrapSelectorWheel(false);
-        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
-            }
-        });
         // number picker for decimals
         final NumberPicker dp = (NumberPicker) dialog.findViewById(R.id.numberPicker2);
         dp.setMaxValue(9);
         dp.setMinValue(0);
+        dp.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         if(!oneLong){
             dp.setValue(Integer.parseInt((String) ((String) tempText.getText()).substring(3,4)));
         }else{
             dp.setValue(Integer.parseInt((String) ((String) tempText.getText()).substring(2,3)));
         }
         dp.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if(newVal == 30){
+                    oldValue = dp.getValue();
+                    System.out.println(oldValue);
+                    dp.setValue(0);
+                    dp.setMaxValue(0);
+                }else if(oldValue != -1){
+                    dp.setWrapSelectorWheel(false);
+                    dp.setMaxValue(9);
+                    System.out.println("resetted: " + oldValue);
+                    dp.setValue(5);
+                    dp.setValue(oldValue);
+                    dp.setWrapSelectorWheel(false);
+                    oldValue = -1;
+                }
+            }
+        });
         dp.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {

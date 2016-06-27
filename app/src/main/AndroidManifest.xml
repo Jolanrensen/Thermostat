@@ -38,6 +38,9 @@
         <activity android:name=".About"
             android:label="About"
             ></activity>
+        <activity android:name=".Help"
+            android:label="Help"
+            ></activity>
     </application>
 
 </manifest>

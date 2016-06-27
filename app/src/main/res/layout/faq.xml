@@ -53,7 +53,7 @@
     android:textStyle="bold"
     android:textSize="20sp"
     android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
     android:layout_marginTop="60dp"
     android:layout_width="match_parent">
 </TextView>
@@ -62,7 +62,7 @@
         android:text="No, this app can only work with a demo thermostat server that runs on the TU."
         android:textSize="20sp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="110dp"
         android:layout_width="match_parent">
     </TextView>
@@ -71,7 +71,7 @@
         android:text="The app is behaving weird?"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="170dp"
         android:layout_width="match_parent">
@@ -81,7 +81,7 @@
         android:text="Possibly this is due to the server. What you can do however is to check your internet connection."
         android:textSize="20sp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="200dp"
         android:layout_width="match_parent">
     </TextView>

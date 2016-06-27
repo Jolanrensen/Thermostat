@@ -52,7 +52,7 @@
         android:id="@+id/text"
         android:text="This app was made by Lyoubomir Katzarov, Guus Westendorp and Jolan Rensen as an exercise for the course Human Technology Interaction on the Tu/e. It's meant as a demo of a companion app of a smart-thermostat. For more information you can contact us on our student.tue.nl email adresses."
         android:textSize="20sp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:layout_width="match_parent">

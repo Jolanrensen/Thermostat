@@ -201,6 +201,7 @@ public class Day extends AppCompatActivity {
                 np0.setMinValue(00);
                 np0.setMaxValue(23);
                 np0.setValue(6);
+                np0.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
                 np0.setWrapSelectorWheel(false);
                 final NumberPicker dp0 = (NumberPicker) addDialog.findViewById(R.id.numberPicker4);
                 dp0.setFormatter(new NumberPicker.Formatter() {
@@ -212,7 +213,8 @@ public class Day extends AppCompatActivity {
                 dp0.setMinValue(00);
                 dp0.setMaxValue(59);
                 dp0.setValue(30);
-                dp0.setWrapSelectorWheel(false);
+                dp0.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+                dp0.setWrapSelectorWheel(true);
 
                 leftImg = (ImageView) addDialog.findViewById(R.id.left_icon);
                 rightImg = (ImageView) addDialog.findViewById(R.id.right_icon);
@@ -223,12 +225,14 @@ public class Day extends AppCompatActivity {
                     //typeChoice.setEnabled(true);
                 }else if(daysAvailable){
                     choice = "day";
-                    typeChoice.setVisibility(View.INVISIBLE);
-                    //typeChoice.setEnabled(false);
+                    //typeChoice.setVisibility(View.INVISIBLE);
+                    typeChoice.setText("Max of 5 night switches reached!");
+                    typeChoice.setEnabled(false);
                 }else if(nightsAvailable){
                     choice = "night";
-                    typeChoice.setVisibility(View.INVISIBLE);
-                    //typeChoice.setEnabled(false);
+                    //typeChoice.setVisibility(View.INVISIBLE);
+                    typeChoice.setText("Max of 5 day switches reached!");
+                    typeChoice.setEnabled(false);
                 }
                 if(choice.equals("day")){
                     leftImg.setBackgroundResource(R.drawable.night);
@@ -363,6 +367,14 @@ public class Day extends AppCompatActivity {
                 ;
                 //Toast toast = Toast.makeText(getApplicationContext(), "Not yet implemented", Toast.LENGTH_LONG);
                 //toast.show();
+                Intent intent = new Intent(getApplicationContext(), Help.class);
+                intent.putExtra("title","Help for schedule editor");
+                intent.putExtra("text","To adjust any of the temperature changes simply tap on the edit icon." +
+                        " To delete any of the temperature changes simply tap on the trash can icon or swipe across the change you wish to delete." +
+                        " To add a new temperature change simply tap on the blue floating button." +
+                        " Note that more than five changes from day to night or vice versa are not allowed. ");
+                startActivity(intent);
+                /*
                 for (int i=0; i < 4; i++)
                 {
                     Toast.makeText(getApplicationContext(), "To adjust any of the temperature changes simply tap on the edit icon." +
@@ -370,6 +382,7 @@ public class Day extends AppCompatActivity {
                             " To add a new temperature change simply tap on the blue floating button." +
                             " Note that more than five changes from day to night or vice versa are not allowed. " , Toast.LENGTH_LONG).show();
                 }
+                */
 
                 return true;
         }

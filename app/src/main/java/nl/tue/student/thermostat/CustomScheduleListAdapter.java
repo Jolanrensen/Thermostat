@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import android.widget.NumberPicker;
 
 import java.util.ArrayList;
 
@@ -151,6 +152,7 @@ public class CustomScheduleListAdapter extends BaseAdapter {
                     np0.setMinValue(00);
                     np0.setMaxValue(23);
                     np0.setValue(Integer.parseInt(day.adapter.time.get(position).substring(0,2)));
+                    np0.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
                     np0.setWrapSelectorWheel(false);
                     final android.widget.NumberPicker dp0 = (android.widget.NumberPicker) editDialog.findViewById(R.id.numberPicker4);
                     dp0.setFormatter(new android.widget.NumberPicker.Formatter() {
@@ -162,7 +164,8 @@ public class CustomScheduleListAdapter extends BaseAdapter {
                     dp0.setMinValue(00);
                     dp0.setMaxValue(59);
                     dp0.setValue(Integer.parseInt(day.adapter.time.get(position).substring(3,5)));
-                    dp0.setWrapSelectorWheel(false);
+                    dp0.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+                    dp0.setWrapSelectorWheel(true);
 
                     day.leftImg = (ImageView) editDialog.findViewById(R.id.left_icon);
                     day.rightImg = (ImageView) editDialog.findViewById(R.id.right_icon);

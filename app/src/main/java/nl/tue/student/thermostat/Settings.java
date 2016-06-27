@@ -117,9 +117,15 @@ public class Settings extends AppCompatActivity {
                     ;
                     //Toast toast = Toast.makeText(getApplicationContext(), "Not yet implemented", Toast.LENGTH_LONG);
                     //toast.show();
+                    Intent intent = new Intent(getApplicationContext(), Help.class);
+                    intent.putExtra("title","Help for settings page");
+                    intent.putExtra("text","This is a demo of how the settings activity would look. It's not working currently though. You can go back to the homepage by pressing the 'back' button.");
+                    startActivity(intent);
+                    /*
                     for (int i = 0; i < 4; i++) {
                         Toast.makeText(getApplicationContext(), "This is a demo of how the settings activity would look. It's not working currently though. You can go back to the homepage by pressing the 'back' button.", Toast.LENGTH_LONG).show();
                     }
+                    */
 
                     return true;
             }
