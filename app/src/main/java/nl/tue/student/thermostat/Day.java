@@ -216,6 +216,19 @@ public class Day extends AppCompatActivity {
                 dp0.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
                 dp0.setWrapSelectorWheel(true);
 
+                dp0.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                        System.out.println("old: " + oldVal + ", new: " + newVal);
+                        if(oldVal == 59 && newVal == 0 && np0.getValue() < 23){
+                            np0.setValue(np0.getValue()+1);
+                        }
+                        if(oldVal == 0 && newVal == 59 && np0.getValue() > 0){
+                            np0.setValue(np0.getValue()-1);
+                        }
+                    }
+                });
+
                 leftImg = (ImageView) addDialog.findViewById(R.id.left_icon);
                 rightImg = (ImageView) addDialog.findViewById(R.id.right_icon);
                 final Button typeChoice = (Button) addDialog.findViewById(R.id.button7);

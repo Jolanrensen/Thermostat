@@ -166,6 +166,18 @@ public class CustomScheduleListAdapter extends BaseAdapter {
                     dp0.setValue(Integer.parseInt(day.adapter.time.get(position).substring(3,5)));
                     dp0.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
                     dp0.setWrapSelectorWheel(true);
+                    dp0.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                        @Override
+                        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                            System.out.println("old: " + oldVal + ", new: " + newVal);
+                            if(oldVal == 59 && newVal == 0 && np0.getValue() < 23){
+                                np0.setValue(np0.getValue()+1);
+                            }
+                            if(oldVal == 0 && newVal == 59 && np0.getValue() > 0){
+                                np0.setValue(np0.getValue()-1);
+                            }
+                        }
+                    });
 
                     day.leftImg = (ImageView) editDialog.findViewById(R.id.left_icon);
                     day.rightImg = (ImageView) editDialog.findViewById(R.id.right_icon);

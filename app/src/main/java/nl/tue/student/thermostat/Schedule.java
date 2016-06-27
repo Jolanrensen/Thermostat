@@ -191,7 +191,7 @@ public class Schedule extends Fragment {
         }else{
             dp.setValue(Integer.parseInt((String) ((String) tempText.getText()).substring(2,3)));
         }
-        dp.setWrapSelectorWheel(false);
+        dp.setWrapSelectorWheel(true);
         np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -201,12 +201,12 @@ public class Schedule extends Fragment {
                     dp.setValue(0);
                     dp.setMaxValue(0);
                 }else if(oldValue != -1){
-                    dp.setWrapSelectorWheel(false);
+                    dp.setWrapSelectorWheel(true);
                     dp.setMaxValue(9);
                     System.out.println("resetted: " + oldValue);
                     dp.setValue(5);
                     dp.setValue(oldValue);
-                    dp.setWrapSelectorWheel(false);
+                    dp.setWrapSelectorWheel(true);
                     oldValue = -1;
                 }
             }
@@ -214,7 +214,12 @@ public class Schedule extends Fragment {
         dp.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
+                if(oldVal == 9 && newVal == 0 && np.getValue() < 30){
+                    np.setValue(np.getValue()+1);
+                }
+                if(oldVal == 0 && newVal == 9 && np.getValue() > 5){
+                    np.setValue(np.getValue()-1);
+                }
             }
         });
         b1.setOnClickListener(new View.OnClickListener()
