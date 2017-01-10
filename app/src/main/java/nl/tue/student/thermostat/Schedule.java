@@ -188,8 +188,10 @@ public class Schedule extends Fragment {
         dp.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         if(!oneLong){
             dp.setValue(Integer.parseInt((String) ((String) tempText.getText()).substring(3,4)));
+            oneLong = false;
         }else{
             dp.setValue(Integer.parseInt((String) ((String) tempText.getText()).substring(2,3)));
+            oneLong = false;
         }
         dp.setWrapSelectorWheel(true);
         np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
